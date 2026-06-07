@@ -4,6 +4,7 @@ import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import WhatsAppWidget from '@/components/widgets/WhatsAppWidget'
 
 const inter = Inter({
   variable: '--font-geist-sans',
@@ -52,6 +53,7 @@ export default function RootLayout({
           <Footer />
         </div>
         <Toaster />
+        <WhatsAppWidget />
       </body>
     </html>
   )

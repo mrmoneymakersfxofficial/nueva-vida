@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import ScrollReveal from '@/components/animations/ScrollReveal'
 import MagneticButton from '@/components/animations/MagneticButton'
+import ScrollSpy from '@/components/animations/ScrollSpy'
 
 const services = [
   {
@@ -63,6 +64,8 @@ const testimonials = [
 export default function HomePage() {
   return (
     <>
+      {/* ScrollSpy — actualiza URL hash al hacer scroll */}
+      <ScrollSpy />
       {/* ═══ HERO SECTION ═══ */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden" id="inicio">
         {/* Background */}
@@ -137,7 +140,7 @@ export default function HomePage() {
                   </Button>
                 </MagneticButton>
                 <MagneticButton href="tel:+51999999999" strength={0.15}>
-                  <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 rounded-full px-8 h-14 text-base backdrop-blur-sm">
+                  <Button size="lg" variant="outline" className="border-cyan text-cyan hover:bg-cyan hover:text-white rounded-full px-8 h-14 text-base backdrop-blur-sm transition-all duration-300">
                     <Phone className="w-5 h-5 mr-2" />
                     Llamar Ahora
                   </Button>
