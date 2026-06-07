@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Phone, Mail, MapPin, Clock, Heart } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 
@@ -33,8 +34,14 @@ export default function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan to-cyan-light flex items-center justify-center">
-                <span className="text-white font-bold text-lg">NV</span>
+              <div className="relative h-10 w-10 flex-shrink-0">
+                <Image
+                  src="/logo-nuevavida.png"
+                  alt="Nueva Vida"
+                  fill
+                  className="object-contain brightness-0 invert"
+                  sizes="40px"
+                />
               </div>
               <div>
                 <h3 className="font-bold text-lg">NUEVA VIDA</h3>

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X, Phone, Clock } from 'lucide-react'
+import Image from 'next/image'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -40,10 +41,16 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-gradient-to-br from-cyan to-royal flex items-center justify-center overflow-hidden">
-              <span className="text-white font-bold text-lg lg:text-xl">NV</span>
-              <div className="absolute inset-0 bg-gradient-to-tr from-cyan-light/20 to-transparent" />
+          <Link href="/" className="flex items-center gap-3 group" aria-label="Inicio - Nueva Vida">
+            <div className="relative h-10 w-10 lg:h-12 lg:w-12 flex-shrink-0">
+              <Image
+                src="/logo-nuevavida.png"
+                alt="Logotipo Nueva Vida"
+                fill
+                className="object-contain transition-transform duration-300 group-hover:scale-105"
+                priority
+                sizes="48px"
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-marine font-bold text-sm lg:text-base tracking-tight leading-tight group-hover:text-royal transition-colors">
@@ -105,7 +112,18 @@ export default function Navbar() {
                   {/* Mobile Header */}
                   <div className="p-6 border-b border-marine/10">
                     <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="relative h-8 w-8 flex-shrink-0">
+                        <Image
+                          src="/logo-nuevavida.png"
+                          alt="NV"
+                          fill
+                          className="object-contain"
+                          sizes="32px"
+                        />
+                      </div>
                       <span className="text-marine font-bold text-lg">NUEVA VIDA</span>
+                    </div>
                       <span className="text-marine/50 text-xs">Menú</span>
                     </div>
                   </div>

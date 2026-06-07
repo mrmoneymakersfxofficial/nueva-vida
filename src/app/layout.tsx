@@ -24,12 +24,22 @@ export const metadata: Metadata = {
     'control prenatal', 'Lima', 'Perú',
   ],
   authors: [{ name: 'Nueva Vida - Consultorio Ginecológico' }],
+  icons: {
+    icon: [
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-64.png', sizes: '64x64', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
   openGraph: {
     type: 'website',
     locale: 'es_PE',
     siteName: 'Nueva Vida - Consultorio Ginecológico',
     title: 'Nueva Vida | Consultorio Ginecológico - Atención Médica Especializada',
     description: 'Atención médica ginecológica especializada con tecnología de última generación. Agende su cita hoy.',
+    images: ['/logo-nuevavida.png'],
   },
   robots: {
     index: true,
