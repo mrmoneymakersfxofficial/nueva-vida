@@ -95,7 +95,7 @@ export default function Navbar() {
           {/* Mobile Menu */}
           <div className="flex lg:hidden items-center gap-3">
             <a
-              href="tel:+51999999999"
+              href="tel:+51983554248"
               className="p-2 rounded-full bg-cyan/10 text-cyan hover:bg-cyan/20 transition-colors"
             >
               <Phone className="w-5 h-5" />
@@ -161,7 +161,7 @@ export default function Navbar() {
                     </Link>
                     <div className="flex items-center justify-center gap-2 mt-4 text-marine/60 text-sm">
                       <Phone className="w-4 h-4" />
-                      <span>+51 999 999 999</span>
+                      <span>+51 983 554 248</span>
                     </div>
                   </div>
                 </div>

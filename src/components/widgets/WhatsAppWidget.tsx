@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent } from '@/components/card'
 import { Badge } from '@/components/ui/badge'
 
-const WHATSAPP_NUMBER = '51999999999'
+const WHATSAPP_NUMBER = '51983554248'
 
 const services = [
   'Ecografía Ginecológica',
@@ -228,7 +228,7 @@ export default function WhatsAppWidget() {
                       <div className="relative">
                         <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-marine/40" />
                         <Input
-                          placeholder="+51 999 999 999"
+                          placeholder="+51 983 554 248"
                           value={formData.telefono}
                           onChange={(e) => setFormData(prev => ({ ...prev, telefono: e.target.value }))}
                           className="pl-10 rounded-xl border-marine/10 focus:border-cyan text-sm"

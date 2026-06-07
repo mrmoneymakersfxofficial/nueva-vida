@@ -177,7 +177,7 @@ export default function ServiciosPage() {
                   Agendar Cita
                 </Button>
               </MagneticButton>
-              <MagneticButton href="https://wa.me/51999999999" strength={0.15}>
+              <MagneticButton href="https://wa.me/51983554248" strength={0.15}>
                 <Button variant="outline" className="border-royal text-royal hover:bg-royal hover:text-white rounded-full px-8">
                   Consultar por WhatsApp
                 </Button>

@@ -54,7 +54,7 @@ export default function ReservasPage() {
       `*Hora:* ${formData.hora}\n` +
       (formData.mensaje ? `*Mensaje:* ${formData.mensaje}\n` : '')
     
-    return `https://wa.me/51999999999?text=${encodeURIComponent(msg)}`
+    return `https://wa.me/51983554248?text=${encodeURIComponent(msg)}`
   }
 
   const handleSubmit = () => {
@@ -192,7 +192,7 @@ export default function ReservasPage() {
                       <Input
                         id="telefono"
                         type="tel"
-                        placeholder="+51 999 999 999"
+                        placeholder="+51 983 554 248"
                         value={formData.telefono}
                         onChange={(e) => updateField('telefono', e.target.value)}
                         className="rounded-xl border-marine/10 focus:border-cyan"
@@ -366,7 +366,7 @@ export default function ReservasPage() {
             {[
               { icon: MapPin, title: 'Ubicación', text: 'Av. Principal 123, Lima' },
               { icon: Clock, title: 'Horario', text: 'Lun-Vie 8:00-18:00' },
-              { icon: Phone, title: 'Emergencias', text: '+51 999 999 999' },
+              { icon: Phone, title: 'Emergencias', text: '+51 983 554 248' },
             ].map((info, i) => (
               <ScrollReveal key={info.title} delay={i * 0.1}>
                 <Card className="text-center border-0 shadow-md bg-muted/50">
