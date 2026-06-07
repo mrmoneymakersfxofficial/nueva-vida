@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import WhatsAppWidget from '@/components/widgets/WhatsAppWidget'
+import { MobileMenuProvider } from '@/context/MobileMenuContext'
 
 const inter = Inter({
   variable: '--font-geist-sans',
@@ -55,15 +56,17 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased bg-background text-foreground`}>
-        <div className="min-h-screen flex flex-col">
-          <Navbar />
-          <main className="flex-1 pt-16 lg:pt-20">
-            {children}
-          </main>
-          <Footer />
-        </div>
-        <Toaster />
-        <WhatsAppWidget />
+        <MobileMenuProvider>
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-1 pt-16 lg:pt-20">
+              {children}
+            </main>
+            <Footer />
+          </div>
+          <Toaster />
+          <WhatsAppWidget />
+        </MobileMenuProvider>
       </body>
     </html>
   )

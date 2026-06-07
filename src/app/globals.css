@@ -193,3 +193,68 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ═══════════════════════════════════════════════
+   Z-INDEX LAYERING SYSTEM
+   ═══════════════════════════════════════════════
+   z-[40]  → Navbar (fixed header)
+   z-[50]  → WhatsApp floating button + popup
+   z-[9999] → Mobile menu Sheet (overlay + content)
+   
+   When mobile menu opens, WhatsApp widget
+   is completely unmounted via React context.
+   ═══════════════════════════════════════════════ */
+
+/* Ensure navbar header never clips/cuts during scroll */
+header[class*="fixed"] {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Radix Dialog / Sheet portal renders at body level.
+   Force the overlay and content above everything. */
+[data-slot="sheet-overlay"] {
+  z-index: 9999 !important;
+}
+
+[data-slot="sheet-content"] {
+  z-index: 9999 !important;
+}
+
+/* Lock body scroll when mobile menu is active */
+body.scroll-locked {
+  overflow: hidden !important;
+  touch-action: none !important;
+  position: fixed !important;
+  width: 100% !important;
+}
+
+/* Prevent overscroll bounce on iOS when menu is open */
+body.scroll-locked #___gatsby,
+body.scroll-locked #__next,
+body.scroll-locked main {
+  overflow: hidden !important;
+}
+
+/* Ensure WhatsApp tooltip doesn't overflow viewport */
+.group-whatsapp {
+  contain: layout;
+}
+
+/* Smooth transition for WhatsApp hide/show */
+.group-whatsapp [class*="animate-"] {
+  will-change: transform, opacity;
+}
+
+/* Fix: Sheet close button should always be clickable */
+[data-slot="sheet-close"] {
+  z-index: 10000 !important;
+  position: relative;
+}
+
+/* Prevent content shift when scrollbar disappears */
+html {
+  overflow-y: scroll;
+}

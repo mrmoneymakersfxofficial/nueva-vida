@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent } from '@/components/card'
 import { Badge } from '@/components/ui/badge'
+import { useMobileMenu } from '@/context/MobileMenuContext'
 
 const WHATSAPP_NUMBER = '51983554248'
 
@@ -58,6 +59,15 @@ export default function WhatsAppWidget() {
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const { isMobileMenuOpen } = useMobileMenu()
+
+  // Auto-close WhatsApp widget when mobile menu opens
+  useEffect(() => {
+    if (isMobileMenuOpen && isOpen) {
+      setIsOpen(false)
+      setTimeout(resetState, 300)
+    }
+  }, [isMobileMenuOpen]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const resetState = useCallback(() => {
     setStep('form')
@@ -126,11 +136,14 @@ export default function WhatsAppWidget() {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
+  // Hide entire widget when mobile menu is open
+  if (isMobileMenuOpen) return null
+
   return (
     <>
       {/* Floating Button */}
       <motion.div
-        className="fixed bottom-6 right-6 z-[60]"
+        className="fixed bottom-6 right-6 z-[50] group-whatsapp"
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 1 }}
@@ -174,7 +187,7 @@ export default function WhatsAppWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="fixed bottom-24 right-6 z-[60] w-[360px] max-w-[calc(100vw-3rem)] rounded-2xl shadow-2xl shadow-marine/20 overflow-hidden"
+            className="fixed bottom-24 right-6 z-[50] w-[360px] max-w-[calc(100vw-3rem)] rounded-2xl shadow-2xl shadow-marine/20 overflow-hidden"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-[#25D366] to-[#128C7E] p-4 flex items-center justify-between">
