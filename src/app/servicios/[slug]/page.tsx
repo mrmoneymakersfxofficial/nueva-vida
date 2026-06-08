@@ -145,7 +145,7 @@ export default function ServiceDetailPage() {
   return (
     <>
       {/* Breadcrumb + Hero */}
-      <section id="hero" className="relative py-20 lg:py-28 animated-gradient overflow-hidden">
+      <section id="hero" className="relative animated-gradient overflow-hidden pt-[60px] sm:pt-[68px] lg:pt-[70px] pb-20 lg:pb-28">
         <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div

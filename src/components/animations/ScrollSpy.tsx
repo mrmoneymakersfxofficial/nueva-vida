@@ -48,7 +48,7 @@ export default function GlobalScrollSpy({
         } else {
           link.classList.remove('nav-link-active', 'bg-cyan', 'text-white', 'shadow-md', 'shadow-cyan/25')
           // Restore appropriate non-active styles based on scroll
-          const scrolled = window.scrollY > 80
+          const scrolled = window.scrollY > 15
           if (scrolled) {
             link.classList.add('text-[#0A2F6B]', 'hover:bg-[#0A2F6B]/5')
           } else {
