@@ -59,7 +59,7 @@ export default function RootLayout({
         <MobileMenuProvider>
           <div className="min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-1 pt-16 lg:pt-20">
+            <main className="flex-1 pt-[60px] sm:pt-[68px] lg:pt-[80px]">
               {children}
             </main>
             <Footer />

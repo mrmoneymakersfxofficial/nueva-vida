@@ -205,13 +205,33 @@
    is completely unmounted via React context.
    ═══════════════════════════════════════════════ */
 
-/* Ensure navbar header never clips/cuts during scroll */
-header[class*="fixed"] {
+/* ═══════════════════════════════════════════════
+   NAVBAR — Anti-clipping / Anti-cut fixes
+   ═══════════════════════════════════════════════ */
+
+/* Force GPU compositing layer — prevents clipping during scroll */
+#navbar-main {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+  contain: layout style;
+  /* Ensure the header NEVER gets partially hidden */
+  clip: auto !important;
+  clip-path: none !important;
+  overflow: visible !important;
 }
+
+/* Ensure the nav inside doesn't overflow */
+#navbar-main nav {
+  overflow: visible;
+}
+
+/* ═══════════════════════════════════════════════
+   SHEET (Mobile Menu) — Z-index overrides
+   ═══════════════════════════════════════════════ */
 
 /* Radix Dialog / Sheet portal renders at body level.
    Force the overlay and content above everything. */
@@ -223,7 +243,16 @@ header[class*="fixed"] {
   z-index: 9999 !important;
 }
 
-/* Lock body scroll when mobile menu is active */
+/* Fix: Sheet close button should always be clickable */
+[data-slot="sheet-close"] {
+  z-index: 10000 !important;
+  position: relative;
+}
+
+/* ═══════════════════════════════════════════════
+   BODY SCROLL LOCK
+   ═══════════════════════════════════════════════ */
+
 body.scroll-locked {
   overflow: hidden !important;
   touch-action: none !important;
@@ -232,11 +261,13 @@ body.scroll-locked {
 }
 
 /* Prevent overscroll bounce on iOS when menu is open */
-body.scroll-locked #___gatsby,
-body.scroll-locked #__next,
 body.scroll-locked main {
   overflow: hidden !important;
 }
+
+/* ═══════════════════════════════════════════════
+   WHATSAPP WIDGET
+   ═══════════════════════════════════════════════ */
 
 /* Ensure WhatsApp tooltip doesn't overflow viewport */
 .group-whatsapp {
@@ -248,13 +279,17 @@ body.scroll-locked main {
   will-change: transform, opacity;
 }
 
-/* Fix: Sheet close button should always be clickable */
-[data-slot="sheet-close"] {
-  z-index: 10000 !important;
-  position: relative;
-}
+/* ═══════════════════════════════════════════════
+   SCROLLBAR & BASE
+   ═══════════════════════════════════════════════ */
 
 /* Prevent content shift when scrollbar disappears */
 html {
   overflow-y: scroll;
+}
+
+/* Ensure no element can overflow the viewport horizontally */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
 }
