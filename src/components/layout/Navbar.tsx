@@ -1,12 +1,12 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, Phone, Clock } from 'lucide-react'
 import Image from 'next/image'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import MagneticButton from '@/components/animations/MagneticButton'
 import { useMobileMenu } from '@/context/MobileMenuContext'
 
@@ -23,9 +23,9 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false)
   const pathname = usePathname()
   const { setMobileMenuOpen } = useMobileMenu()
+  const scrollTicking = useRef(false)
 
   useEffect(() => {
-    // Mark as mounted after hydration to enable entrance animation
     const t = setTimeout(() => setMounted(true), 50)
     return () => clearTimeout(t)
   }, [])
@@ -35,9 +35,20 @@ export default function Navbar() {
     setMobileMenuOpen(isOpen)
   }, [isOpen, setMobileMenuOpen])
 
+  // Premium scroll detection — transparent over hero, solid after scroll
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20)
+    const handleScroll = () => {
+      if (!scrollTicking.current) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 80)
+          scrollTicking.current = false
+        })
+        scrollTicking.current = true
+      }
+    }
     window.addEventListener('scroll', handleScroll, { passive: true })
+    // Check initial state
+    setScrolled(window.scrollY > 80)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -60,20 +71,50 @@ export default function Navbar() {
     setIsOpen(false)
   }
 
+  // ═══ Color classes based on scroll state ═══
+  // When NOT scrolled (over hero): white text for immersive look
+  // When scrolled: marine (#0A2F6B) text for readability on white bg
+  const logoTextClass = scrolled
+    ? 'text-[#0A2F6B]'
+    : 'text-white'
+
+  const logoSubtextClass = scrolled
+    ? 'text-[#0A2F6B]/50'
+    : 'text-white/60'
+
+  const navLinkClass = (href: string) => {
+    const isActive = pathname === href
+    if (scrolled) {
+      return isActive
+        ? 'bg-cyan text-white shadow-md shadow-cyan/25'
+        : 'text-[#0A2F6B] hover:bg-[#0A2F6B]/5'
+    }
+    return isActive
+      ? 'bg-cyan text-white shadow-md shadow-cyan/25'
+      : 'text-white/90 hover:bg-white/10'
+  }
+
+  const iconColorClass = scrolled ? 'text-[#0A2F6B]' : 'text-white'
+  const phoneBtnClass = scrolled
+    ? 'bg-cyan/10 text-cyan hover:bg-cyan/20'
+    : 'bg-white/15 text-white hover:bg-white/25'
+  const menuBtnClass = scrolled ? 'hover:bg-[#0A2F6B]/5' : 'hover:bg-white/10'
+  const timeTextClass = scrolled ? 'text-[#0A2F6B]/70' : 'text-white/70'
+
   return (
     <>
       {/* ═══════════════════════════════════════════════════════
-          FIXED NAVBAR — Rock-solid, no motion animation on y-axis
-          Logo is the dominant element. Full responsive.
+          PREMIUM NAVBAR — Transparent over Hero → Solid on Scroll
+          Immersive → Professional transition with glass effect.
           ═══════════════════════════════════════════════════════ */}
       <header
         id="navbar-main"
-        className={`fixed top-0 left-0 right-0 z-[40] transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[40] navbar-transition ${
           mounted ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
         } ${
           scrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-lg shadow-marine/5'
-            : 'bg-white/80 backdrop-blur-sm'
+            ? 'navbar-scrolled'
+            : 'navbar-transparent'
         }`}
       >
         <nav className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
@@ -88,16 +129,18 @@ export default function Navbar() {
                   src="/logo-nuevavida.png"
                   alt="Logotipo Nueva Vida"
                   fill
-                  className="object-contain transition-transform duration-300 group-hover:scale-105"
+                  className={`object-contain transition-all duration-500 group-hover:scale-105 ${
+                    scrolled ? 'brightness-0' : 'brightness-0 invert'
+                  }`}
                   priority
                   sizes="68px"
                 />
               </div>
               <div className="flex flex-col min-w-0">
-                <span className="text-marine font-bold text-[15px] sm:text-lg lg:text-[22px] tracking-tight leading-[1.1] group-hover:text-royal transition-colors">
+                <span className={`font-bold text-[15px] sm:text-lg lg:text-[22px] tracking-tight leading-[1.1] transition-colors duration-500 ${logoTextClass}`}>
                   NUEVA VIDA
                 </span>
-                <span className="text-marine/50 text-[9px] sm:text-[10px] lg:text-xs font-medium tracking-widest uppercase hidden sm:block leading-tight mt-0.5">
+                <span className={`text-[9px] sm:text-[10px] lg:text-xs font-medium tracking-widest uppercase hidden sm:block leading-tight mt-0.5 transition-colors duration-500 ${logoSubtextClass}`}>
                   Consultorio Ginecológico
                 </span>
               </div>
@@ -109,11 +152,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-200 ${
-                    pathname === link.href
-                      ? 'bg-cyan text-white shadow-md shadow-cyan/25'
-                      : 'text-marine hover:bg-marine/5'
-                  }`}
+                  className={`nav-link px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${navLinkClass(link.href)}`}
                 >
                   {link.label}
                 </Link>
@@ -122,7 +161,7 @@ export default function Navbar() {
 
             {/* ═══ DESKTOP CTA — Right side ═══ */}
             <div className="hidden lg:flex items-center gap-4">
-              <div className="flex items-center gap-2 text-marine/70 text-sm">
+              <div className={`flex items-center gap-2 text-sm transition-colors duration-500 ${timeTextClass}`}>
                 <Clock className="w-4 h-4" />
                 <span className="hidden xl:inline">Lun-Vie 8:00-18:00</span>
                 <span className="xl:hidden">8-18h</span>
@@ -138,18 +177,18 @@ export default function Navbar() {
             <div className="flex lg:hidden items-center gap-2">
               <a
                 href="tel:+51983554248"
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-cyan/10 text-cyan hover:bg-cyan/20 transition-colors"
+                className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-500 ${phoneBtnClass}`}
                 aria-label="Llamar al +51 983 554 248"
               >
-                <Phone className="w-[18px] h-[18px]" />
+                <Phone className={`w-[18px] h-[18px] transition-colors duration-500 ${iconColorClass}`} />
               </a>
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
                   <button
-                    className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-marine/5 transition-colors"
+                    className={`flex items-center justify-center w-10 h-10 rounded-lg transition-colors duration-500 ${menuBtnClass}`}
                     aria-label="Abrir menú de navegación"
                   >
-                    <Menu className="w-5 h-5 text-marine" />
+                    <Menu className={`w-5 h-5 transition-colors duration-500 ${iconColorClass}`} />
                   </button>
                 </SheetTrigger>
                 <SheetContent

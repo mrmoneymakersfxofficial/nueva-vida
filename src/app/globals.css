@@ -209,6 +209,37 @@
    NAVBAR — Anti-clipping / Anti-cut fixes
    ═══════════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════════════
+   NAVBAR — Premium Transparent → Solid transition
+   ═══════════════════════════════════════════════ */
+
+/* Shared base transition — cubic-bezier for premium feel */
+.navbar-transition {
+  transition: background .45s cubic-bezier(.4,0,.2,1),
+              box-shadow .45s cubic-bezier(.4,0,.2,1),
+              backdrop-filter .45s cubic-bezier(.4,0,.2,1),
+              -webkit-backdrop-filter .45s cubic-bezier(.4,0,.2,1),
+              border-color .45s cubic-bezier(.4,0,.2,1);
+}
+
+/* STATE 1: Transparent — Immersive, over hero */
+.navbar-transparent {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+  border-bottom: 1px solid rgba(255,255,255,0);
+}
+
+/* STATE 2: Scrolled — Glass premium solid */
+.navbar-scrolled {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
 /* Force GPU compositing layer — prevents clipping during scroll */
 #navbar-main {
   -webkit-transform: translateZ(0);

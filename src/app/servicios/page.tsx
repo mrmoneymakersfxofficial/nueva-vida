@@ -82,7 +82,7 @@ export default function ServiciosPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative py-20 lg:py-28 animated-gradient overflow-hidden">
+      <section id="hero" className="relative py-20 lg:py-28 animated-gradient overflow-hidden">
         <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -107,7 +107,7 @@ export default function ServiciosPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-20 lg:py-28 bg-white">
+      <section id="servicios" className="py-20 lg:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, i) => (
@@ -164,7 +164,7 @@ export default function ServiciosPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-muted">
+      <section id="reservar" className="py-16 bg-muted">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <ScrollReveal>
             <h2 className="text-2xl sm:text-3xl font-bold text-marine">¿Necesitas orientación sobre algún servicio?</h2>

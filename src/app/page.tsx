@@ -69,13 +69,23 @@ export default function HomePage() {
     <>
       {/* ═══ HERO SECTION ═══ */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden" id="inicio">
-        {/* Background */}
+        {/* Background — Desktop & Mobile responsive images */}
         <div className="absolute inset-0 z-0">
+          {/* Mobile hero image */}
           <Image
-            src="/hero-bg.png"
+            src="/hero-mobile.png"
             alt="Nueva Vida - Consultorio Ginecológico"
             fill
-            className="object-cover"
+            className="object-cover sm:hidden"
+            priority
+            quality={90}
+          />
+          {/* Desktop hero image */}
+          <Image
+            src="/hero-desktop.png"
+            alt="Nueva Vida - Consultorio Ginecológico"
+            fill
+            className="object-cover hidden sm:block"
             priority
             quality={90}
           />

@@ -94,7 +94,7 @@ export default function SaludPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative py-20 lg:py-28 animated-gradient overflow-hidden">
+      <section id="hero" className="relative py-20 lg:py-28 animated-gradient overflow-hidden">
         <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-20" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -119,7 +119,7 @@ export default function SaludPage() {
       </section>
 
       {/* Health Articles */}
-      <section className="py-20 lg:py-28 bg-white">
+      <section id="articulos" className="py-20 lg:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div className="flex items-center gap-3 mb-12">
@@ -156,7 +156,7 @@ export default function SaludPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 lg:py-28 bg-muted">
+      <section id="preguntas" className="py-20 lg:py-28 bg-muted">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div className="text-center mb-12">
@@ -189,7 +189,7 @@ export default function SaludPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-white">
+      <section id="contacto" className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <ScrollReveal>
             <h2 className="text-2xl sm:text-3xl font-bold text-marine">¿Tienes más preguntas?</h2>
