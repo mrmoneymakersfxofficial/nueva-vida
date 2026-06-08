@@ -78,11 +78,11 @@ export default function Navbar() {
     const isActive = pathname === href
     if (scrolled) {
       return isActive
-        ? 'bg-cyan text-white shadow-md shadow-cyan/25'
+        ? 'nav-link-active-scrolled'
         : 'text-[#0A2F6B] hover:bg-[#0A2F6B]/5'
     }
     return isActive
-      ? 'bg-cyan text-white shadow-md shadow-cyan/25'
+      ? 'nav-link-active-transparent'
       : 'text-white/90 hover:bg-white/10'
   }
 
@@ -191,7 +191,7 @@ export default function Navbar() {
                 </SheetTrigger>
                 <SheetContent
                   side="right"
-                  className="w-[300px] sm:w-80 bg-white p-0"
+                  className="mobile-menu-sheet bg-white p-0"
                 >
                   <SheetTitle className="sr-only">Menú de navegación</SheetTitle>
                   <div className="flex flex-col h-full">
@@ -206,12 +206,12 @@ export default function Navbar() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex-1 p-5 flex flex-col gap-1.5 overflow-y-auto overscroll-contain">
+                    <div className="mobile-menu-links-wrapper flex-1 flex flex-col gap-5 overflow-y-auto overscroll-contain">
                       {navLinks.map((link, i) => (
                         <motion.div key={link.href} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.08 }}>
                           <Link href={link.href} onClick={handleLinkClick}
-                            className={`flex items-center px-4 py-3.5 rounded-xl text-base font-medium transition-all duration-200 ${
-                              pathname === link.href ? 'bg-cyan text-white shadow-md shadow-cyan/20' : 'text-marine hover:bg-marine/5'
+                            className={`nav-link flex items-center px-4 py-3.5 rounded-xl text-[20px] font-medium transition-all duration-200 w-full block ${
+                              pathname === link.href ? 'active-link' : 'text-marine hover:bg-marine/5'
                             }`}
                           >
                             {link.label}
@@ -219,7 +219,7 @@ export default function Navbar() {
                         </motion.div>
                       ))}
                     </div>
-                    <div className="p-5 border-t border-marine/10 flex-shrink-0 space-y-4">
+                    <div className="mobile-menu-footer-cta p-5 border-t border-[#F0F2F5] flex-shrink-0 space-y-4">
                       <Link href="/reservas" onClick={handleLinkClick}>
                         <Button className="w-full bg-cyan hover:bg-cyan-light text-white font-semibold rounded-xl py-3.5 shadow-lg shadow-cyan/25 text-base">
                           Agendar Cita
