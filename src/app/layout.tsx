@@ -6,6 +6,7 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import WhatsAppWidget from '@/components/widgets/WhatsAppWidget'
 import { MobileMenuProvider } from '@/context/MobileMenuContext'
+import GlobalScrollSpy from '@/components/animations/ScrollSpy'
 
 const inter = Inter({
   variable: '--font-geist-sans',
@@ -66,6 +67,7 @@ export default function RootLayout({
           </div>
           <Toaster />
           <WhatsAppWidget />
+          <GlobalScrollSpy />
         </MobileMenuProvider>
       </body>
     </html>

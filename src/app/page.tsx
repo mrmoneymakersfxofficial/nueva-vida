@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import ScrollReveal from '@/components/animations/ScrollReveal'
 import MagneticButton from '@/components/animations/MagneticButton'
-import ScrollSpy from '@/components/animations/ScrollSpy'
 
 const services = [
   {
@@ -68,8 +67,6 @@ const testimonials = [
 export default function HomePage() {
   return (
     <>
-      {/* ScrollSpy — actualiza URL hash al hacer scroll */}
-      <ScrollSpy />
       {/* ═══ HERO SECTION ═══ */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden" id="inicio">
         {/* Background */}

@@ -1,32 +1,34 @@
 'use client'
 import { useEffect, useRef, useCallback } from 'react'
+import { usePathname } from 'next/navigation'
 
 /**
- * ScrollSpy — Actualiza la URL hash según la sección visible en el viewport.
- * Usa IntersectionObserver para detectar cuál sección está en pantalla.
- * Actualiza via History API (replaceState) sin recargar la página.
- * Soporta scroll suave al navegar con hash links.
+ * GlobalScrollSpy — Actualiza la URL hash según la sección visible en el viewport.
+ * Funciona GLOBALMENTE en todas las subpáginas (/inicio, /servicios, /salud, etc.)
+ * Usa IntersectionObserver + MutationObserver para contenido dinámico.
+ * Inyecta pathname + hash en la URL para evitar mezclar secciones entre páginas.
  */
 
-interface ScrollSpyProps {
-  /** Selectores CSS de las secciones a vigilar. Default: 'section[id]' */
+interface GlobalScrollSpyProps {
+  /** Selectores CSS de las secciones a vigilar. Default: 'section[id], article[id]' */
   sectionSelector?: string
-  /** Offset (px) desde el top para considerar una sección "visible". Default: 100 */
-  offset?: number
-  /** Umbral de intersección (0-1). Default: 0.15 */
-  threshold?: number
+  /** Offset (px) desde el top del viewport. Default: 100 */
+  offsetTop?: number
+  /** Porcentaje inferior del viewport descartado. Default: 55 */
+  offsetBottom?: number
 }
 
-export default function ScrollSpy({
-  sectionSelector = 'section[id]',
-  offset = 100,
-  threshold = 0.15,
-}: ScrollSpyProps) {
+export default function GlobalScrollSpy({
+  sectionSelector = 'section[id], article[id]',
+  offsetTop = 100,
+  offsetBottom = 55,
+}: GlobalScrollSpyProps) {
+  const pathname = usePathname()
   const isProgrammatic = useRef(false)
   const observerRef = useRef<IntersectionObserver | null>(null)
+  const mutationRef = useRef<MutationObserver | null>(null)
 
   const handleHashOnLoad = useCallback(() => {
-    // Si la URL tiene un hash al cargar, scrollear a esa sección
     const hash = window.location.hash.replace('#', '')
     if (hash) {
       const el = document.getElementById(hash)
@@ -40,41 +42,59 @@ export default function ScrollSpy({
     }
   }, [])
 
-  useEffect(() => {
-    handleHashOnLoad()
+  // Core: observe sections and update URL with pathname + hash
+  const initObserver = useCallback(() => {
+    // Disconnect previous observer
+    if (observerRef.current) observerRef.current.disconnect()
 
     const sections = document.querySelectorAll(sectionSelector)
     if (sections.length === 0) return
 
-    // Crear observer con rootMargin para offset del navbar
     observerRef.current = new IntersectionObserver(
       (entries) => {
-        // Solo actualizar si no estamos en un scroll programático
         if (isProgrammatic.current) return
 
         for (const entry of entries) {
           if (entry.isIntersecting) {
             const id = entry.target.getAttribute('id')
             if (id) {
-              const newHash = `#${id}`
-              if (window.location.hash !== newHash) {
-                window.history.replaceState(null, '', newHash || window.location.pathname)
+              const currentPath = window.location.pathname
+              const newUrl = `${currentPath}#${id}`
+              if (window.location.href !== window.location.origin + newUrl) {
+                window.history.replaceState(null, '', newUrl)
               }
             }
           }
         }
       },
       {
-        rootMargin: `-${offset}px 0px -40% 0px`,
-        threshold: threshold,
+        rootMargin: `-${offsetTop}px 0px -${offsetBottom}% 0px`,
+        threshold: 0,
       }
     )
 
     sections.forEach((section) => {
       observerRef.current?.observe(section)
     })
+  }, [sectionSelector, offsetTop, offsetBottom])
 
-    // Interceptar clicks en links con hash
+  useEffect(() => {
+    handleHashOnLoad()
+    initObserver()
+
+    // MutationObserver: auto-detect new sections added dynamically (AJAX, React, etc.)
+    if (typeof MutationObserver !== 'undefined') {
+      mutationRef.current = new MutationObserver(() => {
+        initObserver()
+      })
+
+      mutationRef.current.observe(document.body, {
+        childList: true,
+        subtree: true,
+      })
+    }
+
+    // Intercept hash link clicks for smooth scroll
     const handleClick = (e: MouseEvent) => {
       const target = (e.target as HTMLElement).closest('a[href^="#"]')
       if (target) {
@@ -85,7 +105,8 @@ export default function ScrollSpy({
           const el = document.getElementById(id)
           if (el) {
             isProgrammatic.current = true
-            window.history.replaceState(null, '', href)
+            const currentPath = window.location.pathname
+            window.history.replaceState(null, '', `${currentPath}#${id}`)
             el.scrollIntoView({ behavior: 'smooth', block: 'start' })
             setTimeout(() => { isProgrammatic.current = false }, 1000)
           }
@@ -97,10 +118,11 @@ export default function ScrollSpy({
 
     return () => {
       observerRef.current?.disconnect()
+      mutationRef.current?.disconnect()
       document.removeEventListener('click', handleClick)
     }
-  }, [sectionSelector, offset, threshold, handleHashOnLoad])
+  }, [pathname, handleHashOnLoad, initObserver])
 
-  // Este componente no renderiza nada visible
+  // This component renders nothing
   return null
 }

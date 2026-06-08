@@ -11,6 +11,12 @@ import { useMobileMenu } from '@/context/MobileMenuContext'
 
 const WHATSAPP_NUMBER = '51983554248'
 
+const TOOLTIP_MESSAGES = [
+  '¿Deseas agendar una cita?',
+  '¿Necesitas ayuda con tu reserva?',
+  '¡Hola! Estamos listos para ayudarte',
+]
+
 const services = [
   'Ecografía Ginecológica',
   'Ecografía Obstétrica',
@@ -61,6 +67,55 @@ export default function WhatsAppWidget() {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const { isMobileMenuOpen } = useMobileMenu()
 
+  // ═══ Tooltip: rotating messages + footer collision ═══
+  const [tooltipIndex, setTooltipIndex] = useState(0)
+  const [tooltipVisible, setTooltipVisible] = useState(false)
+  const [nearFooter, setNearFooter] = useState(false)
+  const rotationRef = useRef<NodeJS.Timeout | null>(null)
+  const showDelayRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Detect when user scrolls near the footer to hide tooltip
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY
+      const windowHeight = window.innerHeight
+      const docHeight = document.documentElement.scrollHeight
+      const distanceToBottom = docHeight - (scrollY + windowHeight)
+      // If within 200px of the bottom (footer area), hide tooltip
+      setNearFooter(distanceToBottom < 200)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Rotating tooltip messages: show after 5s, rotate every 4s
+  useEffect(() => {
+    if (isOpen || isMobileMenuOpen || nearFooter) {
+      setTooltipVisible(false)
+      if (rotationRef.current) clearInterval(rotationRef.current)
+      return
+    }
+
+    // Initial delay: 5 seconds
+    showDelayRef.current = setTimeout(() => {
+      setTooltipVisible(true)
+
+      // Start rotation every 4 seconds
+      rotationRef.current = setInterval(() => {
+        setTooltipVisible(false)
+        setTimeout(() => {
+          setTooltipIndex(prev => (prev + 1) % TOOLTIP_MESSAGES.length)
+          setTooltipVisible(true)
+        }, 400) // fade out duration
+      }, 4000)
+    }, 5000)
+
+    return () => {
+      if (showDelayRef.current) clearTimeout(showDelayRef.current)
+      if (rotationRef.current) clearInterval(rotationRef.current)
+    }
+  }, [isOpen, isMobileMenuOpen, nearFooter])
+
   // Auto-close WhatsApp widget when mobile menu opens
   useEffect(() => {
     if (isMobileMenuOpen && isOpen) {
@@ -88,7 +143,7 @@ export default function WhatsAppWidget() {
       timeoutRef.current = setTimeout(() => {
         setIsOpen(false)
         resetState()
-      }, 300000) // 5 minutes
+      }, 300000)
     }
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
@@ -141,7 +196,7 @@ export default function WhatsAppWidget() {
 
   return (
     <>
-      {/* Floating Button */}
+      {/* ═══ Floating Button + Rotating Tooltip ═══ */}
       <motion.div
         className="fixed bottom-6 right-6 z-[50] group-whatsapp"
         initial={{ scale: 0, opacity: 0 }}
@@ -162,24 +217,26 @@ export default function WhatsAppWidget() {
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
             </svg>
           </div>
-          {/* Tooltip */}
+          {/* Rotating Tooltip — hidden when popup open, near footer, or mobile menu */}
           <AnimatePresence>
-            {!isOpen && (
+            {!isOpen && tooltipVisible && !nearFooter && (
               <motion.div
+                key={`tooltip-${tooltipIndex}`}
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 10 }}
-                className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-marine text-white text-sm px-4 py-2 rounded-lg shadow-lg whitespace-nowrap"
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-marine text-white text-[13px] font-semibold px-4 py-2.5 rounded-full shadow-lg whitespace-nowrap pointer-events-none"
               >
-                ¿Agendar una cita?
-                <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-2 bg-marine rotate-45" />
+                {TOOLTIP_MESSAGES[tooltipIndex]}
+                <div className="absolute top-1/2 -right-1.5 -translate-y-1/2 w-3 h-3 bg-marine rotate-45 rounded-[1px]" />
               </motion.div>
             )}
           </AnimatePresence>
         </button>
       </motion.div>
 
-      {/* Widget Popup */}
+      {/* ═══ Widget Popup ═══ */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -283,13 +340,11 @@ export default function WhatsAppWidget() {
                         <ChevronRight className="w-5 h-5 text-marine" />
                       </button>
                     </div>
-                    {/* Day headers */}
                     <div className="grid grid-cols-7 gap-1">
                       {DAYS.map(d => (
                         <div key={d} className="text-center text-xs font-medium text-marine/40 py-1">{d}</div>
                       ))}
                     </div>
-                    {/* Day grid */}
                     <div className="grid grid-cols-7 gap-1">
                       {[...Array(firstDay)].map((_, i) => (
                         <div key={`empty-${i}`} />
