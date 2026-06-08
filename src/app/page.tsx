@@ -15,24 +15,28 @@ const services = [
     title: 'Ecografía Ginecológica',
     description: 'Diagnóstico por imagen de alta resolución para evaluación completa del aparato reproductor femenino.',
     href: '/servicios/ecografia-ginecologica',
+    image: '/ultrasound-service.jpg',
   },
   {
     icon: Baby,
     title: 'Ecografía Obstétrica',
     description: 'Control prenatal con tecnología 4D para monitorear el desarrollo de tu bebé en cada etapa.',
     href: '/servicios/ecografia-obstetrica',
+    image: '/service-eco-obs.jpg',
   },
   {
     icon: Shield,
     title: 'Colposcopía',
     description: 'Evaluación detallada del cuello uterino con equipos de última generación para detección precoz.',
     href: '/servicios/colposcopia',
+    image: '/biopsy-service.jpg',
   },
   {
     icon: Heart,
     title: 'Control Preventivo',
     description: 'Chequeos regulares y Papanicolau para la prevención y detección temprana de patologías.',
     href: '/servicios/control-preventivo',
+    image: '/service-control-prev.jpg',
   },
 ]
 
@@ -283,11 +287,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ SERVICES PREVIEW ═══ */}
-      <section className="py-20 lg:py-28 bg-muted" id="servicios">
+      {/* ═══ SERVICES PREVIEW — PREMIUM CARDS ═══ */}
+      <section className="py-16 lg:py-24 bg-gradient-to-b from-[#F0F7FD] to-white" id="servicios">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="text-center max-w-2xl mx-auto mb-10 lg:mb-14">
               <span className="text-cyan font-semibold text-sm uppercase tracking-wider">Nuestros Servicios</span>
               <h2 className="text-3xl sm:text-4xl font-bold text-marine mt-2">
                 Atención especializada para tu{' '}
@@ -299,34 +303,76 @@ export default function HomePage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Premium Cards Grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
             {services.map((service, i) => (
-              <ScrollReveal key={service.title} delay={i * 0.1}>
-                <Link href={service.href}>
-                  <Card className="group h-full border-0 shadow-lg shadow-marine/5 hover:shadow-xl hover:shadow-cyan/10 transition-all duration-500 overflow-hidden bg-white hover:-translate-y-1">
-                    <CardContent className="p-6 space-y-4">
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan/10 to-royal/10 flex items-center justify-center group-hover:from-cyan/20 group-hover:to-royal/20 transition-colors duration-300">
-                        <service.icon className="w-7 h-7 text-cyan" />
+              <ScrollReveal key={service.title} delay={i * 0.08}>
+                <Link href={service.href} className="block group">
+                  <article className="relative rounded-2xl overflow-hidden bg-white
+                    shadow-[0_4px_20px_rgba(0,32,96,0.08)]
+                    group-hover:shadow-[0_20px_40px_rgba(0,32,96,0.12)]
+                    group-hover:-translate-y-[6px]
+                    transition-all duration-300 ease-out
+                    h-full flex flex-col
+                  ">
+                    {/* Image Area */}
+                    <div className="relative h-40 sm:h-44 overflow-hidden">
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        fill
+                        className="object-cover
+                          group-hover:scale-105
+                          transition-transform duration-500 ease-out
+                        "
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      />
+                      {/* Gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-marine/70 via-marine/20 to-transparent" />
+                      
+                      {/* Icon badge — floats on image */}
+                      <div className="absolute top-3 left-3 w-11 h-11 rounded-xl bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md
+                        group-hover:bg-cyan group-hover:shadow-lg group-hover:shadow-cyan/30
+                        transition-all duration-300
+                      ">
+                        <service.icon className="w-5 h-5 text-cyan group-hover:text-white transition-colors duration-300" />
                       </div>
-                      <h3 className="text-lg font-bold text-marine group-hover:text-royal transition-colors">
-                        {service.title}
-                      </h3>
-                      <p className="text-marine/60 text-sm leading-relaxed">
+
+                      {/* Title on image */}
+                      <div className="absolute bottom-3 left-3 right-3">
+                        <h3 className="text-white font-bold text-base leading-tight drop-shadow-sm">
+                          {service.title}
+                        </h3>
+                      </div>
+                    </div>
+
+                    {/* Content Area — Compact */}
+                    <div className="p-4 flex-1 flex flex-col">
+                      <p className="text-marine/60 text-[13px] leading-relaxed flex-1">
                         {service.description}
                       </p>
-                      <div className="flex items-center text-cyan text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        Conocer más <ArrowRight className="w-4 h-4 ml-1" />
+                      
+                      {/* CTA — appears on hover */}
+                      <div className="mt-3 pt-3 border-t border-marine/5">
+                        <span className="inline-flex items-center gap-1.5 text-cyan text-sm font-semibold
+                          opacity-60 group-hover:opacity-100
+                          translate-x-0 group-hover:translate-x-1
+                          transition-all duration-300
+                        ">
+                          Conocer más
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </span>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </article>
                 </Link>
               </ScrollReveal>
             ))}
           </div>
 
-          <ScrollReveal className="text-center mt-12">
+          <ScrollReveal className="text-center mt-10 lg:mt-12">
             <MagneticButton href="/servicios" strength={0.15}>
-              <Button className="bg-marine hover:bg-royal text-white font-semibold rounded-full px-8 shadow-lg transition-all duration-300">
+              <Button className="bg-marine hover:bg-royal text-white font-semibold rounded-full px-8 shadow-lg shadow-marine/20 transition-all duration-300 hover:shadow-xl hover:shadow-marine/25">
                 Ver Todos los Servicios <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </MagneticButton>
