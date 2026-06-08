@@ -107,7 +107,7 @@ export default function Navbar() {
           ═══════════════════════════════════════════════════════ */}
       <header
         id="navbar-main"
-        className={`fixed top-0 left-0 right-0 z-[40] navbar-transition ${
+        className={`fixed top-0 left-0 w-full z-[40] navbar-transition ${
           mounted ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
         } ${
           scrolled

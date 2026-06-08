@@ -148,8 +148,9 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ═══ HERO SECTION ═══ */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden" id="inicio">
+      {/* ═══ HERO SECTION — FULL-BLEED 100% ═══ */}
+      <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden" id="inicio">
+        {/* BACKGROUND LAYER — Edge-to-edge image + gradient */}
         <div className="absolute inset-0 z-0">
           <Image src="/hero-mobile.png" alt="Nueva Vida" fill className="object-cover sm:hidden" priority quality={90} />
           <Image src="/hero-desktop.png" alt="Nueva Vida" fill className="object-cover hidden sm:block" priority quality={90} />
@@ -166,7 +167,8 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[70px] sm:pt-[78px] lg:pt-[80px] pb-20">
+        {/* CONTENT WRAPPER — Constrained to 1200px for readability */}
+        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 pt-[70px] sm:pt-[78px] lg:pt-[80px] pb-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="space-y-4">
