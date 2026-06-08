@@ -178,11 +178,24 @@ function buildWhatsAppURL(serviceName: string): string {
 function SubNavbar({ categories }: { categories: typeof categories }) {
   const [activeId, setActiveId] = useState(categories[0].id)
   const navRef = useRef<HTMLDivElement>(null)
-  const animatingRef = useRef(false)
-  const activeIdRef = useRef(categories[0].id)
+  const blockedRef = useRef(false)
 
-  // Keep ref in sync
-  useEffect(() => { activeIdRef.current = activeId }, [activeId])
+  // Scroll tab into view using ONLY horizontal scrollLeft (never touches page scroll)
+  const scrollTabIntoView = useCallback((catId: string) => {
+    const nav = navRef.current
+    if (!nav) return
+    const tab = nav.querySelector(`[data-cat="${catId}"]`) as HTMLElement | null
+    if (!tab) return
+    // Calculate if tab is outside visible area of nav
+    const navRect = nav.getBoundingClientRect()
+    const tabRect = tab.getBoundingClientRect()
+    const tabCenter = tabRect.left - navRect.left + tabRect.width / 2
+    const navCenter = navRect.width / 2
+    const diff = tabCenter - navCenter
+    if (Math.abs(diff) > 20) {
+      nav.scrollBy({ left: diff, behavior: 'smooth' })
+    }
+  }, [])
 
   useEffect(() => {
     const observers: IntersectionObserver[] = []
@@ -193,40 +206,40 @@ function SubNavbar({ categories }: { categories: typeof categories }) {
 
       const observer = new IntersectionObserver(
         ([entry]) => {
-          // If user clicked a tab, ignore scroll events for 850ms (anti-jitter)
-          if (animatingRef.current) return
+          // If user clicked a tab, observer sleeps for 1 second
+          if (blockedRef.current) return
 
           if (entry.isIntersecting) {
             setActiveId(cat.id)
-            const tab = navRef.current?.querySelector(`[data-cat="${cat.id}"]`)
-            tab?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+            scrollTabIntoView(cat.id)
           }
         },
-        { rootMargin: '-35% 0px -45% 0px', threshold: 0 }
+        { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
       )
       observer.observe(el)
       observers.push(observer)
     })
 
     return () => observers.forEach((o) => o.disconnect())
-  }, [categories])
+  }, [categories, scrollTabIntoView])
 
   const handleClick = useCallback((id: string) => {
     const el = document.getElementById(id)
     if (!el) return
 
-    // Immediately activate the clicked tab (no delay)
+    // Immediately activate the clicked tab
     setActiveId(id)
+    scrollTabIntoView(id)
 
-    // Debounce: block observer for 850ms to prevent jitter
-    animatingRef.current = true
-    setTimeout(() => { animatingRef.current = false }, 850)
+    // Block observer for 1 full second to prevent any scroll jitter
+    blockedRef.current = true
+    setTimeout(() => { blockedRef.current = false }, 1000)
 
-    // Smooth scroll with offset for both navbars
-    const offset = 140
+    // Smooth scroll to category with 150px offset
+    const offset = 150
     const top = el.getBoundingClientRect().top + window.scrollY - offset
     window.scrollTo({ top, behavior: 'smooth' })
-  }, [])
+  }, [scrollTabIntoView])
 
   return (
     <div className="sticky top-[56px] sm:top-[60px] lg:top-[64px] z-[35] bg-white/90 backdrop-blur-xl border-b border-marine/5 shadow-[0_2px_20px_rgba(0,32,96,0.04)]">
@@ -274,7 +287,7 @@ function CategoryBlock({
     <ScrollReveal>
       <div
         id={category.id}
-        className="py-16 lg:py-20 scroll-mt-[140px]"
+        className="py-16 lg:py-20 scroll-mt-[150px]"
         style={{ contentVisibility: 'auto' } as React.CSSProperties}
       >
         <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
