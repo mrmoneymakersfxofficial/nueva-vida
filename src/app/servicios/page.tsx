@@ -5,8 +5,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import {
   Baby, Shield, Heart, Scissors, ArrowRight, CheckCircle2,
-  Stethoscope, Clock, ChevronDown, ChevronRight,
-  Microscope, Syringe, Activity
+  Stethoscope, Clock, Calendar, Phone
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -18,6 +17,8 @@ import MagneticButton from '@/components/animations/MagneticButton'
 /* ═══════════════════════════════════════════════════════════════════
    DATA — 4 Categorías de Servicios Especializados
    ═══════════════════════════════════════════════════════════════════ */
+
+const WHATSAPP_BASE = 'https://wa.me/51983554248'
 
 const categories = [
   {
@@ -36,22 +37,27 @@ const categories = [
       {
         name: 'Ecografía Genética (Semanas 11 a 14)',
         description: 'Una ventana de detección temprana indispensable. Evaluamos marcadores clave en las primeras semanas para descartar riesgos cromosómicos tempranos, brindándote la paz mental que necesitas al inicio de tu embarazo.',
+        ctaLabel: 'Agendar esta Ecografía',
       },
       {
         name: 'Ecografía Morfológica (Semanas 18 a 24)',
-        description: 'El examen más detallado del desarrollo de tu bebé. Analizamos minuciosamente cada uno de sus órganos, su estructura ósea y su anatomía interna para confirmar que su crecimiento marcha de forma óptima.',
+        description: 'El examen más detallado del desarrollo de tu bebé. Analizamos minuciosamente cada uno de sus órganos, su estructura ósea y su anatomía interna para confirmar que su crecimiento marche de forma óptima.',
+        ctaLabel: 'Agendar esta Ecografía',
       },
       {
         name: 'Ecografía Obstétrica con Perfil Biofísico',
         description: 'Evaluamos el bienestar de tu bebé en tiempo real. Monitoreamos sus movimientos, su respiración, el tono muscular y el volumen del líquido amniótico para asegurarnos de que el entorno intrauterino sea completamente saludable.',
+        ctaLabel: 'Agendar esta Ecografía',
       },
       {
         name: 'Ecografía Doppler Avanzada',
         description: 'Vital para el control de embarazos de alta complejidad. Permite evaluar de manera precisa el flujo sanguíneo de la placenta hacia el bebé, garantizando una detección oportuna de cualquier alteración circulatoria.',
+        ctaLabel: 'Agendar Evaluación Doppler',
       },
       {
         name: 'Ecografías 3D, 4D y 5D (Hiperrealismo Emocional)',
         description: 'Mucho más que un diagnóstico, una experiencia familiar inolvidable. Gracias a la tecnología HD Live de última generación, podrás ver las facciones, gestos y movimientos en tiempo real de tu bebé con una nitidez e iluminación hiperrealista.',
+        ctaLabel: 'Agendar Ecografía 4D/5D',
       },
     ],
   },
@@ -71,18 +77,22 @@ const categories = [
       {
         name: 'Test de COBAS (Prueba Molecular de VPH)',
         description: 'La tecnología más avanzada del mundo para la prevención del cáncer de cuello uterino. A diferencia del Papanicolaou convencional, esta prueba de ADN detecta directamente el Virus del Papiloma Humano (VPH) de alto riesgo años antes de que pueda causar una lesión.',
+        ctaLabel: 'Agendar este Examen',
       },
       {
         name: 'Histerosonografía',
         description: 'Evaluación especializada y totalmente ambulatoria de la cavidad interna del útero mediante el uso combinado de ecografía y solución salina. Es una herramienta clave, rápida y cómoda para diagnosticar pólipos, miomas o investigar causas de infertilidad.',
+        ctaLabel: 'Agendar Procedimiento',
       },
       {
         name: 'Biopsia de Mama Dirigida por Ecografía',
         description: 'Ante la presencia de un nódulo mamario, ofrecemos la máxima certeza diagnóstica de forma mínimamente invasiva. Guiados por ecografía en tiempo real, extraemos una muestra milimétrica con total precisión, seguridad y mínimas molestias.',
+        ctaLabel: 'Solicitar Cita para Biopsia',
       },
       {
         name: 'Biopsia de Cérvix',
         description: 'Ante hallazgos anormales en tus chequeos, realizamos una toma de muestra dirigida y sumamente delicada del tejido del cuello uterino, permitiéndonos trazar el tratamiento preventivo correcto de manera inmediata.',
+        ctaLabel: 'Solicitar Cita para Biopsia',
       },
     ],
   },
@@ -90,7 +100,7 @@ const categories = [
     id: 'procedimientos-menores',
     label: 'Procedimientos Menores',
     shortLabel: 'Procedimientos',
-    icon: Syringe,
+    icon: Heart,
     color: '#00B0F0',
     title: 'Procedimientos Menores y Soluciones Ambulatorias',
     lead: 'Tratamientos rápidos y efectivos diseñados para aliviar molestias comunes, cuidando tu estética y devolviéndote el confort de inmediato.',
@@ -101,14 +111,17 @@ const categories = [
       {
         name: 'Exéresis de Fibroadenomas de Mama',
         description: 'Extracción quirúrgica programada de nódulos benignos en la mama. Realizamos técnicas cuidadosas y respetuosas con la anatomía femenina para garantizar resultados estéticos y una óptima cicatrización.',
+        ctaLabel: 'Consultar por este Procedimiento',
       },
       {
         name: 'Aspiración de Quistes Mamarios',
         description: 'Un procedimiento sencillo y resolutivo que se realiza directamente en el consultorio. Bajo guía ecográfica, aliviamos la presión y el dolor mamario causados por quistes líquidos de forma inmediata.',
+        ctaLabel: 'Agendar en Consultorio',
       },
       {
         name: 'Marsupialización de la Glándula de Bartholino',
         description: 'Solución definitiva y ambulatoria para la inflamación o quistes molestos en la zona íntima. Este procedimiento restablece el drenaje natural de la glándula, eliminando el dolor y devolviéndote tu calidad de vida.',
+        ctaLabel: 'Agendar Procedimiento',
       },
     ],
   },
@@ -128,30 +141,48 @@ const categories = [
       {
         name: 'Corrección de Incontinencia Urinaria de Esfuerzo',
         description: 'Recupera la libertad de reír, saltar y hacer ejercicio sin temores. Mediante procedimientos avanzados y el refuerzo del piso pélvico, devolvemos el soporte anatómico definitivo para que retomes tu rutina con total seguridad.',
+        ctaLabel: 'Agendar Evaluación Integral',
       },
       {
         name: 'Histerectomía (Abdominal y Vaginal)',
         description: 'Cuando la extracción del útero es la mejor alternativa para tu salud (por miomas o sangrados severos), evaluamos el abordaje más seguro para ti. Priorizamos la vía vaginal o mínimamente invasiva para asegurar menos dolor posoperatorio y un retorno más rápido a tus actividades.',
+        ctaLabel: 'Programar Consulta Quirúrgica',
       },
       {
         name: 'Cesárea Segura y Humanizada',
         description: 'El nacimiento de tu hijo en las manos más expertas. Combinamos el máximo rigor médico y de seguridad en quirófano con un enfoque respetuoso, fomentando el apego temprano y cuidando minuciosamente tu proceso de recuperación.',
+        ctaLabel: 'Agendar Cesárea',
       },
       {
         name: 'Ligadura de Trompas',
         description: 'Un procedimiento de planificación familiar definitivo realizado bajo estrictos estándares de seguridad, diseñado para aquellas mujeres que han decidido cerrar su etapa reproductiva con total convicción y tranquilidad.',
+        ctaLabel: 'Programar Consulta',
       },
     ],
   },
 ]
 
 /* ═══════════════════════════════════════════════════════════════════
-   SUB-NAVBAR — Sticky scroll-spy navigation
+   HELPERS
+   ═══════════════════════════════════════════════════════════════════ */
+
+function buildWhatsAppURL(serviceName: string): string {
+  const msg = `Hola Consultorio Nueva Vida, deseo solicitar información y agendar una cita para *${serviceName}*.`
+  return `${WHATSAPP_BASE}?text=${encodeURIComponent(msg)}`
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SUB-NAVBAR — Sticky scroll-spy navigation + DEBOUNCE anti-jitter
    ═══════════════════════════════════════════════════════════════════ */
 
 function SubNavbar({ categories }: { categories: typeof categories }) {
   const [activeId, setActiveId] = useState(categories[0].id)
   const navRef = useRef<HTMLDivElement>(null)
+  const animatingRef = useRef(false)
+  const activeIdRef = useRef(categories[0].id)
+
+  // Keep ref in sync
+  useEffect(() => { activeIdRef.current = activeId }, [activeId])
 
   useEffect(() => {
     const observers: IntersectionObserver[] = []
@@ -162,14 +193,16 @@ function SubNavbar({ categories }: { categories: typeof categories }) {
 
       const observer = new IntersectionObserver(
         ([entry]) => {
+          // If user clicked a tab, ignore scroll events for 850ms (anti-jitter)
+          if (animatingRef.current) return
+
           if (entry.isIntersecting) {
             setActiveId(cat.id)
-            // Scroll active tab into view horizontally on mobile
             const tab = navRef.current?.querySelector(`[data-cat="${cat.id}"]`)
             tab?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
           }
         },
-        { rootMargin: '-30% 0px -60% 0px', threshold: 0 }
+        { rootMargin: '-35% 0px -45% 0px', threshold: 0 }
       )
       observer.observe(el)
       observers.push(observer)
@@ -180,11 +213,19 @@ function SubNavbar({ categories }: { categories: typeof categories }) {
 
   const handleClick = useCallback((id: string) => {
     const el = document.getElementById(id)
-    if (el) {
-      const offset = 130 // navbar + sub-navbar height
-      const top = el.getBoundingClientRect().top + window.scrollY - offset
-      window.scrollTo({ top, behavior: 'smooth' })
-    }
+    if (!el) return
+
+    // Immediately activate the clicked tab (no delay)
+    setActiveId(id)
+
+    // Debounce: block observer for 850ms to prevent jitter
+    animatingRef.current = true
+    setTimeout(() => { animatingRef.current = false }, 850)
+
+    // Smooth scroll with offset for both navbars
+    const offset = 140
+    const top = el.getBoundingClientRect().top + window.scrollY - offset
+    window.scrollTo({ top, behavior: 'smooth' })
   }, [])
 
   return (
@@ -218,7 +259,7 @@ function SubNavbar({ categories }: { categories: typeof categories }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SERVICE CATEGORY BLOCK — Alternating image/text layout
+   SERVICE CATEGORY BLOCK — Alternating image/text layout + WhatsApp CTA
    ═══════════════════════════════════════════════════════════════════ */
 
 function CategoryBlock({
@@ -233,7 +274,8 @@ function CategoryBlock({
     <ScrollReveal>
       <div
         id={category.id}
-        className="py-16 lg:py-20 scroll-mt-[160px]"
+        className="py-16 lg:py-20 scroll-mt-[140px]"
+        style={{ contentVisibility: 'auto' } as React.CSSProperties}
       >
         <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Category Header */}
@@ -259,7 +301,7 @@ function CategoryBlock({
           </p>
 
           {/* Body: Image + Accordion List */}
-          <div className={`grid lg:grid-cols-5 gap-8 lg:gap-12 mt-8 ${!isEven ? 'lg:direction-rtl' : ''}`}>
+          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 mt-8">
             {/* Text / Accordion Side */}
             <div className={`lg:col-span-3 ${!isEven ? 'lg:order-2' : ''}`}>
               <Accordion type="single" collapsible className="space-y-3">
@@ -277,6 +319,19 @@ function CategoryBlock({
                     </AccordionTrigger>
                     <AccordionContent className="text-marine/60 text-sm sm:text-base leading-relaxed pb-4 pl-8 sm:pl-[52px]">
                       {service.description}
+
+                      {/* ═══ WhatsApp CTA — Service-Specific Booking ═══ */}
+                      <div className="mt-4 pt-4 border-t border-dashed border-marine/10 flex justify-start sm:justify-start">
+                        <a
+                          href={buildWhatsAppURL(service.name)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 bg-marine hover:bg-cyan text-white text-[13px] font-bold rounded-full px-5 py-2.5 shadow-[0_4px_12px_rgba(0,32,96,0.1)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_6px_15px_rgba(0,176,240,0.3)] w-full sm:w-auto justify-center"
+                        >
+                          <Calendar className="w-4 h-4 flex-shrink-0" />
+                          <span>{service.ctaLabel}</span>
+                        </a>
+                      </div>
                     </AccordionContent>
                   </AccordionItem>
                 ))}
@@ -366,25 +421,28 @@ export default function ServiciosPage() {
         </div>
       </section>
 
-      {/* ═══ CTA ═══ */}
-      <section id="reservar" className="py-16 lg:py-20 bg-white">
-        <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* ═══ CTA — Premium conversion section ═══ */}
+      <section id="reservar" className="py-16 lg:py-20 animated-gradient relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-10" />
+        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold text-marine">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
               ¿Necesitas orientación sobre algún servicio?
             </h2>
-            <p className="text-marine/60 mt-4 max-w-xl mx-auto">
+            <p className="text-white/80 mt-4 max-w-xl mx-auto text-lg">
               Nuestro equipo está disponible para resolver tus dudas y ayudarte a elegir el servicio adecuado para ti.
             </p>
             <div className="flex flex-wrap gap-4 justify-center mt-8">
               <MagneticButton href="/reservas" strength={0.2}>
-                <Button className="bg-cyan hover:bg-cyan-light text-white font-semibold rounded-full px-8 shadow-lg shadow-cyan/25 glow-cyan">
+                <Button className="bg-white text-marine hover:bg-white/90 font-semibold rounded-full px-8 shadow-2xl shadow-black/10 text-base">
+                  <Calendar className="w-5 h-5 mr-2" />
                   Agendar Cita
                 </Button>
               </MagneticButton>
-              <MagneticButton href="https://wa.me/51983554248" strength={0.15}>
-                <Button variant="outline" className="border-royal text-royal hover:bg-royal hover:text-white rounded-full px-8">
-                  Consultar por WhatsApp
+              <MagneticButton href="https://wa.me/51983554248?text=Hola%20Consultorio%20Nueva%20Vida%2C%20deseo%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20servicios." strength={0.15}>
+                <Button className="bg-cyan hover:bg-cyan-light text-white font-semibold rounded-full px-8 shadow-lg shadow-cyan/30 glow-cyan text-base">
+                  <Phone className="w-5 h-5 mr-2" />
+                  Escribir por WhatsApp
                 </Button>
               </MagneticButton>
             </div>
