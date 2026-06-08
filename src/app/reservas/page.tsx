@@ -91,6 +91,8 @@ export default function ReservasPage() {
               </Button>
             </div>
           </div>
+          {/* Section transition: dark → white */}
+          <div className="hero-fade-bottom" />
         </section>
       </>
     )
@@ -121,6 +123,8 @@ export default function ReservasPage() {
             </p>
           </motion.div>
         </div>
+        {/* Section transition: dark → white */}
+        <div className="hero-fade-bottom" />
       </section>
 
       {/* Booking Form */}

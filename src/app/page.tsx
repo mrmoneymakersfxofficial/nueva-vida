@@ -229,6 +229,8 @@ export default function HomePage() {
             <motion.div className="w-1.5 h-1.5 rounded-full bg-cyan" animate={{ y: [0, 16, 0] }} transition={{ duration: 2, repeat: Infinity }} />
           </div>
         </motion.div>
+        {/* Section transition: dark → white */}
+        <div className="hero-fade-bottom" />
       </section>
 
       {/* ═══ ABOUT SECTION ═══ */}
@@ -272,7 +274,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══ SERVICES PREVIEW — EXPANDED WITH SURGICAL ═══ */}
-      <section className="py-16 lg:py-24 bg-gradient-to-b from-[#F0F7FD] to-white" id="servicios">
+      <section className="section-transition-light py-16 lg:py-24 bg-gradient-to-b from-[#F0F7FD] to-white" id="servicios">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div className="text-center max-w-2xl mx-auto mb-10 lg:mb-14">
@@ -384,7 +386,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══ NUESTROS ESPECIALISTAS ═══ */}
-      <section className="py-20 lg:py-28 bg-gradient-to-b from-[#F0F7FD] to-white" id="especialistas">
+      <section className="section-transition-light py-20 lg:py-28 bg-gradient-to-b from-[#F0F7FD] to-white" id="especialistas">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
@@ -489,6 +491,8 @@ export default function HomePage() {
 
       {/* ═══ CTA SECTION ═══ */}
       <section className="py-20 lg:py-28 animated-gradient relative overflow-hidden" id="cta">
+        {/* Section transition: white → dark */}
+        <div className="cta-fade-top" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <ScrollReveal>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">¿Lista para cuidar de tu salud?</h2>
@@ -503,6 +507,8 @@ export default function HomePage() {
             </div>
           </ScrollReveal>
         </div>
+        {/* Section transition: dark → white */}
+        <div className="cta-fade-bottom" />
       </section>
 
       {/* ═══ DR. OCHOA LIGHTBOX ═══ */}

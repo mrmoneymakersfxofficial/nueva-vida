@@ -116,6 +116,8 @@ export default function SaludPage() {
             </p>
           </motion.div>
         </div>
+        {/* Section transition: dark → white */}
+        <div className="hero-fade-bottom" />
       </section>
 
       {/* Health Articles */}
@@ -156,7 +158,7 @@ export default function SaludPage() {
       </section>
 
       {/* FAQ Section */}
-      <section id="preguntas" className="py-20 lg:py-28 bg-muted">
+      <section id="preguntas" className="section-transition-muted py-20 lg:py-28 bg-muted">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div className="text-center mb-12">

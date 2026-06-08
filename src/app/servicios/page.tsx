@@ -413,6 +413,8 @@ export default function ServiciosPage() {
             </p>
           </motion.div>
         </div>
+        {/* Section transition: dark → white */}
+        <div className="hero-fade-bottom" />
       </section>
 
       {/* ═══ SUB-NAVBAR + CATEGORIES BODY ═══ */}
@@ -436,6 +438,8 @@ export default function ServiciosPage() {
 
       {/* ═══ CTA — Premium conversion section ═══ */}
       <section id="reservar" className="py-16 lg:py-20 animated-gradient relative overflow-hidden">
+        {/* Section transition: white → dark */}
+        <div className="cta-fade-top" />
         <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-10" />
         <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <ScrollReveal>
@@ -461,6 +465,8 @@ export default function ServiciosPage() {
             </div>
           </ScrollReveal>
         </div>
+        {/* Section transition: dark → white */}
+        <div className="cta-fade-bottom" />
       </section>
     </>
   )
