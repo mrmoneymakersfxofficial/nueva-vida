@@ -149,7 +149,7 @@ export default function HomePage() {
   return (
     <>
       {/* ═══ HERO SECTION — FULL-BLEED 100% ═══ */}
-      <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden" id="inicio">
+      <section className="relative w-full min-h-screen min-h-[100dvh] flex items-center overflow-hidden" id="inicio">
         {/* BACKGROUND LAYER — Edge-to-edge image + gradient */}
         <div className="absolute inset-0 z-0">
           <Image src="/hero-mobile.png" alt="Nueva Vida" fill className="object-cover sm:hidden" priority quality={90} />
