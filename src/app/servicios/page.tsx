@@ -465,8 +465,6 @@ export default function ServiciosPage() {
             </div>
           </ScrollReveal>
         </div>
-        {/* Section transition: dark → white */}
-        <div className="cta-fade-bottom" />
       </section>
     </>
   )

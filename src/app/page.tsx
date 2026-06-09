@@ -507,8 +507,6 @@ export default function HomePage() {
             </div>
           </ScrollReveal>
         </div>
-        {/* Section transition: dark → white */}
-        <div className="cta-fade-bottom" />
       </section>
 
       {/* ═══ DR. OCHOA LIGHTBOX ═══ */}

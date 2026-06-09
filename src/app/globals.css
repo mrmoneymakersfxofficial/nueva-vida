@@ -630,3 +630,46 @@ main, section {
   z-index: 2;
   pointer-events: none;
 }
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER — Diffusion无缝暗色过渡 + White Stripe Elimination
+   Elimina la franja blanca entre CTA y footer.
+   Difuminado continuo de ≈0.2cm entre tonos azules.
+   ═══════════════════════════════════════════════════════ */
+
+.main-web-footer {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 50px !important;
+}
+
+/* Diffusion gradient that extends upward into the section above */
+.footer-diffusion-top {
+  position: absolute !important;
+  top: -20px !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 40px !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 21, 61, 0) 0%,
+    rgba(0, 21, 61, 0.6) 50%,
+    #00153D 100%
+  ) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* ═══════════════════════════════════════════════════════
+   WHATSAPP WIDGET — Mobile Anti-Collision Fix
+   Eleva el widget en móviles para que no tape el texto
+   legal del footer.
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .group-whatsapp {
+    bottom: 35px !important;
+    right: 15px !important;
+  }
+}

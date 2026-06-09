@@ -21,14 +21,16 @@ const services = [
 
 export default function Footer() {
   return (
-    <footer className="bg-marine text-white relative overflow-hidden">
-      {/* Decorative top gradient */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan via-royal to-cyan" />
-      
-      {/* Decorative circles */}
-      <div className="absolute top-10 right-10 w-64 h-64 rounded-full bg-cyan/5 blur-3xl" />
-      <div className="absolute bottom-10 left-10 w-48 h-48 rounded-full bg-royal/10 blur-3xl" />
-      
+    <footer className="main-web-footer bg-[#00153D] text-white relative">
+      {/* Diffusion: seamless dark gradient from CTA above */}
+      <div className="footer-diffusion-top" />
+
+      {/* Decorative container (overflow-hidden keeps blurs contained) */}
+      <div className="relative overflow-hidden">
+        <div className="absolute top-10 right-10 w-64 h-64 rounded-full bg-cyan/5 blur-3xl" />
+        <div className="absolute bottom-10 left-10 w-48 h-48 rounded-full bg-royal/10 blur-3xl" />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
