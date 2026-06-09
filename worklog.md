@@ -34,3 +34,22 @@ Stage Summary:
 - Color palette correctly applied: Marine (navbar/text), Cyan (CTA/buttons), White (background)
 - Footer fastpagepro.com credit link verified as hard-coded and non-editable
 - WhatsApp integration working in booking form
+
+---
+Task ID: 1
+Agent: main
+Task: Fix WhatsApp CTA button visibility on animated gradient background
+
+Work Log:
+- Analyzed uploaded screenshot showing invisible WhatsApp button next to "Agendar Cita" on CTA section
+- Identified root cause: `text-white` + `border-white/30` on animated gradient that cycles through light colors (#00B0F0, #00D4FF) making white text invisible
+- Fixed `src/app/page.tsx` line 505: Changed WhatsApp button from outline (white text/border) to solid WhatsApp green (#25D366) background with white text, shadow glow effect
+- Fixed `src/app/servicios/[slug]/page.tsx` line 246: Same green WhatsApp button treatment for consistency on cyan-to-royal gradient card
+- Verified other WhatsApp buttons (servicios CTA uses bg-cyan, salud uses border-royal on white) are already readable
+- Build successful, pushed to GitHub for Vercel auto-deploy
+
+Stage Summary:
+- WhatsApp CTA buttons now use bg-[#25D366] (WhatsApp brand green) with white text — always visible on any background
+- Hover state: bg-[#1DA851] with enhanced shadow glow
+- Files changed: page.tsx, servicios/[slug]/page.tsx
+- Commit: 09d6cd8 pushed to main
