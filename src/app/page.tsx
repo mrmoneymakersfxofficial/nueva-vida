@@ -502,7 +502,7 @@ export default function HomePage() {
                 <Button size="lg" className="bg-white text-marine hover:bg-white/90 font-semibold rounded-full px-10 h-14 text-base shadow-2xl transition-all duration-300"><Calendar className="w-5 h-5 mr-2" />Agendar Cita Ahora</Button>
               </MagneticButton>
               <MagneticButton href="https://wa.me/51983554248?text=Hola%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita" strength={0.15}>
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 rounded-full px-8 h-14 text-base backdrop-blur-sm transition-all duration-300"><Phone className="w-5 h-5 mr-2" />WhatsApp</Button>
+                <Button size="lg" className="bg-[#25D366] hover:bg-[#1DA851] text-white font-semibold rounded-full px-8 h-14 text-base shadow-lg shadow-[#25D366]/30 transition-all duration-300 hover:shadow-xl hover:shadow-[#25D366]/40"><Phone className="w-5 h-5 mr-2" />WhatsApp</Button>
               </MagneticButton>
             </div>
           </ScrollReveal>
