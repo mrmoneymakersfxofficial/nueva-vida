@@ -514,12 +514,9 @@ export default function HomePage() {
           <ScrollReveal>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">¿Lista para cuidar de tu salud?</h2>
             <p className="text-white/80 mt-6 text-lg max-w-2xl mx-auto leading-relaxed">Agenda tu cita de manera rápida y sencilla. Nuestro equipo está listo para brindarte la atención que mereces.</p>
-            <div className="flex flex-wrap gap-4 justify-center mt-10">
+            <div className="mt-10">
               <MagneticButton href="/reservas" strength={0.2}>
                 <Button size="lg" className="bg-white text-marine hover:bg-white/90 font-semibold rounded-full px-10 h-14 text-base shadow-2xl transition-all duration-300"><Calendar className="w-5 h-5 mr-2" />Agendar Cita Ahora</Button>
-              </MagneticButton>
-              <MagneticButton href="https://wa.me/51983554248?text=Hola%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita" strength={0.15}>
-                <Button size="lg" className="bg-[#25D366] hover:bg-[#1DA851] text-white font-semibold rounded-full px-8 h-14 text-base shadow-lg shadow-[#25D366]/30 transition-all duration-300 hover:shadow-xl hover:shadow-[#25D366]/40"><Phone className="w-5 h-5 mr-2" />WhatsApp</Button>
               </MagneticButton>
             </div>
           </ScrollReveal>
