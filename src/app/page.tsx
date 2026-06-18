@@ -3,12 +3,11 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Phone, Calendar, Shield, Heart, Baby, Stethoscope, ArrowRight, Star, CheckCircle2, Eye, Scissors, Microscope, Syringe, Activity } from 'lucide-react'
+import { Phone, Calendar, Baby, Stethoscope, ArrowRight, Star, CheckCircle2, Eye, Scissors, Microscope, Syringe, Activity, ChevronDown, GraduationCap, Globe, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import ScrollReveal from '@/components/animations/ScrollReveal'
 import MagneticButton from '@/components/animations/MagneticButton'
-import DoctorLightbox from '@/components/ui/DoctorLightbox'
 
 /* ═══════════════════════════════════════════════════════════════════
    DATA — Services (expanded with surgical + new images)
@@ -58,48 +57,31 @@ const services = [
   },
 ]
 
-/* ═══════════════════════════════════════════════════════════════════
-   DATA — Doctors
-   ═══════════════════════════════════════════════════════════════════ */
-const doctors = [
+const mentorships = [
   {
-    name: 'Dr. Elías',
-    specialty: 'Ginecología y Obstetricia',
-    description: 'Especialista en diagnóstico por imagen y control prenatal con más de 10 años de experiencia en ecografía ginecológica de alta resolución.',
-    image: '/doctores/dr-elias-1.jpg',
-    image2: '/doctores/dr-elias-2.jpg',
-    banner: '/doctores/dr-elias-banner.jpeg',
+    title: 'Alta Especialización en Ginecología Funcional',
+    institution: 'Sociedad Argentina de Ginecología y Estética (SARGE)',
+    location: 'Buenos Aires, Argentina',
+    flag: '🇦🇷',
+    icon: Globe,
+    description: 'Certificación avanzada y entrenamiento médico en tecnologías aplicadas a la ginecología funcional, cursado bajo la tutela directa del Dr. Jorge Elías, referente e ícono de la medicina funcional en Sudamérica.',
   },
   {
-    name: 'Dr. Ochoa',
-    specialty: 'Cirugía Ginecológica',
-    description: 'Cirujano especialista en laparoscopía y procedimientos mínimamente invasivos. Reconocido por su precisión quirúrgica y altas tasas de éxito.',
-    image: '/doctores/dr-ochoa-1.jpg',
-    image2: '/doctores/dr-ochoa-2.jpg',
-    gallery: [
-      { src: '/dr-ochoa-gallery/dr-ochoa-quir1.jpg', alt: 'Dr. Ochoa en quirófano ginecológico - Vista principal' },
-      { src: '/dr-ochoa-gallery/dr-ochoa-quir2.jpg', alt: 'Precisión quirúrgica ginecológica - Dr. Ochoa' },
-      { src: '/dr-ochoa-gallery/dr-ochoa-quir3.jpg', alt: 'Equipamiento y tecnología en sala de operaciones' },
-      { src: '/dr-ochoa-gallery/dr-ochoa-quir4.jpg', alt: 'Equipo médico liderado por el Dr. Ochoa' },
-    ],
+    title: 'Cirugía Avanzada de Piso Pélvico',
+    institution: 'Fundación Universitaria de Ciencias de la Salud (FUCS)',
+    location: 'Cúcuta, Colombia',
+    flag: '🇨🇴',
+    icon: Activity,
+    description: 'Perfeccionamiento de técnicas quirúrgicas de vanguardia en prolapso genital, incontinencia urinaria y reparación sitio específica, entrenado por el Dr. Álvaro Ochoa, uno de los máximos expositores de piso pélvico en Colombia y Sudamérica.',
   },
   {
-    name: 'Dr. Zapata',
-    specialty: 'Ginecología General',
-    description: 'Médico especializado en prevención, detección temprana y tratamiento integral de patologías ginecológicas con enfoque humanista.',
-    image: '/doctores/dr-zapata-1.jpg',
-    image2: '/doctores/dr-zapata-2.jpg',
+    title: 'Medicina Fetal y Ecografía Compleja',
+    institution: 'Escuela de Ultrasonido ECO IMAGEN',
+    location: 'Lima, Perú',
+    flag: '🇵🇪',
+    icon: Baby,
+    description: 'Sólida preparación experta en neurosonografía, ecocardiografía fetal y Doppler avanzado para el manejo de embarazos de alto riesgo, estudios realizados junto al reconocido especialista Dr. Josué Zapata.',
   },
-]
-
-/* ═══════════════════════════════════════════════════════════════════
-   DATA — Dr. Ochoa Lightbox
-   ═══════════════════════════════════════════════════════════════════ */
-const drOchoaGalleryImages = [
-  { src: '/dr-ochoa-gallery/dr-ochoa-quir1.jpg', alt: 'Dr. Ochoa en quirófano ginecológico' },
-  { src: '/dr-ochoa-gallery/dr-ochoa-quir2.jpg', alt: 'Precisión quirúrgica del Dr. Ochoa' },
-  { src: '/dr-ochoa-gallery/dr-ochoa-quir3.jpg', alt: 'Tecnología de última generación en sala de operaciones' },
-  { src: '/dr-ochoa-gallery/dr-ochoa-quir4.jpg', alt: 'Equipo médico del Dr. Ochoa' },
 ]
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -144,7 +126,7 @@ const testimonials = [
 ]
 
 export default function HomePage() {
-  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [accordionOpen, setAccordionOpen] = useState(0)
 
   return (
     <>
@@ -206,17 +188,16 @@ export default function HomePage() {
               </motion.div>
             </div>
 
-            {/* Hero doctor card */}
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.4 }} className="hidden lg:flex justify-center">
               <div className="relative">
                 <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-cyan/20 to-royal/20 blur-2xl" />
                 <div className="relative rounded-3xl overflow-hidden glass p-1">
                   <div className="rounded-2xl overflow-hidden">
-                    <Image src="/doctores/dr-ochoa-1.jpg" alt="Dr. Ochoa - Cirujano Ginecológico" width={400} height={550} className="object-cover" />
+                    <Image src="/doctores/dr-elias-1.jpg" alt="Dr. Adolfo Herencia Barrios - Especialista en Ginecología y Obstetricia" width={400} height={550} className="object-cover" />
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-marine/90 to-transparent">
-                    <h3 className="text-white font-bold text-xl">Dr. Ochoa</h3>
-                    <p className="text-cyan-light text-sm">Cirugía Ginecológica Avanzada</p>
+                    <h3 className="text-white font-bold text-xl">Dr. Adolfo Herencia Barrios</h3>
+                    <p className="text-cyan-light text-sm">Ginecología y Obstetricia</p>
                   </div>
                 </div>
               </div>
@@ -273,6 +254,108 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══ NUESTRO ESPECIALISTA — Dr. Adolfo Herencia Barrios ═══ */}
+      <section className="py-20 lg:py-28 bg-white" id="nuestro-especialista">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-14 items-start">
+              <div className="relative">
+                <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-cyan/15 to-royal/15 blur-2xl" />
+                <div className="relative rounded-2xl overflow-hidden shadow-xl shadow-marine/10">
+                  <Image src="/doctores/dr-elias-1.jpg" alt="Dr. Adolfo Herencia Barrios" width={500} height={620} className="object-cover w-full h-auto" priority />
+                  <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-marine/90 via-marine/40 to-transparent">
+                    <span className="inline-flex items-center gap-2 bg-cyan/20 text-cyan-light text-xs font-bold px-4 py-1.5 rounded-full backdrop-blur-sm">
+                      <Stethoscope className="w-3.5 h-3.5" />+10 Años de Experiencia
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-5">
+                <div>
+                  <span className="text-cyan font-bold text-xs uppercase tracking-widest">Médico Especialista Principal</span>
+                  <h2 className="text-3xl sm:text-4xl font-bold text-marine mt-2 leading-tight">Dr. Adolfo Herencia Barrios</h2>
+                  <p className="text-royal font-semibold mt-3 text-base lg:text-lg leading-relaxed">Garantizando tu bienestar en cada etapa de la vida con medicina de vanguardia, precisión diagnóstica y calidez humana.</p>
+                </div>
+                <div className="bg-[#F8F9FA] rounded-xl border border-[#E9ECEF] overflow-hidden">
+                  <button onClick={() => setAccordionOpen(accordionOpen === 1 ? 0 : 1)} className="w-full flex items-center justify-between p-4 sm:p-5 text-left font-bold text-marine hover:bg-[#F0F4FA] transition-colors duration-200">
+                    <span className="text-sm sm:text-base">Presentación Profesional</span>
+                    <ChevronDown className={`w-5 h-5 text-cyan flex-shrink-0 ml-3 transition-transform duration-300 ${accordionOpen === 1 ? 'rotate-180' : ''}`} />
+                  </button>
+                  <AnimatePresence>
+                    {accordionOpen === 1 && (
+                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden">
+                        <div className="px-5 pb-5 text-marine/70 text-sm sm:text-[15px] leading-relaxed">Soy el Dr. Adolfo Herencia Barrios, médico gineco-obstetra comprometido firmemente con la salud integral y el bienestar de la mujer. Entiendo que acudir al ginecólogo es un acto de confianza absoluta; por ello, mi enfoque combina una atención empática y personalizada con el respaldo de más de una década de sólida experiencia clínica y quirúrgica en los principales centros hospitalarios de nuestra región. Mi práctica se distingue por una constante actualización científica a nivel internacional, orientada a ofrecer los tratamientos menos invasivos, más seguros y avanzados en la especialidad de ginecología y obstetricia.</div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+                <div className="bg-[#F8F9FA] rounded-xl border border-[#E9ECEF] overflow-hidden">
+                  <button onClick={() => setAccordionOpen(accordionOpen === 2 ? 0 : 2)} className="w-full flex items-center justify-between p-4 sm:p-5 text-left font-bold text-marine hover:bg-[#F0F4FA] transition-colors duration-200">
+                    <span className="text-sm sm:text-base">Pilares y Especialidades de Vanguardia</span>
+                    <ChevronDown className={`w-5 h-5 text-cyan flex-shrink-0 ml-3 transition-transform duration-300 ${accordionOpen === 2 ? 'rotate-180' : ''}`} />
+                  </button>
+                  <AnimatePresence>
+                    {accordionOpen === 2 && (
+                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden">
+                        <div className="px-5 pb-5 space-y-5">
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 rounded-lg bg-cyan/10 flex items-center justify-center flex-shrink-0"><Globe className="w-4 h-4 text-cyan" /></div>
+                              <h4 className="font-bold text-marine text-sm">Formación y Alta Especialización Internacional</h4>
+                            </div>
+                            <p className="text-marine/70 text-sm leading-relaxed pl-10">Con el propósito de traer la medicina del más alto nivel a mis pacientes, he complementado mi especialización con entrenamientos avanzados fuera de nuestras fronteras. Cuento con certificación en Buenos Aires, Argentina, por la <strong className="text-marine">Sociedad Argentina de Ginecología y Estética (SARGE)</strong>, especializándome en tecnologías aplicadas a la ginecología funcional; estudios de alta especialización realizados junto al <strong className="text-marine">Dr. Jorge Elías</strong> (referente de la medicina funcional en Argentina y Sudamérica). Asimismo, me capacité en la <strong className="text-marine">Fundación Universitaria de Ciencias de la Salud (FUCS)</strong> en Cúcuta, Colombia, perfeccionando técnicas avanzadas de cirugía ginecológica en prolapso genital, incontinencia urinaria de esfuerzo, reparación sitio específica e histerectomía sin prolapso, bajo la mentoría del <strong className="text-marine">Dr. Álvaro Ochoa</strong> (referente y uno de los máximos expositores de piso pélvico en Colombia y Sudamérica).</p>
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 rounded-lg bg-cyan/10 flex items-center justify-center flex-shrink-0"><Microscope className="w-4 h-4 text-cyan" /></div>
+                              <h4 className="font-bold text-marine text-sm">Histeroscopia Avanzada y Cirugía Mínimamente Invasiva</h4>
+                            </div>
+                            <p className="text-marine/70 text-sm leading-relaxed pl-10">Cuento con un riguroso entrenamiento intensivo de nivel avanzado (Hands-On) en histeroscopia tanto de consultorio (utilizando el reconocido equipo Bettocchi) como de quirófano con resectoscopio. Este enfoque de vanguardia me permite diagnosticar y tratar de forma directa patologías dentro del útero sin necesidad de recurrir a grandes cirugías abiertas, asegurando intervenciones rápidas, seguras y con una recuperación extraordinariamente cómoda para ti.</p>
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 rounded-lg bg-cyan/10 flex items-center justify-center flex-shrink-0"><Baby className="w-4 h-4 text-cyan" /></div>
+                              <h4 className="font-bold text-marine text-sm">Ecografía Obstétrica Compleja y Medicina Fetal</h4>
+                            </div>
+                            <p className="text-marine/70 text-sm leading-relaxed pl-10">El cuidado de una nueva vida exige la máxima exactitud diagnóstica. Poseo una sólida formación experta en ecografía morfológica avanzada del primer y segundo trimestre, ecografía Doppler avanzada, ecocardiografía y neurosonografía fetal, estudios realizados bajo la tutela del <strong className="text-marine">Dr. Josué Zapata</strong> (especialista en medicina fetal y estudios ecográficos de alta complejidad, en su escuela ECO IMAGEN). Esta preparación técnica, sumada a mi acreditación en Cirugía Obstétrica de Alta Complejidad por el <strong className="text-marine">Instituto Nacional Materno Perinatal (Maternidad de Lima)</strong>, me permite realizar un seguimiento minucioso y proteger la salud de la madre y del bebé, incluso en embarazos de alto riesgo.</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+                <div className="bg-[#F8F9FA] rounded-xl border border-[#E9ECEF] overflow-hidden">
+                  <button onClick={() => setAccordionOpen(accordionOpen === 3 ? 0 : 3)} className="w-full flex items-center justify-between p-4 sm:p-5 text-left font-bold text-marine hover:bg-[#F0F4FA] transition-colors duration-200">
+                    <span className="text-sm sm:text-base">Respaldo Académico (Garantía de Confianza)</span>
+                    <ChevronDown className={`w-5 h-5 text-cyan flex-shrink-0 ml-3 transition-transform duration-300 ${accordionOpen === 3 ? 'rotate-180' : ''}`} />
+                  </button>
+                  <AnimatePresence>
+                    {accordionOpen === 3 && (
+                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden">
+                        <div className="px-5 pb-5 space-y-2">
+                          <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-lg bg-cyan/10 flex items-center justify-center flex-shrink-0"><GraduationCap className="w-4 h-4 text-cyan" /></div>
+                            <h4 className="font-bold text-marine text-sm">Labor Docente Universitaria</h4>
+                          </div>
+                          <p className="text-marine/70 text-sm leading-relaxed pl-10">Comparto activamente mis conocimientos e investigo las últimas evidencias de la ciencia médica como Docente de la Facultad de Medicina Humana en la <strong className="text-marine">Universidad Privada San Juan Bautista</strong>, manteniéndome al día con las directrices de salud mundiales.</p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+                <div className="pt-3">
+                  <MagneticButton href="https://wa.me/51983554248?text=Hola%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita%20con%20el%20Dr.%20Adolfo" strength={0.15}>
+                    <Button className="bg-[#25D366] hover:bg-[#1DA851] text-white font-semibold rounded-full px-8 h-13 shadow-lg shadow-[#25D366]/30 transition-all duration-300 hover:shadow-xl hover:shadow-[#25D366]/40">
+                      <Calendar className="w-5 h-5 mr-2" />Agendar Cita con el Dr. Adolfo
+                    </Button>
+                  </MagneticButton>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* ═══ SERVICES PREVIEW — EXPANDED WITH SURGICAL ═══ */}
       <section className="section-transition-light py-16 lg:py-24 bg-gradient-to-b from-[#F0F7FD] to-white" id="servicios">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -323,106 +406,40 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ DR. OCHOA EXPERIENCE + LIGHTBOX ═══ */}
-      <section className="py-20 lg:py-28 bg-white" id="experiencia-clinica">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <ScrollReveal direction="left">
-              <div className="space-y-6">
-                <div>
-                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan/10 text-cyan text-xs font-bold uppercase tracking-wider">
-                    Compromiso y Rigor Médico
-                  </span>
-                </div>
-                <h2 className="text-3xl sm:text-4xl font-bold text-marine leading-tight">
-                  El Dr. Ochoa en Acción:{' '}
-                  <span className="gradient-text">Alta Cirugía Ginecológica</span>
-                </h2>
-                <p className="text-marine/70 text-lg leading-relaxed">
-                  La seguridad de nuestras pacientes es nuestra máxima prioridad. Conoce de cerca el entorno de alta tecnología y precisión quirúrgica liderado por el Dr. Ochoa en cada intervención ginecológica. Procedimientos mínimamente invasivos con resultados excepcionales.
-                </p>
-                <div className="grid grid-cols-2 gap-4">
-                  {['Cirugía Laparoscópica', 'Mínima Invasión', 'Alta Precisión', 'Recuperación Rápida'].map((item) => (
-                    <div key={item} className="flex items-center gap-2 text-marine/80 text-sm"><CheckCircle2 className="w-4 h-4 text-cyan flex-shrink-0" /><span>{item}</span></div>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-4 pt-2">
-                  <button
-                    onClick={() => setLightboxOpen(true)}
-                    className="inline-flex items-center gap-2 bg-marine hover:bg-royal text-white font-semibold rounded-full px-6 py-3 transition-colors duration-300"
-                  >
-                    <Eye className="w-4 h-4" />Ver galería de quirófano
-                  </button>
-                  <MagneticButton href="/reservas" strength={0.15}>
-                    <Button variant="outline" className="border-marine/20 text-marine hover:bg-marine hover:text-white rounded-full px-6 transition-all duration-300">Agendar Cita <ArrowRight className="w-4 h-4 ml-2" /></Button>
-                  </MagneticButton>
-                </div>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal direction="right" delay={0.15}>
-              <div
-                className="relative rounded-2xl overflow-hidden shadow-2xl shadow-marine/15 cursor-pointer group"
-                onClick={() => setLightboxOpen(true)}
-              >
-                <div className="relative h-[300px] sm:h-[380px]">
-                  <Image src={drOchoaGalleryImages[0].src} alt={drOchoaGalleryImages[0].alt} fill className="object-cover group-hover:scale-105 transition-transform duration-500" priority />
-                  <div className="absolute inset-0 bg-gradient-to-t from-marine/50 via-transparent to-transparent" />
-                </div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <div className="bg-white/90 backdrop-blur-sm rounded-xl px-4 py-3 flex items-center justify-between">
-                    <div>
-                      <p className="text-marine font-bold text-sm">Galería del Quirófano</p>
-                      <p className="text-marine/50 text-xs">{drOchoaGalleryImages.length} imágenes</p>
-                    </div>
-                    <div className="w-10 h-10 rounded-full bg-marine flex items-center justify-center">
-                      <Eye className="w-4 h-4 text-white" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ NUESTROS ESPECIALISTAS ═══ */}
-      <section className="section-transition-light py-20 lg:py-28 bg-gradient-to-b from-[#F0F7FD] to-white" id="especialistas">
+      {/* ═══ FORMACIÓN MÉDICA DE EXCELENCIA INTERNACIONAL ═══ */}
+      <section className="section-transition-light py-20 lg:py-28 bg-gradient-to-b from-[#F0F7FD] to-white" id="formacion-internacional">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
-              <span className="text-cyan font-semibold text-sm uppercase tracking-wider">Nuestros Especialistas</span>
+              <span className="text-cyan font-bold text-xs uppercase tracking-widest">Garantía de Confianza</span>
               <h2 className="text-3xl sm:text-4xl font-bold text-marine mt-2">
-                Equipo médico de{' '}<span className="gradient-text">excelencia</span>
+                Formación Médica de{' '}<span className="gradient-text">Excelencia Internacional</span>
               </h2>
-              <p className="text-marine/60 mt-4 text-lg">
-                Profesionales comprometidos con tu salud y bienestar, con formación especializada y experiencia comprobada.
+              <p className="text-marine/60 mt-4 text-base lg:text-lg leading-relaxed">
+                El Dr. Adolfo Herencia Barrios complementa su experiencia clínica mediante capacitaciones de alto nivel y mentorías directas con los máximos exponentes de la ginecología en Sudamérica.
               </p>
             </div>
           </ScrollReveal>
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-            {doctors.map((doc, i) => (
-              <ScrollReveal key={doc.name} delay={i * 0.1}>
-                <Card className="border-0 shadow-xl shadow-marine/8 bg-white overflow-hidden group hover:-translate-y-2 transition-all duration-300 h-full">
-                  <div className="relative h-56 overflow-hidden">
-                    <Image src={doc.image} alt={`Foto de perfil - ${doc.name}`} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" loading="lazy" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-marine/70 via-transparent to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-white font-bold text-xl">{doc.name}</h3>
-                      <p className="text-cyan-light text-sm font-medium">{doc.specialty}</p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {mentorships.map((m, i) => (
+              <ScrollReveal key={m.institution} delay={i * 0.1}>
+                <article className="bg-white rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(0,32,96,0.06)] border border-[#F0F2F5] group hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+                  <div className="relative h-40 bg-gradient-to-br from-marine to-royal flex items-center justify-center">
+                    <div className="absolute bottom-3 left-3">
+                      <span className="inline-flex items-center gap-1.5 bg-white/15 text-white text-[11px] font-bold px-3 py-1.5 rounded-full backdrop-blur-sm">
+                        <MapPin className="w-3 h-3" />{m.flag} {m.location}
+                      </span>
+                    </div>
+                    <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center">
+                      <m.icon className="w-8 h-8 text-cyan-light" />
                     </div>
                   </div>
-                  <CardContent className="p-5 space-y-3">
-                    <p className="text-marine/60 text-sm leading-relaxed">{doc.description}</p>
-                    {doc.gallery && (
-                      <button
-                        onClick={() => setLightboxOpen(true)}
-                        className="inline-flex items-center gap-1.5 text-cyan text-sm font-semibold hover:underline"
-                      >
-                        <Eye className="w-3.5 h-3.5" />Ver galería quirúrgica
-                      </button>
-                    )}
-                  </CardContent>
-                </Card>
+                  <div className="p-5 sm:p-6 flex flex-col flex-1">
+                    <h3 className="text-marine font-bold text-lg leading-tight">{m.title}</h3>
+                    <p className="text-cyan font-bold text-[13px] mt-1.5">{m.institution}</p>
+                    <p className="text-marine/60 text-[13.5px] leading-relaxed mt-3 flex-1">{m.description}</p>
+                  </div>
+                </article>
               </ScrollReveal>
             ))}
           </div>
@@ -508,9 +525,6 @@ export default function HomePage() {
           </ScrollReveal>
         </div>
       </section>
-
-      {/* ═══ DR. OCHOA LIGHTBOX ═══ */}
-      <DoctorLightbox images={drOchoaGalleryImages} isOpen={lightboxOpen} onClose={() => setLightboxOpen(false)} />
     </>
   )
 }

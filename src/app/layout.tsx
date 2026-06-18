@@ -4,7 +4,7 @@ import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-import WhatsAppWidget from '@/components/widgets/WhatsAppWidget'
+import MobileBottomNav from '@/components/layout/MobileBottomNav'
 import { MobileMenuProvider } from '@/context/MobileMenuContext'
 import GlobalScrollSpy from '@/components/animations/ScrollSpy'
 
@@ -66,7 +66,7 @@ export default function RootLayout({
             <Footer />
           </div>
           <Toaster />
-          <WhatsAppWidget />
+          <MobileBottomNav />
           <GlobalScrollSpy />
         </MobileMenuProvider>
       </body>

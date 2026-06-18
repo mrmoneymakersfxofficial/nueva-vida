@@ -663,13 +663,10 @@ main, section {
 }
 
 /* ═══════════════════════════════════════════════════════
-   WHATSAPP WIDGET — Mobile Anti-Collision Fix
-   Eleva el widget en móviles para que no tape el texto
-   legal del footer.
+   MOBILE BOTTOM NAV — Body padding so content isn't hidden
    ═══════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  .group-whatsapp {
-    bottom: 35px !important;
-    right: 15px !important;
+  main {
+    padding-bottom: 70px !important;
   }
 }
