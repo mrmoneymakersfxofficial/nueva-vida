@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import ScrollReveal from '@/components/animations/ScrollReveal'
 import MagneticButton from '@/components/animations/MagneticButton'
+import DoctorLightbox from '@/components/ui/DoctorLightbox'
 
 /* ═══════════════════════════════════════════════════════════════════
    DATA — Services (expanded with surgical + new images)
@@ -63,7 +64,8 @@ const mentorships = [
     institution: 'Sociedad Argentina de Ginecología y Estética (SARGE)',
     location: 'Buenos Aires, Argentina',
     flag: '🇦🇷',
-    icon: Globe,
+    image: '/doctores/dr-elias-1.jpg',
+    galleryImages: ['/doctores/dr-elias-1.jpg', '/doctores/dr-elias-2.jpg', '/doctores/dr-elias-banner.jpeg'],
     description: 'Certificación avanzada y entrenamiento médico en tecnologías aplicadas a la ginecología funcional, cursado bajo la tutela directa del Dr. Jorge Elías, referente e ícono de la medicina funcional en Sudamérica.',
   },
   {
@@ -71,7 +73,9 @@ const mentorships = [
     institution: 'Fundación Universitaria de Ciencias de la Salud (FUCS)',
     location: 'Cúcuta, Colombia',
     flag: '🇨🇴',
-    icon: Activity,
+    image: '/doctores/dr-ochoa-1.jpg',
+    galleryImages: ['/doctores/dr-ochoa-1.jpg', '/doctores/dr-ochoa-2.jpg', '/doctores/dr-ochoa-3.jpg'],
+    galleryLabel: 'Ver galería quirúrgica',
     description: 'Perfeccionamiento de técnicas quirúrgicas de vanguardia en prolapso genital, incontinencia urinaria y reparación sitio específica, entrenado por el Dr. Álvaro Ochoa, uno de los máximos expositores de piso pélvico en Colombia y Sudamérica.',
   },
   {
@@ -79,7 +83,8 @@ const mentorships = [
     institution: 'Escuela de Ultrasonido ECO IMAGEN',
     location: 'Lima, Perú',
     flag: '🇵🇪',
-    icon: Baby,
+    image: '/doctores/dr-zapata-1.jpg',
+    galleryImages: ['/doctores/dr-zapata-1.jpg', '/doctores/dr-zapata-2.jpg'],
     description: 'Sólida preparación experta en neurosonografía, ecocardiografía fetal y Doppler avanzado para el manejo de embarazos de alto riesgo, estudios realizados junto al reconocido especialista Dr. Josué Zapata.',
   },
 ]
@@ -127,6 +132,8 @@ const testimonials = [
 
 export default function HomePage() {
   const [accordionOpen, setAccordionOpen] = useState(0)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [lightboxImages, setLightboxImages] = useState<{ src: string; alt: string }[]>([])
 
   return (
     <>
@@ -424,20 +431,27 @@ export default function HomePage() {
             {mentorships.map((m, i) => (
               <ScrollReveal key={m.institution} delay={i * 0.1}>
                 <article className="bg-white rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(0,32,96,0.06)] border border-[#F0F2F5] group hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
-                  <div className="relative h-40 bg-gradient-to-br from-marine to-royal flex items-center justify-center">
+                  <div className="relative h-48 overflow-hidden">
+                    <Image src={m.image} alt={m.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" loading="lazy" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-marine/50 via-transparent to-transparent" />
                     <div className="absolute bottom-3 left-3">
-                      <span className="inline-flex items-center gap-1.5 bg-white/15 text-white text-[11px] font-bold px-3 py-1.5 rounded-full backdrop-blur-sm">
-                        <MapPin className="w-3 h-3" />{m.flag} {m.location}
+                      <span className="inline-flex items-center gap-1.5 bg-white/90 text-marine text-[11px] font-bold px-3 py-1.5 rounded-full backdrop-blur-sm shadow-sm">
+                        <MapPin className="w-3 h-3 text-cyan" />{m.flag} {m.location}
                       </span>
-                    </div>
-                    <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center">
-                      <m.icon className="w-8 h-8 text-cyan-light" />
                     </div>
                   </div>
                   <div className="p-5 sm:p-6 flex flex-col flex-1">
                     <h3 className="text-marine font-bold text-lg leading-tight">{m.title}</h3>
                     <p className="text-cyan font-bold text-[13px] mt-1.5">{m.institution}</p>
                     <p className="text-marine/60 text-[13.5px] leading-relaxed mt-3 flex-1">{m.description}</p>
+                    {m.galleryImages && (
+                      <button
+                        onClick={() => { setLightboxImages(m.galleryImages!.map((src) => ({ src, alt: m.title }))); setLightboxOpen(true) }}
+                        className="mt-4 inline-flex items-center gap-1.5 text-cyan text-sm font-semibold hover:text-royal transition-colors duration-200"
+                      >
+                        <Eye className="w-4 h-4" />{m.galleryLabel || 'Ver galería'}
+                      </button>
+                    )}
                   </div>
                 </article>
               </ScrollReveal>
@@ -522,6 +536,13 @@ export default function HomePage() {
           </ScrollReveal>
         </div>
       </section>
+
+      {/* ═══ LIGHTBOX — Mentorship Gallery ═══ */}
+      <DoctorLightbox
+        images={lightboxImages}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
     </>
   )
 }
