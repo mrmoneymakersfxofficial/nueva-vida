@@ -141,8 +141,8 @@ export default function HomePage() {
       <section className="relative w-full min-h-screen min-h-[100dvh] flex items-center overflow-hidden" id="inicio">
         {/* BACKGROUND LAYER — Edge-to-edge image + gradient */}
         <div className="absolute inset-0 z-0">
-          <Image src="/hero-mobile.png" alt="Nueva Vida" fill className="object-cover sm:hidden" priority quality={90} />
-          <Image src="/hero-desktop.png" alt="Nueva Vida" fill className="object-cover hidden sm:block" priority quality={90} />
+          <Image src="/hero-mobile.webp" alt="Nueva Vida" fill className="object-cover sm:hidden" priority quality={90} />
+          <Image src="/hero-desktop.webp" alt="Nueva Vida" fill className="object-cover hidden sm:block" priority quality={90} />
           <div className="absolute inset-0 bg-gradient-to-r from-marine/90 via-marine/70 to-royal/50" />
         </div>
 
@@ -200,7 +200,7 @@ export default function HomePage() {
                 <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-cyan/20 to-royal/20 blur-2xl" />
                 <div className="relative rounded-3xl overflow-hidden glass p-1">
                   <div className="rounded-2xl overflow-hidden">
-                    <Image src="/doctores/dr-elias-1.jpg" alt="Dr. Adolfo Herencia Barrios - Especialista en Ginecología y Obstetricia" width={400} height={550} className="object-cover" />
+                    <Image src="/doctores/dr-adolfo.webp" alt="Dr. Adolfo Herencia Barrios - Especialista en Ginecología y Obstetricia" width={400} height={550} className="object-cover" />
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-marine/90 to-transparent">
                     <h3 className="text-white font-bold text-xl">Dr. Adolfo Herencia Barrios</h3>
@@ -269,7 +269,7 @@ export default function HomePage() {
               <div className="relative">
                 <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-cyan/15 to-royal/15 blur-2xl" />
                 <div className="relative rounded-2xl overflow-hidden shadow-xl shadow-marine/10">
-                  <Image src="/doctores/dr-elias-1.jpg" alt="Dr. Adolfo Herencia Barrios" width={500} height={620} className="object-cover w-full h-auto" priority />
+                  <Image src="/doctores/dr-adolfo.webp" alt="Dr. Adolfo Herencia Barrios" width={500} height={620} className="object-cover w-full h-auto" priority />
                   <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-marine/90 via-marine/40 to-transparent">
                     <span className="inline-flex items-center gap-2 bg-cyan/20 text-cyan-light text-xs font-bold px-4 py-1.5 rounded-full backdrop-blur-sm">
                       <Stethoscope className="w-3.5 h-3.5" />+10 Años de Experiencia
