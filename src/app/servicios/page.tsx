@@ -5,8 +5,9 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import {
   Baby, Shield, Heart, Scissors, ArrowRight, CheckCircle2,
-  Stethoscope, Clock, Calendar, Phone
+  Stethoscope, Clock, Calendar, Phone, Eye, Maximize2
 } from 'lucide-react'
+import DoctorLightbox from '@/components/ui/DoctorLightbox'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -30,8 +31,9 @@ const categories = [
     title: 'Unidad de Ecografía de Alta Precisión y Medicina Fetal',
     lead: 'Monitoreamos el milagro de la vida con la máxima rigurosidad científica y tecnología de última generación para darte total tranquilidad.',
     images: [
-      { src: '/ultrasound-service.jpg', alt: 'Ecografía ginecológica de alta resolución' },
-      { src: '/service-eco-obs.jpg', alt: 'Ecografía obstétrica 4D' },
+      { src: '/servicios/eco-fetal-1.webp', alt: 'Ecografía 2D de alta precisión — Consultorio Nueva Vida' },
+      { src: '/servicios/eco-fetal-2.webp', alt: 'Ecografía obstétrica 2D — Evaluación fetal a las 14 semanas' },
+      { src: '/servicios/eco-fetal-3.webp', alt: 'Ecografía 3D/4D — Hiperrealismo fetal' },
     ],
     services: [
       {
@@ -283,6 +285,9 @@ function CategoryBlock({
   index: number
 }) {
   const isEven = index % 2 === 0
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [lightboxImages, setLightboxImages] = useState<{ src: string; alt: string }[]>([])
+  const [lightboxStartIndex, setLightboxStartIndex] = useState(0)
   return (
     <ScrollReveal>
       <div
@@ -351,13 +356,18 @@ function CategoryBlock({
               </Accordion>
             </div>
 
-            {/* Image Side */}
+            {/* Image Side — with Lightbox */}
             <div className={`lg:col-span-2 ${!isEven ? 'lg:order-1' : ''}`}>
               <div className="space-y-4">
                 {category.images.map((img, i) => (
                   <div
                     key={i}
-                    className="relative rounded-2xl overflow-hidden shadow-xl shadow-marine/10 group"
+                    className="relative rounded-2xl overflow-hidden shadow-xl shadow-marine/10 group cursor-pointer"
+                    onClick={() => {
+                      setLightboxImages(category.images.map((im) => ({ src: im.src, alt: im.alt })))
+                      setLightboxStartIndex(i)
+                      setLightboxOpen(true)
+                    }}
                   >
                     <div className="relative h-[220px] sm:h-[260px]">
                       <Image
@@ -369,13 +379,33 @@ function CategoryBlock({
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-marine/40 via-transparent to-transparent" />
+                      {/* Hover overlay with expand icon */}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/0 group-hover:bg-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg">
+                          <Maximize2 className="w-5 h-5 sm:w-6 sm:h-6 text-marine" />
+                        </div>
+                      </div>
                     </div>
-                    <div className="absolute bottom-3 left-3 right-3">
-                      <p className="text-white text-xs sm:text-sm font-medium drop-shadow-sm">{img.alt}</p>
+                    <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-2">
+                      <p className="text-white text-xs sm:text-sm font-medium drop-shadow-sm flex-1">{img.alt}</p>
+                      {category.images.length > 1 && (
+                        <span className="flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-full">
+                          <Eye className="w-3 h-3" />{i + 1}/{category.images.length}
+                        </span>
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
+              {/* Lightbox */}
+              {category.images.length > 1 && (
+                <DoctorLightbox
+                  images={lightboxImages}
+                  isOpen={lightboxOpen}
+                  onClose={() => setLightboxOpen(false)}
+                  startIndex={lightboxStartIndex}
+                />
+              )}
             </div>
           </div>
         </div>

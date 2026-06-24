@@ -12,15 +12,16 @@ interface DoctorLightboxProps {
   images: LightboxImage[]
   isOpen: boolean
   onClose: () => void
+  startIndex?: number
 }
 
-export default function DoctorLightbox({ images, isOpen, onClose }: DoctorLightboxProps) {
+export default function DoctorLightbox({ images, isOpen, onClose, startIndex = 0 }: DoctorLightboxProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   // Reset index when lightbox opens
   useEffect(() => {
-    if (isOpen) setCurrentIndex(0)
-  }, [isOpen])
+    if (isOpen) setCurrentIndex(startIndex)
+  }, [isOpen, startIndex])
 
   // Lock body scroll when open
   useEffect(() => {
