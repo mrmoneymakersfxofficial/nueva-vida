@@ -31,7 +31,7 @@ export default function Footer() {
         <div className="absolute bottom-10 left-10 w-48 h-48 rounded-full bg-royal/10 blur-3xl" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-24 sm:pt-16 sm:pb-16 lg:py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="space-y-4">
@@ -113,14 +113,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <Separator className="my-8 bg-white/10" />
+        <Separator className="my-6 sm:my-8 bg-white/10" />
 
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
-          <p className="text-white/50 text-center sm:text-left">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+          <p className="text-white/80 text-xs sm:text-sm text-center sm:text-left leading-relaxed">
             © {new Date().getFullYear()} Nueva Vida - Consultorio Ginecológico. Todos los derechos reservados.
           </p>
-          <p className="text-white/50 text-center sm:text-right">
+          <p className="text-white/80 text-xs sm:text-sm text-center sm:text-right leading-relaxed">
             Diseño y desarrollo por{' '}
             <a 
               href="https://www.fastpagepro.com" 
