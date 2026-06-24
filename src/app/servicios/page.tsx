@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import {
   Baby, Shield, Heart, Scissors, ArrowRight, CheckCircle2,
-  Stethoscope, Clock, Calendar, Phone, Eye, Maximize2
+  Stethoscope, Clock, Calendar, Phone, Eye, Maximize2, Images
 } from 'lucide-react'
 import DoctorLightbox from '@/components/ui/DoctorLightbox'
 import { Button } from '@/components/ui/button'
@@ -356,46 +356,102 @@ function CategoryBlock({
               </Accordion>
             </div>
 
-            {/* Image Side — with Lightbox */}
+            {/* Image Side — Premium Gallery with Lightbox */}
             <div className={`lg:col-span-2 ${!isEven ? 'lg:order-1' : ''}`}>
-              <div className="space-y-4">
-                {category.images.map((img, i) => (
-                  <div
-                    key={i}
-                    className="relative rounded-2xl overflow-hidden shadow-xl shadow-marine/10 group cursor-pointer"
-                    onClick={() => {
-                      setLightboxImages(category.images.map((im) => ({ src: im.src, alt: im.alt })))
-                      setLightboxStartIndex(i)
-                      setLightboxOpen(true)
-                    }}
-                  >
-                    <div className="relative h-[220px] sm:h-[260px]">
-                      <Image
-                        src={img.src}
-                        alt={img.alt}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-marine/40 via-transparent to-transparent" />
-                      {/* Hover overlay with expand icon */}
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/0 group-hover:bg-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg">
-                          <Maximize2 className="w-5 h-5 sm:w-6 sm:h-6 text-marine" />
-                        </div>
+              <div className="space-y-3">
+                {/* ── Featured Image (first) ── */}
+                <div
+                  className="relative rounded-2xl overflow-hidden shadow-lg shadow-marine/8 group cursor-pointer"
+                  onClick={() => {
+                    setLightboxImages(category.images.map((im) => ({ src: im.src, alt: im.alt })))
+                    setLightboxStartIndex(0)
+                    setLightboxOpen(true)
+                  }}
+                >
+                  <div className="relative h-[200px] sm:h-[240px] lg:h-[280px]">
+                    <Image
+                      src={category.images[0].src}
+                      alt={category.images[0].alt}
+                      fill
+                      className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                      loading="lazy"
+                    />
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
+                    {/* Hover expand icon */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-500 flex items-center justify-center">
+                      <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-white/0 group-hover:bg-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 shadow-2xl">
+                        <Maximize2 className="w-5 h-5 sm:w-6 sm:h-6 text-marine" />
                       </div>
                     </div>
-                    <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-2">
-                      <p className="text-white text-xs sm:text-sm font-medium drop-shadow-sm flex-1">{img.alt}</p>
-                      {category.images.length > 1 && (
-                        <span className="flex items-center gap-1 bg-white/20 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-full">
-                          <Eye className="w-3 h-3" />{i + 1}/{category.images.length}
-                        </span>
-                      )}
-                    </div>
                   </div>
-                ))}
+                  {/* Caption + counter */}
+                  <div className="absolute bottom-0 left-0 right-0 px-4 pb-4 pt-12">
+                    <p className="text-white text-[13px] sm:text-sm font-medium leading-snug drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]">{category.images[0].alt}</p>
+                    {category.images.length > 1 && (
+                      <span className="mt-1.5 inline-flex items-center gap-1 bg-white/15 backdrop-blur-md text-white text-[11px] font-bold px-2.5 py-[3px] rounded-full border border-white/10">
+                        <Eye className="w-3 h-3" />1 / {category.images.length}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* ── Thumbnail Grid (2nd+ images) ── */}
+                {category.images.length > 1 && (
+                  <div className="grid grid-cols-2 gap-3">
+                    {category.images.slice(1).map((img, i) => (
+                      <div
+                        key={i + 1}
+                        className="relative rounded-xl overflow-hidden shadow-md shadow-marine/6 group cursor-pointer"
+                        onClick={() => {
+                          setLightboxImages(category.images.map((im) => ({ src: im.src, alt: im.alt })))
+                          setLightboxStartIndex(i + 1)
+                          setLightboxOpen(true)
+                        }}
+                      >
+                        <div className="relative h-[120px] sm:h-[140px] lg:h-[160px]">
+                          <Image
+                            src={img.src}
+                            alt={img.alt}
+                            fill
+                            className="object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+                            sizes="(max-width: 640px) 50vw, 20vw"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-500 flex items-center justify-center">
+                            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/0 group-hover:bg-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 shadow-xl">
+                              <Maximize2 className="w-4 h-4 sm:w-5 sm:h-5 text-marine" />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="absolute bottom-0 left-0 right-0 px-3 pb-3 pt-8">
+                          <p className="text-white text-[11px] sm:text-xs font-medium leading-snug drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)] line-clamp-2">{img.alt}</p>
+                          <span className="mt-1 inline-flex items-center gap-1 bg-white/15 backdrop-blur-md text-white text-[10px] font-bold px-2 py-[2px] rounded-full border border-white/10">
+                            {i + 2} / {category.images.length}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* ── Ver Galería Link ── */}
+                {category.images.length > 1 && (
+                  <button
+                    onClick={() => {
+                      setLightboxImages(category.images.map((im) => ({ src: im.src, alt: im.alt })))
+                      setLightboxStartIndex(0)
+                      setLightboxOpen(true)
+                    }}
+                    className="group/link w-full flex items-center justify-center gap-2 py-3 rounded-xl text-cyan text-sm font-semibold hover:text-marine transition-colors duration-300"
+                  >
+                    <Images className="w-4 h-4" />
+                    <span>Ver galería completa</span>
+                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform duration-300" />
+                  </button>
+                )}
               </div>
               {/* Lightbox */}
               {category.images.length > 1 && (
