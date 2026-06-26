@@ -199,7 +199,7 @@ export default function SaludPage() {
               No dudes en contactarnos. Estamos aquí para orientarte y brindarte la información que necesitas.
             </p>
             <div className="flex flex-wrap gap-4 justify-center mt-8">
-              <MagneticButton href="/reservas" strength={0.2}>
+              <MagneticButton href="/reservas#hero" strength={0.2}>
                 <Button className="bg-cyan hover:bg-cyan-light text-white font-semibold rounded-full px-8 shadow-lg shadow-cyan/25 glow-cyan">
                   Agendar Consulta
                 </Button>

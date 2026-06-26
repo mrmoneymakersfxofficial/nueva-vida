@@ -536,7 +536,7 @@ export default function ServiciosPage() {
               Nuestro equipo está disponible para resolver tus dudas y ayudarte a elegir el servicio adecuado para ti.
             </p>
             <div className="flex flex-wrap gap-4 justify-center mt-8">
-              <MagneticButton href="/reservas" strength={0.2}>
+              <MagneticButton href="/reservas#hero" strength={0.2}>
                 <Button className="bg-white text-marine hover:bg-white/90 font-semibold rounded-full px-8 shadow-2xl shadow-black/10 text-base">
                   <Calendar className="w-5 h-5 mr-2" />
                   Agendar Cita

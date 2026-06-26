@@ -15,7 +15,7 @@ export default function MobileBottomNav() {
         <div className="flex items-center justify-around h-16 px-2">
           {/* Agendar Cita */}
           <a
-            href="/reservas"
+            href="/reservas#hero"
             className="flex flex-col items-center justify-center gap-1 flex-1 py-1 text-marine/60 active:text-cyan transition-colors duration-200"
           >
             <Calendar className="w-5 h-5" />

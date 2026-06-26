@@ -28,9 +28,8 @@ const services = [
 ]
 
 const timeSlots = [
-  '08:00 AM', '08:30 AM', '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM',
-  '11:00 AM', '11:30 AM', '12:00 PM', '01:00 PM', '01:30 PM', '02:00 PM',
-  '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM',
+  '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM',
+  '6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM',
 ]
 
 const DAYS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
@@ -57,7 +56,6 @@ export default function WhatsAppWidget() {
   const [submitted, setSubmitted] = useState(false)
   const [formData, setFormData] = useState({
     nombre: '',
-    telefono: '',
     servicio: '',
     fecha: null as Date | null,
     hora: '',
@@ -126,7 +124,7 @@ export default function WhatsAppWidget() {
 
   const resetState = useCallback(() => {
     setStep('form')
-    setFormData({ nombre: '', telefono: '', servicio: '', fecha: null, hora: '' })
+    setFormData({ nombre: '', servicio: '', fecha: null, hora: '' })
     setSelectedDate(null)
     setSubmitted(false)
   }, [])
@@ -171,13 +169,12 @@ export default function WhatsAppWidget() {
   }
 
   const generateWhatsAppUrl = () => {
-    const msg = `Hola Consultorio Nueva Vida, acabo de pre-agendar una cita médica a través de la web. Aquí mis datos:\n\n` +
+    const msg = `Hola Consultorio Nueva Vida, deseo agendar una cita médica:\n\n` +
       `• Nombre: ${formData.nombre}\n` +
-      `• Teléfono: ${formData.telefono}\n` +
       `• Especialidad: ${formData.servicio}\n` +
       `• Fecha: ${formData.fecha ? formatDate(formData.fecha) : 'No seleccionada'}\n` +
       `• Hora: ${formData.hora}\n\n` +
-      `Quedo a la espera de su confirmación final. ¡Gracias!`
+      `Quedo a la espera de su confirmación. ¡Gracias!`
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`
   }
 
@@ -294,18 +291,6 @@ export default function WhatsAppWidget() {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-marine/80 text-xs font-medium">Teléfono *</Label>
-                      <div className="relative">
-                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-marine/40" />
-                        <Input
-                          placeholder="+51 983 554 248"
-                          value={formData.telefono}
-                          onChange={(e) => setFormData(prev => ({ ...prev, telefono: e.target.value }))}
-                          className="pl-10 rounded-xl border-marine/10 focus:border-cyan text-sm"
-                        />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
                       <Label className="text-marine/80 text-xs font-medium">Servicio *</Label>
                       <div className="relative">
                         <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-marine/40" />
@@ -321,7 +306,7 @@ export default function WhatsAppWidget() {
                     </div>
                     <Button
                       onClick={() => setStep('calendar')}
-                      disabled={!formData.nombre || !formData.telefono || !formData.servicio}
+                      disabled={!formData.nombre || !formData.servicio}
                       className="w-full bg-[#25D366] hover:bg-[#20BD5A] text-white font-semibold rounded-xl py-2.5 disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       <Calendar className="w-4 h-4 mr-2" /> Elegir fecha y hora
@@ -434,10 +419,6 @@ export default function WhatsAppWidget() {
                       <div className="flex justify-between items-center">
                         <span className="text-marine/60 flex items-center gap-2"><User className="w-3.5 h-3.5" /> Nombre:</span>
                         <span className="font-medium text-marine">{formData.nombre}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-marine/60 flex items-center gap-2"><Phone className="w-3.5 h-3.5" /> Teléfono:</span>
-                        <span className="font-medium text-marine">{formData.telefono}</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-marine/60 flex items-center gap-2"><MessageSquare className="w-3.5 h-3.5" /> Servicio:</span>

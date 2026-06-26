@@ -7,7 +7,7 @@ const quickLinks = [
   { href: '/', label: 'Inicio' },
   { href: '/servicios', label: 'Servicios' },
   { href: '/salud', label: 'Portal de Salud' },
-  { href: '/reservas', label: 'Agendar Cita' },
+  { href: '/reservas#hero', label: 'Agendar Cita' },
 ]
 
 const services = [
@@ -105,8 +105,7 @@ export default function Footer() {
               <li className="flex items-start gap-3 text-sm text-white/70">
                 <Clock className="w-4 h-4 text-cyan mt-0.5 flex-shrink-0" />
                 <div>
-                  <p>Lun - Vie: 8:00 AM - 6:00 PM</p>
-                  <p>Sáb: 8:00 AM - 1:00 PM</p>
+                  <p>Lun - Vie: 4:00 PM - 8:00 PM</p>
                 </div>
               </li>
             </ul>

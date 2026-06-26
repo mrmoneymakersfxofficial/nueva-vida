@@ -14,7 +14,7 @@ const navLinks = [
   { href: '/', label: 'Inicio' },
   { href: '/servicios', label: 'Servicios' },
   { href: '/salud', label: 'Salud' },
-  { href: '/reservas', label: 'Reservas' },
+  { href: '/reservas#hero', label: 'Reservas' },
 ]
 
 export default function Navbar() {
@@ -161,10 +161,10 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-4">
               <div className={`flex items-center gap-2 text-sm transition-colors duration-500 ${timeTextClass}`}>
                 <Clock className="w-4 h-4" />
-                <span className="hidden xl:inline">Lun-Vie 8:00-18:00</span>
-                <span className="xl:hidden">8-18h</span>
+                <span className="hidden xl:inline">Lun-Vie 4:00-20:00</span>
+                <span className="xl:hidden">16-20h</span>
               </div>
-              <MagneticButton href="/reservas" strength={0.2}>
+              <MagneticButton href="/reservas#hero" strength={0.2}>
                 <Button className="bg-cyan hover:bg-cyan-light text-white font-semibold rounded-full px-6 shadow-lg shadow-cyan/25 glow-cyan transition-all duration-300">
                   Agendar Cita
                 </Button>
@@ -220,7 +220,7 @@ export default function Navbar() {
                       ))}
                     </div>
                     <div className="mobile-menu-footer-cta p-5 border-t border-[#F0F2F5] flex-shrink-0 space-y-4">
-                      <Link href="/reservas" onClick={handleLinkClick}>
+                      <Link href="/reservas#hero" onClick={handleLinkClick}>
                         <Button className="w-full bg-cyan hover:bg-cyan-light text-white font-semibold rounded-xl py-3.5 shadow-lg shadow-cyan/25 text-base">
                           Agendar Cita
                         </Button>

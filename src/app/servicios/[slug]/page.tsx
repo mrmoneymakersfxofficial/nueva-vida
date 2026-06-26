@@ -237,7 +237,7 @@ export default function ServiceDetailPage() {
                       <Clock className="w-5 h-5" />
                       <span>Duración: {service.duration}</span>
                     </div>
-                    <MagneticButton href="/reservas" strength={0.2}>
+                    <MagneticButton href="/reservas#hero" strength={0.2}>
                       <Button className="w-full bg-white text-marine hover:bg-white/90 font-semibold rounded-xl py-3 h-auto text-base">
                         <Calendar className="w-5 h-5 mr-2" /> Agendar Cita
                       </Button>
