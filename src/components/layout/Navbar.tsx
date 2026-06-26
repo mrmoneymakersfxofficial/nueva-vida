@@ -35,6 +35,9 @@ export default function Navbar() {
     setMobileMenuOpen(isOpen)
   }, [isOpen, setMobileMenuOpen])
 
+  // Pages that don't have a dark hero — navbar must start solid
+  const forceScrolled = pathname.startsWith('/reservas') || pathname.startsWith('/salud')
+
   // Premium scroll — 15px threshold for instant response, shrink height
   useEffect(() => {
     const handleScroll = () => {
@@ -47,9 +50,9 @@ export default function Navbar() {
       }
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
-    setScrolled(window.scrollY > 15)
+    setScrolled(forceScrolled || window.scrollY > 15)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [forceScrolled])
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
