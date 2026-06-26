@@ -1,10 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Calendar, Clock, CheckCircle2, ArrowRight, ArrowLeft, MapPin, Send, Stethoscope, MessageSquare } from 'lucide-react'
+import { Calendar, Clock, CheckCircle2, ArrowRight, ArrowLeft, MapPin, Stethoscope, MessageSquare } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
@@ -101,33 +100,8 @@ export default function ReservasPage() {
 
   return (
     <>
-      {/* Hero */}
-      <section id="hero" className="relative w-full animated-gradient overflow-hidden pt-[60px] sm:pt-[68px] lg:pt-[70px] pb-16 lg:pb-24">
-        <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-20" />
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <Badge className="bg-cyan/20 text-cyan-light border-0 mb-4 px-4 py-1">
-              Agendar Cita
-            </Badge>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              Reserva tu{' '}
-              <span className="text-cyan-light">Cita Médica</span>
-            </h1>
-            <p className="text-white/80 mt-6 text-lg max-w-2xl mx-auto">
-              Solo 2 pasos: elige tu servicio, selecciona fecha y hora. Te confirmaremos por WhatsApp.
-            </p>
-          </motion.div>
-        </div>
-        <div className="hero-fade-bottom" />
-      </section>
-
-      {/* Booking Form — 2 Steps */}
-      <section id="formulario" className="py-16 lg:py-24 bg-white">
+      {/* Immersive Form — starts right below navbar */}
+      <section id="hero" className="pt-[72px] sm:pt-[80px] lg:pt-[84px] pb-16 lg:pb-24 bg-gradient-to-b from-[#F0F7FD] to-white min-h-[80vh]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Progress Steps — 2 steps */}
           <ScrollReveal>
