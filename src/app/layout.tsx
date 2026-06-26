@@ -28,11 +28,11 @@ export const metadata: Metadata = {
   authors: [{ name: 'Nueva Vida - Consultorio Ginecológico' }],
   icons: {
     icon: [
-      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-64.png', sizes: '64x64', type: 'image/png' },
+      { url: '/favicon-32x32.webp', sizes: '32x32', type: 'image/webp' },
+      { url: '/favicon-16x16.webp', sizes: '16x16', type: 'image/webp' },
     ],
     apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-touch-icon.webp', sizes: '180x180', type: 'image/webp' },
     ],
   },
   openGraph: {
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     siteName: 'Nueva Vida - Consultorio Ginecológico',
     title: 'Nueva Vida | Consultorio Ginecológico - Atención Médica Especializada',
     description: 'Atención médica ginecológica especializada con tecnología de última generación. Agende su cita hoy.',
-    images: ['/logo-nuevavida.png'],
+    images: ['/logo-nuevavida.webp'],
   },
   robots: {
     index: true,

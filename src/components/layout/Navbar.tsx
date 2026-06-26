@@ -127,7 +127,7 @@ export default function Navbar() {
                 transition-[width,height] duration-[.35s] ease-[cubic-bezier(.4,0,.2,1)]
               ">
                 <Image
-                  src="/logo-nuevavida.png"
+                  src="/logo-nuevavida.webp"
                   alt="Logotipo Nueva Vida"
                   fill
                   className={`object-contain transition-all duration-500 group-hover:scale-105 ${
@@ -201,7 +201,7 @@ export default function Navbar() {
                     <div className="p-5 border-b border-marine/10 flex-shrink-0">
                       <div className="flex items-center gap-3">
                         <div className="relative w-12 h-12 flex-shrink-0">
-                          <Image src="/logo-nuevavida.png" alt="Nueva Vida" fill className="object-contain" sizes="48px" />
+                          <Image src="/logo-nuevavida.webp" alt="Nueva Vida" fill className="object-contain" sizes="48px" />
                         </div>
                         <div className="flex flex-col">
                           <span className="text-marine font-bold text-lg leading-tight">NUEVA VIDA</span>

@@ -38,7 +38,7 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               <div className="relative h-10 w-10 flex-shrink-0">
                 <Image
-                  src="/logo-nuevavida.png"
+                  src="/logo-nuevavida.webp"
                   alt="Nueva Vida"
                   fill
                   className="object-contain brightness-0 invert"
