@@ -35,20 +35,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="relative h-10 w-10 flex-shrink-0">
-                <Image
-                  src="/logo-nuevavida.webp"
-                  alt="Nueva Vida"
-                  fill
-                  className="object-contain brightness-0 invert"
-                  sizes="40px"
-                />
-              </div>
-              <div>
-                <h3 className="font-bold text-lg">NUEVA VIDA</h3>
-                <p className="text-white/50 text-xs tracking-wider">CONSULTORIO GINECOLÓGICO</p>
-              </div>
+            <div className="relative h-10 w-[140px] flex-shrink-0">
+              <Image
+                src="/logo-nuevavida.webp"
+                alt="Nueva Vida"
+                fill
+                className="object-contain brightness-0 invert"
+                sizes="140px"
+              />
             </div>
             <p className="text-white/70 text-sm leading-relaxed">
               Brindamos atención médica especializada con la más alta calidad y calidez humana. 

@@ -73,9 +73,7 @@ export default function Navbar() {
     setIsOpen(false)
   }
 
-  // ═══ Color classes ═══
-  const logoTextClass = scrolled ? 'text-[#0A2F6B]' : 'text-white'
-  const logoSubtextClass = scrolled ? 'text-[#0A2F6B]/50' : 'text-white/60'
+  // ═══ Color classes ═══ (logo image has its own colors — no text needed)
 
   const navLinkClass = (href: string) => {
     const isActive = pathname === href
@@ -120,30 +118,21 @@ export default function Navbar() {
       >
         <nav className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className={`flex items-center justify-between ${navHeight} transition-[height] duration-[.35s] ease-[cubic-bezier(.4,0,.2,1)]`}>
-            {/* ═══ LOGO ═══ */}
-            <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink-0" aria-label="Inicio - Nueva Vida">
+            {/* ═══ LOGO — Wide transparent logo image ═══ */}
+            <Link href="/" className="flex items-center group flex-shrink-0" aria-label="Inicio - Nueva Vida">
               <div className="relative flex-shrink-0
-                w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14
+                h-9 sm:h-11 lg:h-[52px]
+                w-[135px] sm:w-[165px] lg:w-[200px]
                 transition-[width,height] duration-[.35s] ease-[cubic-bezier(.4,0,.2,1)]
               ">
                 <Image
                   src="/logo-nuevavida.webp"
                   alt="Logotipo Nueva Vida"
                   fill
-                  className={`object-contain transition-all duration-500 group-hover:scale-105 ${
-                    scrolled ? 'brightness-0' : 'brightness-0 invert'
-                  }`}
+                  className="object-contain transition-all duration-500 group-hover:scale-105"
                   priority
-                  sizes="56px"
+                  sizes="200px"
                 />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className={`font-bold text-[14px] sm:text-base lg:text-[20px] tracking-tight leading-[1.1] transition-colors duration-500 ${logoTextClass}`}>
-                  NUEVA VIDA
-                </span>
-                <span className={`text-[8px] sm:text-[9px] lg:text-[10px] font-medium tracking-widest uppercase hidden sm:block leading-tight mt-0.5 transition-colors duration-500 ${logoSubtextClass}`}>
-                  Consultorio Ginecológico
-                </span>
               </div>
             </Link>
 
@@ -199,14 +188,8 @@ export default function Navbar() {
                   <SheetTitle className="sr-only">Menú de navegación</SheetTitle>
                   <div className="flex flex-col h-full">
                     <div className="p-5 border-b border-marine/10 flex-shrink-0">
-                      <div className="flex items-center gap-3">
-                        <div className="relative w-12 h-12 flex-shrink-0">
-                          <Image src="/logo-nuevavida.webp" alt="Nueva Vida" fill className="object-contain" sizes="48px" />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-marine font-bold text-lg leading-tight">NUEVA VIDA</span>
-                          <span className="text-marine/50 text-[10px] tracking-widest uppercase">Menú de navegación</span>
-                        </div>
+                      <div className="relative h-11 w-[165px]">
+                        <Image src="/logo-nuevavida.webp" alt="Nueva Vida" fill className="object-contain" sizes="165px" />
                       </div>
                     </div>
                     <div className="mobile-menu-links-wrapper flex-1 flex flex-col gap-5 overflow-y-auto overscroll-contain">
