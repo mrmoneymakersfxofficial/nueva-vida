@@ -1,0 +1,558 @@
+     1→'use client'
+     2→import { useState, useEffect, useRef, useCallback } from 'react'
+     3→import Image from 'next/image'
+     4→import Link from 'next/link'
+     5→import { motion } from 'framer-motion'
+     6→import {
+     7→  Baby, Shield, Heart, Scissors, ArrowRight, CheckCircle2,
+     8→  Stethoscope, Clock, Calendar, Phone, Eye, Maximize2, Images
+     9→} from 'lucide-react'
+    10→import DoctorLightbox from '@/components/ui/DoctorLightbox'
+    11→import { Button } from '@/components/ui/button'
+    12→import { Card, CardContent } from '@/components/ui/card'
+    13→import { Badge } from '@/components/ui/badge'
+    14→import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
+    15→import ScrollReveal from '@/components/animations/ScrollReveal'
+    16→import MagneticButton from '@/components/animations/MagneticButton'
+    17→
+    18→/* ═══════════════════════════════════════════════════════════════════
+    19→   DATA — 4 Categorías de Servicios Especializados
+    20→   ═══════════════════════════════════════════════════════════════════ */
+    21→
+    22→const WHATSAPP_BASE = 'https://wa.me/51983554248'
+    23→
+    24→const categories = [
+    25→  {
+    26→    id: 'unidad-ecografia',
+    27→    label: 'Ecografía y Medicina Fetal',
+    28→    shortLabel: 'Ecografía',
+    29→    icon: Baby,
+    30→    color: '#00B0F0',
+    31→    title: 'Unidad de Ecografía de Alta Precisión y Medicina Fetal',
+    32→    lead: 'Monitoreamos el milagro de la vida con la máxima rigurosidad científica y tecnología de última generación para darte total tranquilidad.',
+    33→    images: [
+    34→      { src: '/servicios/eco-fetal-1.webp', alt: 'Ecografía 2D de alta precisión — Consultorio Nueva Vida' },
+    35→      { src: '/servicios/eco-fetal-2.webp', alt: 'Ecografía obstétrica 2D — Evaluación fetal a las 14 semanas' },
+    36→      { src: '/servicios/eco-fetal-3.webp', alt: 'Ecografía 3D/4D — Hiperrealismo fetal' },
+    37→    ],
+    38→    services: [
+    39→      {
+    40→        name: 'Ecografía Genética (Semanas 11 a 14)',
+    41→        description: 'Una ventana de detección temprana indispensable. Evaluamos marcadores clave en las primeras semanas para descartar riesgos cromosómicos tempranos, brindándote la paz mental que necesitas al inicio de tu embarazo.',
+    42→        ctaLabel: 'Agendar esta Ecografía',
+    43→      },
+    44→      {
+    45→        name: 'Ecografía Morfológica (Semanas 18 a 24)',
+    46→        description: 'El examen más detallado del desarrollo de tu bebé. Analizamos minuciosamente cada uno de sus órganos, su estructura ósea y su anatomía interna para confirmar que su crecimiento marche de forma óptima.',
+    47→        ctaLabel: 'Agendar esta Ecografía',
+    48→      },
+    49→      {
+    50→        name: 'Ecografía Obstétrica con Perfil Biofísico',
+    51→        description: 'Evaluamos el bienestar de tu bebé en tiempo real. Monitoreamos sus movimientos, su respiración, el tono muscular y el volumen del líquido amniótico para asegurarnos de que el entorno intrauterino sea completamente saludable.',
+    52→        ctaLabel: 'Agendar esta Ecografía',
+    53→      },
+    54→      {
+    55→        name: 'Ecografía Doppler Avanzada',
+    56→        description: 'Vital para el control de embarazos de alta complejidad. Permite evaluar de manera precisa el flujo sanguíneo de la placenta hacia el bebé, garantizando una detección oportuna de cualquier alteración circulatoria.',
+    57→        ctaLabel: 'Agendar Evaluación Doppler',
+    58→      },
+    59→      {
+    60→        name: 'Ecografías 3D, 4D y 5D (Hiperrealismo Emocional)',
+    61→        description: 'Mucho más que un diagnóstico, una experiencia familiar inolvidable. Gracias a la tecnología HD Live de última generación, podrás ver las facciones, gestos y movimientos en tiempo real de tu bebé con una nitidez e iluminación hiperrealista.',
+    62→        ctaLabel: 'Agendar Ecografía 4D/5D',
+    63→      },
+    64→    ],
+    65→  },
+    66→  {
+    67→    id: 'prevencion-diagnostico',
+    68→    label: 'Prevención y Diagnóstico',
+    69→    shortLabel: 'Prevención',
+    70→    icon: Shield,
+    71→    color: '#0046AD',
+    72→    title: 'Prevención, Diagnóstico Avanzado y Detección Oportuna',
+    73→    lead: 'Nos anticipamos a las enfermedades mediante pruebas moleculares y procedimientos de alta fidelidad diagnóstica.',
+    74→    images: [
+    75→      { src: '/servicios/histeroscopia.png', alt: 'Histeroscopía diagnóstica avanzada' },
+    76→      { src: '/servicios/histeroscopia-1.png', alt: 'Procedimiento de histeroscopia' },
+    77→    ],
+    78→    services: [
+    79→      {
+    80→        name: 'Test de COBAS (Prueba Molecular de VPH)',
+    81→        description: 'La tecnología más avanzada del mundo para la prevención del cáncer de cuello uterino. A diferencia del Papanicolaou convencional, esta prueba de ADN detecta directamente el Virus del Papiloma Humano (VPH) de alto riesgo años antes de que pueda causar una lesión.',
+    82→        ctaLabel: 'Agendar este Examen',
+    83→      },
+    84→      {
+    85→        name: 'Histerosonografía',
+    86→        description: 'Evaluación especializada y totalmente ambulatoria de la cavidad interna del útero mediante el uso combinado de ecografía y solución salina. Es una herramienta clave, rápida y cómoda para diagnosticar pólipos, miomas o investigar causas de infertilidad.',
+    87→        ctaLabel: 'Agendar Procedimiento',
+    88→      },
+    89→      {
+    90→        name: 'Biopsia de Mama Dirigida por Ecografía',
+    91→        description: 'Ante la presencia de un nódulo mamario, ofrecemos la máxima certeza diagnóstica de forma mínimamente invasiva. Guiados por ecografía en tiempo real, extraemos una muestra milimétrica con total precisión, seguridad y mínimas molestias.',
+    92→        ctaLabel: 'Solicitar Cita para Biopsia',
+    93→      },
+    94→      {
+    95→        name: 'Biopsia de Cérvix',
+    96→        description: 'Ante hallazgos anormales en tus chequeos, realizamos una toma de muestra dirigida y sumamente delicada del tejido del cuello uterino, permitiéndonos trazar el tratamiento preventivo correcto de manera inmediata.',
+    97→        ctaLabel: 'Solicitar Cita para Biopsia',
+    98→      },
+    99→    ],
+   100→  },
+   101→  {
+   102→    id: 'procedimientos-menores',
+   103→    label: 'Procedimientos Menores',
+   104→    shortLabel: 'Procedimientos',
+   105→    icon: Heart,
+   106→    color: '#00B0F0',
+   107→    title: 'Procedimientos Menores y Soluciones Ambulatorias',
+   108→    lead: 'Tratamientos rápidos y efectivos diseñados para aliviar molestias comunes, cuidando tu estética y devolviéndote el confort de inmediato.',
+   109→    images: [
+   110→      { src: '/biopsy-service.jpg', alt: 'Equipamiento clínico de procedimientos ambulatorios' },
+   111→    ],
+   112→    services: [
+   113→      {
+   114→        name: 'Exéresis de Fibroadenomas de Mama',
+   115→        description: 'Extracción quirúrgica programada de nódulos benignos en la mama. Realizamos técnicas cuidadosas y respetuosas con la anatomía femenina para garantizar resultados estéticos y una óptima cicatrización.',
+   116→        ctaLabel: 'Consultar por este Procedimiento',
+   117→      },
+   118→      {
+   119→        name: 'Aspiración de Quistes Mamarios',
+   120→        description: 'Un procedimiento sencillo y resolutivo que se realiza directamente en el consultorio. Bajo guía ecográfica, aliviamos la presión y el dolor mamario causados por quistes líquidos de forma inmediata.',
+   121→        ctaLabel: 'Agendar en Consultorio',
+   122→      },
+   123→      {
+   124→        name: 'Marsupialización de la Glándula de Bartholino',
+   125→        description: 'Solución definitiva y ambulatoria para la inflamación o quistes molestos en la zona íntima. Este procedimiento restablece el drenaje natural de la glándula, eliminando el dolor y devolviéndote tu calidad de vida.',
+   126→        ctaLabel: 'Agendar Procedimiento',
+   127→      },
+   128→    ],
+   129→  },
+   130→  {
+   131→    id: 'cirugias-especializadas',
+   132→    label: 'Cirugías Ginecológicas',
+   133→    shortLabel: 'Cirugías',
+   134→    icon: Scissors,
+   135→    color: '#002060',
+   136→    title: 'Cirugías Ginecológicas y Obstétricas Especializadas',
+   137→    lead: 'Experiencia quirúrgica respaldada por años de práctica institucional, priorizando técnicas mínimamente invasivas y recuperaciones confortables.',
+   138→    images: [
+   139→      { src: '/servicios/cirugias-1.jpg', alt: 'Cirugía ginecológica especializada' },
+   140→      { src: '/servicios/cesarea-1.jpg', alt: 'Cesárea segura y humanizada' },
+   141→    ],
+   142→    services: [
+   143→      {
+   144→        name: 'Corrección de Incontinencia Urinaria de Esfuerzo',
+   145→        description: 'Recupera la libertad de reír, saltar y hacer ejercicio sin temores. Mediante procedimientos avanzados y el refuerzo del piso pélvico, devolvemos el soporte anatómico definitivo para que retomes tu rutina con total seguridad.',
+   146→        ctaLabel: 'Agendar Evaluación Integral',
+   147→      },
+   148→      {
+   149→        name: 'Histerectomía (Abdominal y Vaginal)',
+   150→        description: 'Cuando la extracción del útero es la mejor alternativa para tu salud (por miomas o sangrados severos), evaluamos el abordaje más seguro para ti. Priorizamos la vía vaginal o mínimamente invasiva para asegurar menos dolor posoperatorio y un retorno más rápido a tus actividades.',
+   151→        ctaLabel: 'Programar Consulta Quirúrgica',
+   152→      },
+   153→      {
+   154→        name: 'Cesárea Segura y Humanizada',
+   155→        description: 'El nacimiento de tu hijo en las manos más expertas. Combinamos el máximo rigor médico y de seguridad en quirófano con un enfoque respetuoso, fomentando el apego temprano y cuidando minuciosamente tu proceso de recuperación.',
+   156→        ctaLabel: 'Agendar Cesárea',
+   157→      },
+   158→      {
+   159→        name: 'Ligadura de Trompas',
+   160→        description: 'Un procedimiento de planificación familiar definitivo realizado bajo estrictos estándares de seguridad, diseñado para aquellas mujeres que han decidido cerrar su etapa reproductiva con total convicción y tranquilidad.',
+   161→        ctaLabel: 'Programar Consulta',
+   162→      },
+   163→    ],
+   164→  },
+   165→]
+   166→
+   167→/* ═══════════════════════════════════════════════════════════════════
+   168→   HELPERS
+   169→   ═══════════════════════════════════════════════════════════════════ */
+   170→
+   171→function buildWhatsAppURL(serviceName: string): string {
+   172→  const msg = `Hola Consultorio Nueva Vida, deseo solicitar información y agendar una cita para *${serviceName}*.`
+   173→  return `${WHATSAPP_BASE}?text=${encodeURIComponent(msg)}`
+   174→}
+   175→
+   176→/* ═══════════════════════════════════════════════════════════════════
+   177→   SUB-NAVBAR — Sticky scroll-spy navigation + DEBOUNCE anti-jitter
+   178→   ═══════════════════════════════════════════════════════════════════ */
+   179→
+   180→function SubNavbar({ categories }: { categories: typeof categories }) {
+   181→  const [activeId, setActiveId] = useState(categories[0].id)
+   182→  const navRef = useRef<HTMLDivElement>(null)
+   183→  const blockedRef = useRef(false)
+   184→
+   185→  // Scroll tab into view using ONLY horizontal scrollLeft (never touches page scroll)
+   186→  const scrollTabIntoView = useCallback((catId: string) => {
+   187→    const nav = navRef.current
+   188→    if (!nav) return
+   189→    const tab = nav.querySelector(`[data-cat="${catId}"]`) as HTMLElement | null
+   190→    if (!tab) return
+   191→    // Calculate if tab is outside visible area of nav
+   192→    const navRect = nav.getBoundingClientRect()
+   193→    const tabRect = tab.getBoundingClientRect()
+   194→    const tabCenter = tabRect.left - navRect.left + tabRect.width / 2
+   195→    const navCenter = navRect.width / 2
+   196→    const diff = tabCenter - navCenter
+   197→    if (Math.abs(diff) > 20) {
+   198→      nav.scrollBy({ left: diff, behavior: 'smooth' })
+   199→    }
+   200→  }, [])
+   201→
+   202→  useEffect(() => {
+   203→    const observers: IntersectionObserver[] = []
+   204→
+   205→    categories.forEach((cat) => {
+   206→      const el = document.getElementById(cat.id)
+   207→      if (!el) return
+   208→
+   209→      const observer = new IntersectionObserver(
+   210→        ([entry]) => {
+   211→          // If user clicked a tab, observer sleeps for 1 second
+   212→          if (blockedRef.current) return
+   213→
+   214→          if (entry.isIntersecting) {
+   215→            setActiveId(cat.id)
+   216→            scrollTabIntoView(cat.id)
+   217→          }
+   218→        },
+   219→        { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
+   220→      )
+   221→      observer.observe(el)
+   222→      observers.push(observer)
+   223→    })
+   224→
+   225→    return () => observers.forEach((o) => o.disconnect())
+   226→  }, [categories, scrollTabIntoView])
+   227→
+   228→  const handleClick = useCallback((id: string) => {
+   229→    const el = document.getElementById(id)
+   230→    if (!el) return
+   231→
+   232→    // Immediately activate the clicked tab
+   233→    setActiveId(id)
+   234→    scrollTabIntoView(id)
+   235→
+   236→    // Block observer for 1 full second to prevent any scroll jitter
+   237→    blockedRef.current = true
+   238→    setTimeout(() => { blockedRef.current = false }, 1000)
+   239→
+   240→    // Smooth scroll to category with 150px offset
+   241→    const offset = 150
+   242→    const top = el.getBoundingClientRect().top + window.scrollY - offset
+   243→    window.scrollTo({ top, behavior: 'smooth' })
+   244→  }, [scrollTabIntoView])
+   245→
+   246→  return (
+   247→    <div className="sticky top-[56px] sm:top-[60px] lg:top-[64px] z-[35] bg-white/90 backdrop-blur-xl border-b border-marine/5 shadow-[0_2px_20px_rgba(0,32,96,0.04)]">
+   248→      <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+   249→        <nav
+   250→          ref={navRef}
+   251→          className="flex items-center gap-1 overflow-x-auto py-2.5 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0"
+   252→          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+   253→        >
+   254→          {categories.map((cat) => (
+   255→            <button
+   256→              key={cat.id}
+   257→              data-cat={cat.id}
+   258→              onClick={() => handleClick(cat.id)}
+   259→              className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 flex-shrink-0 ${
+   260→                activeId === cat.id
+   261→                  ? 'bg-marine text-white shadow-md shadow-marine/20'
+   262→                  : 'text-marine/60 hover:text-marine hover:bg-marine/5'
+   263→              }`}
+   264→            >
+   265→              <cat.icon className="w-4 h-4" />
+   266→              <span className="hidden sm:inline">{cat.label}</span>
+   267→              <span className="sm:hidden">{cat.shortLabel}</span>
+   268→            </button>
+   269→          ))}
+   270→        </nav>
+   271→      </div>
+   272→    </div>
+   273→  )
+   274→}
+   275→
+   276→/* ═══════════════════════════════════════════════════════════════════
+   277→   SERVICE CATEGORY BLOCK — Alternating image/text layout + WhatsApp CTA
+   278→   ═══════════════════════════════════════════════════════════════════ */
+   279→
+   280→function CategoryBlock({
+   281→  category,
+   282→  index,
+   283→}: {
+   284→  category: (typeof categories)[0]
+   285→  index: number
+   286→}) {
+   287→  const isEven = index % 2 === 0
+   288→  const [lightboxOpen, setLightboxOpen] = useState(false)
+   289→  const [lightboxImages, setLightboxImages] = useState<{ src: string; alt: string }[]>([])
+   290→  const [lightboxStartIndex, setLightboxStartIndex] = useState(0)
+   291→  return (
+   292→    <ScrollReveal>
+   293→      <div
+   294→        id={category.id}
+   295→        className="py-16 lg:py-20 scroll-mt-[150px]"
+   296→        style={{ contentVisibility: 'auto' } as React.CSSProperties}
+   297→      >
+   298→        <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+   299→          {/* Category Header */}
+   300→          <div className="flex items-center gap-3 mb-2">
+   301→            <div
+   302→              className="w-10 h-10 rounded-xl flex items-center justify-center"
+   303→              style={{ backgroundColor: `${category.color}15` }}
+   304→            >
+   305→              <category.icon className="w-5 h-5" style={{ color: category.color }} />
+   306→            </div>
+   307→            <Badge
+   308→              className="border-0 text-xs font-bold uppercase tracking-wider"
+   309→              style={{ backgroundColor: `${category.color}12`, color: category.color }}
+   310→            >
+   311→              {category.label}
+   312→            </Badge>
+   313→          </div>
+   314→          <h3 className="text-2xl sm:text-3xl font-bold text-marine mt-3 leading-tight">
+   315→            {category.title}
+   316→          </h3>
+   317→          <p className="text-marine/60 text-base sm:text-lg mt-3 leading-relaxed max-w-3xl">
+   318→            {category.lead}
+   319→          </p>
+   320→
+   321→          {/* Body: Image + Accordion List */}
+   322→          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 mt-8">
+   323→            {/* Text / Accordion Side */}
+   324→            <div className={`lg:col-span-3 ${!isEven ? 'lg:order-2' : ''}`}>
+   325→              <Accordion type="single" collapsible className="space-y-3">
+   326→                {category.services.map((service, i) => (
+   327→                  <AccordionItem
+   328→                    key={i}
+   329→                    value={`${category.id}-item-${i}`}
+   330→                    className="bg-white rounded-xl shadow-[0_2px_12px_rgba(0,32,96,0.05)] border border-marine/5 px-5 data-[state=open]:shadow-md data-[state=open]:border-cyan/20 transition-all duration-300"
+   331→                  >
+   332→                    <AccordionTrigger className="text-marine font-semibold text-left hover:no-underline py-4 text-sm sm:text-base leading-snug [&>svg]:text-cyan [&>svg]:shrink-0 gap-3">
+   333→                      <span className="flex items-start gap-3">
+   334→                        <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-cyan mt-0.5 flex-shrink-0" />
+   335→                        {service.name}
+   336→                      </span>
+   337→                    </AccordionTrigger>
+   338→                    <AccordionContent className="text-marine/60 text-sm sm:text-base leading-relaxed pb-4 pl-8 sm:pl-[52px]">
+   339→                      {service.description}
+   340→
+   341→                      {/* ═══ WhatsApp CTA — Service-Specific Booking ═══ */}
+   342→                      <div className="mt-4 pt-4 border-t border-dashed border-marine/10 flex justify-start sm:justify-start">
+   343→                        <a
+   344→                          href={buildWhatsAppURL(service.name)}
+   345→                          target="_blank"
+   346→                          rel="noopener noreferrer"
+   347→                          className="inline-flex items-center gap-2 bg-marine hover:bg-cyan text-white text-[13px] font-bold rounded-full px-5 py-2.5 shadow-[0_4px_12px_rgba(0,32,96,0.1)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_6px_15px_rgba(0,176,240,0.3)] w-full sm:w-auto justify-center"
+   348→                        >
+   349→                          <Calendar className="w-4 h-4 flex-shrink-0" />
+   350→                          <span>{service.ctaLabel}</span>
+   351→                        </a>
+   352→                      </div>
+   353→                    </AccordionContent>
+   354→                  </AccordionItem>
+   355→                ))}
+   356→              </Accordion>
+   357→            </div>
+   358→
+   359→            {/* Image Side — Premium Gallery with Lightbox */}
+   360→            <div className={`lg:col-span-2 ${!isEven ? 'lg:order-1' : ''}`}>
+   361→              <div className="space-y-3">
+   362→                {/* ── Featured Image (first) ── */}
+   363→                <div
+   364→                  className="relative rounded-2xl overflow-hidden shadow-lg shadow-marine/8 group cursor-pointer"
+   365→                  onClick={() => {
+   366→                    setLightboxImages(category.images.map((im) => ({ src: im.src, alt: im.alt })))
+   367→                    setLightboxStartIndex(0)
+   368→                    setLightboxOpen(true)
+   369→                  }}
+   370→                >
+   371→                  <div className="relative h-[200px] sm:h-[240px] lg:h-[280px]">
+   372→                    <Image
+   373→                      src={category.images[0].src}
+   374→                      alt={category.images[0].alt}
+   375→                      fill
+   376→                      className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+   377→                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
+   378→                      loading="lazy"
+   379→                    />
+   380→                    {/* Gradient overlay */}
+   381→                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
+   382→                    {/* Hover expand icon */}
+   383→                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-500 flex items-center justify-center">
+   384→                      <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-white/0 group-hover:bg-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 shadow-2xl">
+   385→                        <Maximize2 className="w-5 h-5 sm:w-6 sm:h-6 text-marine" />
+   386→                      </div>
+   387→                    </div>
+   388→                  </div>
+   389→                  {/* Caption + counter */}
+   390→                  <div className="absolute bottom-0 left-0 right-0 px-4 pb-4 pt-12">
+   391→                    <p className="text-white text-[13px] sm:text-sm font-medium leading-snug drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]">{category.images[0].alt}</p>
+   392→                    {category.images.length > 1 && (
+   393→                      <span className="mt-1.5 inline-flex items-center gap-1 bg-white/15 backdrop-blur-md text-white text-[11px] font-bold px-2.5 py-[3px] rounded-full border border-white/10">
+   394→                        <Eye className="w-3 h-3" />1 / {category.images.length}
+   395→                      </span>
+   396→                    )}
+   397→                  </div>
+   398→                </div>
+   399→
+   400→                {/* ── Thumbnail Grid (2nd+ images) ── */}
+   401→                {category.images.length > 1 && (
+   402→                  <div className="grid grid-cols-2 gap-3">
+   403→                    {category.images.slice(1).map((img, i) => (
+   404→                      <div
+   405→                        key={i + 1}
+   406→                        className="relative rounded-xl overflow-hidden shadow-md shadow-marine/6 group cursor-pointer"
+   407→                        onClick={() => {
+   408→                          setLightboxImages(category.images.map((im) => ({ src: im.src, alt: im.alt })))
+   409→                          setLightboxStartIndex(i + 1)
+   410→                          setLightboxOpen(true)
+   411→                        }}
+   412→                      >
+   413→                        <div className="relative h-[120px] sm:h-[140px] lg:h-[160px]">
+   414→                          <Image
+   415→                            src={img.src}
+   416→                            alt={img.alt}
+   417→                            fill
+   418→                            className="object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+   419→                            sizes="(max-width: 640px) 50vw, 20vw"
+   420→                            loading="lazy"
+   421→                          />
+   422→                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
+   423→                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-500 flex items-center justify-center">
+   424→                            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/0 group-hover:bg-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 shadow-xl">
+   425→                              <Maximize2 className="w-4 h-4 sm:w-5 sm:h-5 text-marine" />
+   426→                            </div>
+   427→                          </div>
+   428→                        </div>
+   429→                        <div className="absolute bottom-0 left-0 right-0 px-3 pb-3 pt-8">
+   430→                          <p className="text-white text-[11px] sm:text-xs font-medium leading-snug drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)] line-clamp-2">{img.alt}</p>
+   431→                          <span className="mt-1 inline-flex items-center gap-1 bg-white/15 backdrop-blur-md text-white text-[10px] font-bold px-2 py-[2px] rounded-full border border-white/10">
+   432→                            {i + 2} / {category.images.length}
+   433→                          </span>
+   434→                        </div>
+   435→                      </div>
+   436→                    ))}
+   437→                  </div>
+   438→                )}
+   439→
+   440→                {/* ── Ver Galería Link ── */}
+   441→                {category.images.length > 1 && (
+   442→                  <button
+   443→                    onClick={() => {
+   444→                      setLightboxImages(category.images.map((im) => ({ src: im.src, alt: im.alt })))
+   445→                      setLightboxStartIndex(0)
+   446→                      setLightboxOpen(true)
+   447→                    }}
+   448→                    className="group/link w-full flex items-center justify-center gap-2 py-3 rounded-xl text-cyan text-sm font-semibold hover:text-marine transition-colors duration-300"
+   449→                  >
+   450→                    <Images className="w-4 h-4" />
+   451→                    <span>Ver galería completa</span>
+   452→                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform duration-300" />
+   453→                  </button>
+   454→                )}
+   455→              </div>
+   456→              {/* Lightbox */}
+   457→              {category.images.length > 1 && (
+   458→                <DoctorLightbox
+   459→                  images={lightboxImages}
+   460→                  isOpen={lightboxOpen}
+   461→                  onClose={() => setLightboxOpen(false)}
+   462→                  startIndex={lightboxStartIndex}
+   463→                />
+   464→              )}
+   465→            </div>
+   466→          </div>
+   467→        </div>
+   468→      </div>
+   469→    </ScrollReveal>
+   470→  )
+   471→}
+   472→
+   473→/* ═══════════════════════════════════════════════════════════════════
+   474→   MAIN PAGE
+   475→   ═══════════════════════════════════════════════════════════════════ */
+   476→
+   477→export default function ServiciosPage() {
+   478→  return (
+   479→    <>
+   480→      {/* ═══ HERO ═══ */}
+   481→      <section id="hero" className="relative w-full animated-gradient overflow-hidden pt-[60px] sm:pt-[68px] lg:pt-[70px] pb-20 lg:pb-28">
+   482→        <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-20" />
+   483→        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+   484→          <motion.div
+   485→            initial={{ opacity: 0, y: 30 }}
+   486→            animate={{ opacity: 1, y: 0 }}
+   487→            transition={{ duration: 0.8 }}
+   488→            className="text-center max-w-3xl mx-auto"
+   489→          >
+   490→            <Badge className="bg-cyan/20 text-cyan-light border-0 mb-4 px-4 py-1">
+   491→              Servicios Especializados
+   492→            </Badge>
+   493→            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
+   494→              Nuestros Servicios{' '}
+   495→              <span className="text-cyan-light">Especializados</span>
+   496→            </h1>
+   497→            <p className="text-white/80 mt-6 text-lg max-w-2xl mx-auto">
+   498→              Tecnología médica de vanguardia y calidez humana para proteger lo que más amas: tu salud y la de tu familia.
+   499→            </p>
+   500→          </motion.div>
+   501→        </div>
+   502→        {/* Section transition: dark → white */}
+   503→        <div className="hero-fade-bottom" />
+   504→      </section>
+   505→
+   506→      {/* ═══ SUB-NAVBAR + CATEGORIES BODY ═══ */}
+   507→      <section id="servicios-especializados" className="bg-gradient-to-b from-[#FAFCFF] to-white">
+   508→        <SubNavbar categories={categories} />
+   509→
+   510→        {/* Separator lines between categories */}
+   511→        <div>
+   512→          {categories.map((cat, i) => (
+   513→            <div key={cat.id}>
+   514→              <CategoryBlock category={cat} index={i} />
+   515→              {i < categories.length - 1 && (
+   516→                <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+   517→                  <div className="border-t border-marine/5" />
+   518→                </div>
+   519→              )}
+   520→            </div>
+   521→          ))}
+   522→        </div>
+   523→      </section>
+   524→
+   525→      {/* ═══ CTA — Premium conversion section ═══ */}
+   526→      <section id="reservar" className="py-16 lg:py-20 animated-gradient relative overflow-hidden">
+   527→        {/* Section transition: white → dark */}
+   528→        <div className="cta-fade-top" />
+   529→        <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center opacity-10" />
+   530→        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+   531→          <ScrollReveal>
+   532→            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+   533→              ¿Necesitas orientación sobre algún servicio?
+   534→            </h2>
+   535→            <p className="text-white/80 mt-4 max-w-xl mx-auto text-lg">
+   536→              Nuestro equipo está disponible para resolver tus dudas y ayudarte a elegir el servicio adecuado para ti.
+   537→            </p>
+   538→            <div className="flex flex-wrap gap-4 justify-center mt-8">
+   539→              <MagneticButton href="/reservas#hero" strength={0.2}>
+   540→                <Button className="bg-white text-marine hover:bg-white/90 font-semibold rounded-full px-8 shadow-2xl shadow-black/10 text-base">
+   541→                  <Calendar className="w-5 h-5 mr-2" />
+   542→                  Agendar Cita
+   543→                </Button>
+   544→              </MagneticButton>
+   545→              <MagneticButton href="https://wa.me/51983554248?text=Hola%20Consultorio%20Nueva%20Vida%2C%20deseo%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20servicios." strength={0.15}>
+   546→                <Button className="bg-cyan hover:bg-cyan-light text-white font-semibold rounded-full px-8 shadow-lg shadow-cyan/30 glow-cyan text-base">
+   547→                  <Phone className="w-5 h-5 mr-2" />
+   548→                  Escribir por WhatsApp
+   549→                </Button>
+   550→              </MagneticButton>
+   551→            </div>
+   552→          </ScrollReveal>
+   553→        </div>
+   554→      </section>
+   555→    </>
+   556→  )
+   557→}
+   558→

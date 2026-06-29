@@ -1,0 +1,733 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ========================================
+   POPPINS FONT FAMILY — Local @font-face
+   ======================================== */
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/files/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/files/Poppins-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/files/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/files/Poppins-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/files/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/files/Poppins-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/files/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/files/Poppins-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/files/Poppins-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/files/Poppins-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/files/Poppins-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/files/Poppins-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-navy: #004691;
+  --color-navy-light: #0062b8;
+  --color-navy-dark: #003466;
+  --color-cta: #d4a017;
+  --color-cta-light: #e0b030;
+  --color-gray-soft: #f7f8fa;
+  --color-gray-medium: #e8eaed;
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.35 0.12 250);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.35 0.12 250);
+  --chart-1: oklch(0.35 0.12 250);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.35 0.12 250);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.35 0.12 250);
+}
+
+/* ========================================
+   MOBILE FIRST: Overflow & Base
+   ======================================== */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Poppins', sans-serif;
+  }
+  ul, ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  html {
+    scroll-behavior: auto;
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Ensure no browser defaults push header down */
+  header, nav, main, section, footer, div {
+    margin: 0;
+  }
+}
+
+/* ========================================
+   CORPORATE SCROLLBAR — Sertrade Brand
+   ======================================== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F7FA;
+}
+::-webkit-scrollbar-thumb {
+  background: #004691;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D4AF37;
+}
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #004691 #F4F7FA;
+}
+
+/* Hide scrollbar utility (for horizontal scroll filters on mobile) */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* ========================================
+   Keyframe Animations
+   ======================================== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blurReveal {
+  from { opacity: 0; filter: blur(10px); transform: translateY(20px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scaleEntry {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes heroSlideIn {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================
+   Animation Utility Classes
+   ======================================== */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s ease-out forwards;
+}
+.animate-fade-in-down {
+  animation: fadeInDown 0.6s ease-out forwards;
+}
+.animate-blur-reveal {
+  animation: blurReveal 0.9s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+.animate-slide-left {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+.animate-slide-right {
+  animation: slideInRight 0.8s ease-out forwards;
+}
+.animate-scale-in {
+  animation: scaleIn 0.6s ease-out forwards;
+}
+.animate-scale-entry {
+  animation: scaleEntry 0.5s ease-out forwards;
+}
+.animate-hero-slide {
+  animation: heroSlideIn 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+/* Delay utilities */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+
+/* Start invisible for animated elements */
+.anim-hidden {
+  opacity: 0;
+}
+
+/* ========================================
+   Timeline Styles
+   ======================================== */
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #004691, #d4a017);
+  transform: translateX(-50%);
+}
+
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 20px;
+  }
+}
+
+/* ========================================
+   WhatsApp Pulse Animation
+   ======================================== */
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+.whatsapp-pulse::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #25D366;
+  animation: pulse-ring 1.5s ease-out infinite;
+  z-index: -1;
+}
+
+/* ========================================
+   Geometric UI Base
+   ======================================== */
+.geo-card {
+  border-radius: 8px;
+}
+.geo-card-lg {
+  border-radius: 12px;
+}
+.geo-pill {
+  border-radius: 999px;
+}
+.geo-btn {
+  border-radius: 8px;
+}
+
+/* ========================================
+   Hero Overlay: Darker gradient for
+   text readability on any image
+   ======================================== */
+.hero-overlay-dark {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 20, 50, 0.70) 0%,
+    rgba(0, 50, 110, 0.55) 40%,
+    rgba(0, 20, 50, 0.65) 100%
+  );
+}
+
+/* ========================================
+   Lazy Load Zoom-In Animation
+   for project gallery images
+   ======================================== */
+@keyframes lazyZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.img-lazy-zoom {
+  animation: lazyZoomIn 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+/* ========================================
+   CTA Shimmer Effect — light sweep every 3s
+   Subtle attention-grab for primary buttons
+   ======================================== */
+@keyframes shimmerSweep {
+  0% { transform: translateX(-100%); }
+  50%, 100% { transform: translateX(200%); }
+}
+.cta-shimmer-sweep {
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 70%
+  );
+  animation: shimmerSweep 3s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+/* ========================================
+   Mobile Responsive Fixes
+   ======================================== */
+@media (max-width: 480px) {
+  .hero-btn-stack {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+  .hero-btn-stack > a,
+  .hero-btn-stack > button,
+  .hero-btn-stack > div {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* ========================================
+   Hero Slider Navigation Arrows (desktop)
+   ======================================== */
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 35;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.hero-arrow:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+.hero-arrow-left { left: 20px; }
+.hero-arrow-right { right: 20px; }
+
+/* ========================================
+   STAT CARD — Strict hover/active states
+   Prevents text disappearing on mobile tap
+   ======================================== */
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #004691;
+  border: 1px solid transparent;
+  box-shadow: 0 15px 35px rgba(0, 28, 61, 0.08);
+  cursor: pointer;
+  transition: all 300ms ease-in-out;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Icon wrapper — color driven by React inline style (gold/blue) */
+.stat-card-icon {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stat-card-icon svg {
+  display: block;
+}
+
+/* Counter value — color driven entirely by React/Tailwind conditional classes */
+.stat-card-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.375rem;
+  line-height: 1.2;
+}
+@media (min-width: 640px) {
+  .stat-card-value { font-size: 1.875rem; }
+}
+
+/* Label — color driven entirely by React/Tailwind conditional classes */
+.stat-card-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+@media (min-width: 640px) {
+  .stat-card-label { font-size: 0.8125rem; }
+}
+
+/* ===== HOVER / ACTIVE — Background and layout ONLY ===== */
+/* Text colors are controlled exclusively by React isActive prop + Tailwind classes */
+/* Do NOT add color overrides here — they conflict with Framer Motion inline styles */
+.stat-card:hover,
+.stat-card:active {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+/* ===== FOCUS-VISIBLE (Accessibility) ===== */
+.stat-card:focus-visible {
+  outline: 2px solid #D4AF37;
+  outline-offset: 2px;
+}
+
+/* ========================================
+   NOSOTROS INLINE CARDS — Same pattern
+   ======================================== */
+.nosotros-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #004691;
+  border: 1px solid transparent;
+  box-shadow: 0 15px 35px rgba(0, 28, 61, 0.08);
+  cursor: pointer;
+  transition: all 300ms ease-in-out;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.nosotros-card-icon {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #C5960C;
+  transition: color 300ms ease-in-out;
+}
+.nosotros-card-icon svg {
+  display: block;
+}
+.nosotros-card-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  transition: color 300ms ease-in-out;
+  line-height: 1.2;
+}
+@media (min-width: 640px) {
+  .nosotros-card-number { font-size: 1.875rem; }
+}
+.nosotros-card-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #F3F4F6;
+  transition: color 300ms ease-in-out;
+  margin-top: 0.375rem;
+}
+@media (min-width: 640px) {
+  .nosotros-card-label { font-size: 0.8125rem; }
+}
+
+/* ===== HOVER ===== */
+.nosotros-card:hover {
+  background-color: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  border-color: #e8eaed;
+}
+.nosotros-card:hover .nosotros-card-icon { color: #004691 !important; }
+.nosotros-card:hover .nosotros-card-number { color: #004691 !important; }
+.nosotros-card:hover .nosotros-card-label { color: #4A4A4A !important; }
+
+/* ===== ACTIVE (Mobile) ===== */
+.nosotros-card:active {
+  background-color: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  border-color: #e8eaed;
+}
+.nosotros-card:active .nosotros-card-icon { color: #004691 !important; }
+.nosotros-card:active .nosotros-card-number { color: #004691 !important; }
+.nosotros-card:active .nosotros-card-label { color: #4A4A4A !important; }
+
+/* ===== FOCUS ===== */
+.nosotros-card:focus-visible {
+  outline: 2px solid #D4AF37;
+  outline-offset: 2px;
+}
+
+/* ========================================
+   3D FLIP CARDS — Service cards
+   ======================================== */
+.flip-card-wrapper {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.flip-card-perspective {
+  position: relative;
+  width: 100%;
+  height: 480px;
+}
+
+@media (min-width: 768px) {
+  .flip-card-perspective {
+    height: 500px;
+  }
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.flip-card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.flip-card-front {
+  z-index: 2;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
+/* ========================================
+   BRAND WATERMARK — Client-provided pattern
+   Tile: 1086x177px (cropped at gap rows so
+   logos are never sliced at tile boundaries).
+   background-position aligns the gap with
+   the wrapper's top edge (inset offset).
+   ======================================== */
+.brand-pattern-wrapper {
+  position: relative;
+}
+.brand-pattern-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/brand-pattern-tile.png');
+  background-repeat: repeat;
+  background-size: 1086px 177px;
+  background-position: 0 0;
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ========================================
+   PRO SHADOWS — 3D Volume
+   ======================================== */
+.shadow-pro {
+  box-shadow: 0 15px 35px rgba(0, 28, 61, 0.08);
+}
+.shadow-pro-hover:hover {
+  box-shadow: 0 20px 45px rgba(0, 28, 61, 0.12);
+}
+
+/* Text shadow for titles — industrial definition */
+.text-shadow-pro {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.10);
+}
+.text-shadow-hero {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), 0 0 20px rgba(0, 20, 50, 0.15);
+}
+
+/* Gold icon — more saturated/vibrant */
+.gold-icon-vivid {
+  color: #C5960C;
+}
+.gold-icon-vivid svg {
+  color: #C5960C;
+}
