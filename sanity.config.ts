@@ -62,7 +62,6 @@ export default defineConfig({
       },
     }),
     presentationTool({
-      document: { actions: [] },
       previewUrl: {
         initial: process.env.NODE_ENV === "development" ? "http://localhost:3000" : SITE_URL,
         previewMode: { enable: "/api/draft-mode/enable" },
