@@ -1,0 +1,577 @@
+     1→     1→'use client'
+     2→     2→import { useState } from 'react'
+     3→     3→import Image from 'next/image'
+     4→     4→import Link from 'next/link'
+     5→     5→import { motion, AnimatePresence } from 'framer-motion'
+     6→     6→import { Phone, Calendar, Baby, Stethoscope, ArrowRight, Star, CheckCircle2, Eye, Scissors, Microscope, Syringe, Activity, ChevronDown, GraduationCap, Globe, MapPin } from 'lucide-react'
+     7→     7→import { Button } from '@/components/ui/button'
+     8→     8→import { Card, CardContent } from '@/components/ui/card'
+     9→     9→import ScrollReveal from '@/components/animations/ScrollReveal'
+    10→    10→import MagneticButton from '@/components/animations/MagneticButton'
+    11→    11→import DoctorLightbox from '@/components/ui/DoctorLightbox'
+    12→    12→import { ve } from '@/lib/ve'
+    13→    13→import { plainText } from '@/lib/sanity.client'
+    14→    14→
+    15→    15→/* ═══════════════════════════════════════════════════════════════════
+    16→    16→   TYPES
+    17→    17→   ═══════════════════════════════════════════════════════════════════ */
+    18→    18→interface HeroSlideData { _id: string; title?: string; subtitle?: Array<{_type:string;children:Array<{text:string}>}>; ctaLabel?: string; ctaLink?: string; ctaType?: string }
+    19→    19→interface StatData { _id: string; label?: string; value?: number; suffix?: string; prefix?: string }
+    20→    20→interface SiteSettingsData { _id: string; companyName?: string; slogan?: string; tagline?: string }
+    21→    21→
+    22→    22→interface HomePageClientProps {
+    23→    23→  heroSlide?: HeroSlideData | null
+    24→    24→  stats?: StatData[] | null
+    25→    25→  siteSettings?: SiteSettingsData | null
+    26→    26→}
+    27→    27→
+    28→    28→/* ═══════════════════════════════════════════════════════════════════
+    29→    29→   DATA — Services (expanded with surgical + new images)
+    30→    30→   ═══════════════════════════════════════════════════════════════════ */
+    31→    31→const services = [
+    32→    32→  {
+    33→    33→    icon: Stethoscope,
+    34→    34→    title: 'Ecografía Ginecológica',
+    35→    35→    description: 'Diagnóstico por imagen de alta resolución para evaluación completa del aparato reproductor femenino.',
+    36→    36→    href: '/servicios/ecografia-ginecologica',
+    37→    37→    image: '/ultrasound-service.jpg',
+    38→    38→  },
+    39→    39→  {
+    40→    40→    icon: Baby,
+    41→    41→    title: 'Ecografía Obstétrica',
+    42→    42→    description: 'Control prenatal con tecnología 4D para monitorear el desarrollo de tu bebé en cada etapa.',
+    43→    43→    href: '/servicios/ecografia-obstetrica',
+    44→    44→    image: '/service-eco-obs.jpg',
+    45→    45→  },
+    46→    46→  {
+    47→    47→    icon: Scissors,
+    48→    48→    title: 'Cirugía Ginecológica',
+    49→    49→    description: 'Procedimientos quirúrgicos de alta precisión con tecnología mínimamente invasiva para tu recuperación óptima.',
+    50→    50→    href: '/servicios/cirugia-ginecologica',
+    51→    51→    image: '/servicios/cirugias-1.jpg',
+    52→    52→  },
+    53→    53→  {
+    54→    54→    icon: Activity,
+    55→    55→    title: 'Laparoscopía',
+    56→    56→    description: 'Cirugía laparoscópica avanzada: mínima invasión, máxima precisión y recuperación rápida.',
+    57→    57→    href: '/servicios/laparoscopia',
+    58→    58→    image: '/servicios/laparoscopia-3.jpg',
+    59→    59→  },
+    60→    60→  {
+    61→    61→    icon: Syringe,
+    62→    62→    title: 'Cesáreas',
+    63→    63→    description: 'Maternidad segura con equipo especializado y tecnología de última generación para el bienestar madre e hijo.',
+    64→    64→    href: '/servicios/cesareas',
+    65→    65→    image: '/servicios/cesarea-1.jpg',
+    66→    66→  },
+    67→    67→  {
+    68→    68→    icon: Microscope,
+    69→    69→    title: 'Histeroscopía',
+    70→    70→    description: 'Diagnóstico avanzado del interior uterino con equipos de alta resolución para detección precisa.',
+    71→    71→    href: '/servicios/histeroscopia',
+    72→    72→    image: '/servicios/histeroscopia.png',
+    73→    73→  },
+    74→    74→]
+    75→    75→
+    76→    76→const mentorships = [
+    77→    77→  {
+    78→    78→    title: 'Alta Especialización en Ginecología Funcional',
+    79→    79→    institution: 'Sociedad Argentina de Ginecología y Estética (SARGE)',
+    80→    80→    location: 'Buenos Aires, Argentina',
+    81→    81→    flag: '🇦🇷',
+    82→    82→    image: '/doctores/dr-elias-1.jpg',
+    83→    83→    galleryImages: ['/doctores/dr-elias-1.jpg', '/doctores/dr-elias-2.jpg', '/doctores/dr-elias-banner.jpeg'],
+    84→    84→    description: 'Certificación avanzada y entrenamiento médico en tecnologías aplicadas a la ginecología funcional, cursado bajo la tutela directa del Dr. Jorge Elías, referente e ícono de la medicina funcional en Sudamérica.',
+    85→    85→  },
+    86→    86→  {
+    87→    87→    title: 'Cirugía Avanzada de Piso Pélvico',
+    88→    88→    institution: 'Fundación Universitaria de Ciencias de la Salud (FUCS)',
+    89→    89→    location: 'Cúcuta, Colombia',
+    90→    90→    flag: '🇨🇴',
+    91→    91→    image: '/doctores/dr-ochoa-1.jpg',
+    92→    92→    galleryImages: ['/doctores/dr-ochoa-1.jpg', '/doctores/dr-ochoa-2.jpg', '/doctores/dr-ochoa-3.jpg'],
+    93→    93→    galleryLabel: 'Ver galería quirúrgica',
+    94→    94→    description: 'Perfeccionamiento de técnicas quirúrgicas de vanguardia en prolapso genital, incontinencia urinaria y reparación sitio específica, entrenado por el Dr. Álvaro Ochoa, uno de los máximos expositores de piso pélvico en Colombia y Sudamérica.',
+    95→    95→  },
+    96→    96→  {
+    97→    97→    title: 'Medicina Fetal y Ecografía Compleja',
+    98→    98→    institution: 'Escuela de Ultrasonido ECO IMAGEN',
+    99→    99→    location: 'Lima, Perú',
+   100→   100→    flag: '🇵🇪',
+   101→   101→    image: '/doctores/dr-zapata-1.jpg',
+   102→   102→    galleryImages: ['/doctores/dr-zapata-1.jpg', '/doctores/dr-zapata-2.jpg'],
+   103→   103→    description: 'Sólida preparación experta en neurosonografía, ecocardiografía fetal y Doppler avanzado para el manejo de embarazos de alto riesgo, estudios realizados junto al reconocido especialista Dr. Josué Zapata.',
+   104→   104→  },
+   105→   105→]
+   106→   106→
+   107→   107→/* ═══════════════════════════════════════════════════════════════════
+   108→   108→   DATA — Facilities
+   109→   109→   ═══════════════════════════════════════════════════════════════════ */
+   110→   110→const facilities = [
+   111→   111→  {
+   112→   112→    src: '/instalaciones/instalacion-1.jpg',
+   113→   113→    alt: 'Infraestructura física del Consultorio Nueva Vida',
+   114→   114→    caption: 'Áreas de atención modernas y cómodas',
+   115→   115→  },
+   116→   116→  {
+   117→   117→    src: '/instalaciones/instalacion-2.jpg',
+   118→   118→    alt: 'Tecnología médica de última generación',
+   119→   119→    caption: 'Equipos de diagnóstico de alta resolución',
+   120→   120→  },
+   121→   121→]
+   122→   122→
+   123→   123→const fallbackStats = [
+   124→   124→  { value: '15+', label: 'Años de Experiencia' },
+   125→   125→  { value: '10,000+', label: 'Pacientes Atendidas' },
+   126→   126→  { value: '98%', label: 'Satisfacción' },
+   127→   127→  { value: '4.9', label: 'Calificación' },
+   128→   128→]
+   129→   129→
+   130→   130→const testimonials = [
+   131→   131→  {
+   132→   132→    name: 'María García',
+   133→   133→    text: 'El Dr. Adolfo es un profesional excepcional. Me hizo sentir cómoda en todo momento y su atención fue impecable durante todo mi embarazo.',
+   134→   134→    rating: 5,
+   135→   135→  },
+   136→   136→  {
+   137→   137→    name: 'Carolina López',
+   138→   138→    text: 'La tecnología que manejan es de primera. La ecografía 4D fue una experiencia increíble para mi familia. Totalmente recomendado.',
+   139→   139→    rating: 5,
+   140→   140→  },
+   141→   141→  {
+   142→   142→    name: 'Ana Torres',
+   143→   143→    text: 'Excelente atención desde la recepción hasta la consulta. El ambiente es muy acogedor y profesional. Sin duda el mejor consultorio.',
+   144→   144→    rating: 5,
+   145→   145→  },
+   146→   146→]
+   147→   147→
+   148→   148→export default function HomePageClient({ heroSlide, stats: sanityStats, siteSettings }: HomePageClientProps) {
+   149→   149→  const [accordionOpen, setAccordionOpen] = useState(0)
+   150→   150→  const [lightboxOpen, setLightboxOpen] = useState(false)
+   151→   151→  const [lightboxImages, setLightboxImages] = useState<{ src: string; alt: string }[]>([])
+   152→   152→
+   153→   153→  // Use Sanity data or fallback
+   154→   154→  const heroTitle = heroSlide?.title || 'Cuidamos tu Nueva Vida'
+   155→   155→  const heroSubtitle = heroSlide?.subtitle ? plainText(heroSlide.subtitle) : 'Atención médica especializada con tecnología de última generación. Tu salud y bienestar están en las mejores manos.'
+   156→   156→  const heroCtaLabel = heroSlide?.ctaLabel || 'Agendar Cita'
+   157→   157→  const heroCtaLink = heroSlide?.ctaLink || '/reservas#hero'
+   158→   158→
+   159→   159→  const displayStats = (sanityStats && sanityStats.length > 0)
+   160→   160→    ? sanityStats.map(s => ({
+   161→   161→        value: `${s.prefix || ''}${s.value}${s.suffix || ''}`,
+   162→   162→        label: s.label || '',
+   163→   163→        _id: s._id,
+   164→   164→      }))
+   165→   165→    : fallbackStats.map(s => ({ ...s, _id: '' }))
+   166→   166→
+   167→   167→  return (
+   168→   168→    <>
+   169→   169→      {/* ═══ HERO SECTION — FULL-BLEED 100% ═══ */}
+   170→   170→      <section className="relative w-full min-h-screen min-h-[100dvh] flex items-center overflow-hidden" id="inicio">
+   171→   171→        {/* BACKGROUND LAYER — Edge-to-edge image + gradient */}
+   172→   172→        <div className="absolute inset-0 z-0">
+   173→   173→          <Image src="/hero-mobile.webp" alt="Nueva Vida" fill className="object-cover sm:hidden" priority quality={90} />
+   174→   174→          <Image src="/hero-desktop.webp" alt="Nueva Vida" fill className="object-cover hidden sm:block" priority quality={90} />
+   175→   175→          <div className="absolute inset-0 bg-gradient-to-r from-marine/90 via-marine/70 to-royal/50" />
+   176→   176→        </div>
+   177→   177→
+   178→   178→        <div className="absolute inset-0 z-0 overflow-hidden">
+   179→   179→          {[...Array(6)].map((_, i) => (
+   180→   180→            <motion.div key={i} className="absolute w-2 h-2 rounded-full bg-cyan/30"
+   181→   181→              style={{ left: `${10 + i * 15}%`, top: `${20 + (i % 3) * 25}%` }}
+   182→   182→              animate={{ y: [0, -30, 0], opacity: [0.3, 0.8, 0.3] }}
+   183→   183→              transition={{ duration: 3 + i, repeat: Infinity, ease: 'easeInOut' }}
+   184→   184→            />
+   185→   185→          ))}
+   186→   186→        </div>
+   187→   187→
+   188→   188→        {/* CONTENT WRAPPER — Constrained to 1200px for readability */}
+   189→   189→        <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 pt-[70px] sm:pt-[78px] lg:pt-[80px] pb-20">
+   190→   190→          <div className="grid lg:grid-cols-2 gap-12 items-center">
+   191→   191→            <div className="space-y-8">
+   192→   192→              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="space-y-4">
+   193→   193→                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan/20 text-cyan-light text-sm font-medium">
+   194→   194→                  <span className="w-2 h-2 rounded-full bg-cyan animate-pulse" />
+   195→   195→                  Consultorio Ginecológico Especializado
+   196→   196→                </span>
+   197→   197→                <h1 {...ve(heroSlide?._id || 'heroSlide-fallback', 'heroSlide', 'title')} className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight">
+   198→   198→                  {heroTitle}
+   199→   199→                </h1>
+   200→   200→                <p {...ve(heroSlide?._id || 'heroSlide-fallback', 'heroSlide', 'subtitle')} className="text-lg sm:text-xl text-white/80 max-w-lg leading-relaxed">
+   201→   201→                  {heroSubtitle}
+   202→   202→                </p>
+   203→   203→              </motion.div>
+   204→   204→              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.5 }} className="flex flex-wrap gap-4">
+   205→   205→                <MagneticButton href="/reservas#hero" strength={0.2}>
+   206→   206→                  <Button size="lg" className="bg-cyan hover:bg-cyan-light text-white font-semibold rounded-full px-8 h-14 text-base shadow-2xl shadow-cyan/30 glow-cyan">
+   207→   207→                    <Calendar className="w-5 h-5 mr-2" />Agendar Cita
+   208→   208→                  </Button>
+   209→   209→                </MagneticButton>
+   210→   210→                <MagneticButton href="tel:+51983554248" strength={0.15}>
+   211→   211→                  <Button size="lg" variant="outline" className="border-cyan text-cyan hover:bg-cyan hover:text-white rounded-full px-8 h-14 text-base backdrop-blur-sm transition-all duration-300">
+   212→   212→                    <Phone className="w-5 h-5 mr-2" />Llamar Ahora
+   213→   213→                  </Button>
+   214→   214→                </MagneticButton>
+   215→   215→              </motion.div>
+   216→   216→              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.8 }}
+   217→   217→                className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8 border-t border-white/10">
+   218→   218→                {displayStats.map((stat) => (
+   219→   219→                  <div key={stat._id || stat.label} {...ve(stat._id, 'stat', 'value')} className="text-center">
+   220→   220→                    <div className="text-2xl sm:text-3xl font-bold text-cyan-light">{stat.value}</div>
+   221→   221→                    <div {...ve(stat._id, 'stat', 'label')} className="text-white/50 text-xs sm:text-sm mt-1">{stat.label}</div>
+   222→   222→                  </div>
+   223→   223→                ))}
+   224→   224→              </motion.div>
+   225→   225→            </div>
+   226→   226→
+   227→   227→            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.4 }} className="hidden lg:flex justify-center">
+   228→   228→              <div className="relative">
+   229→   229→                <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-cyan/20 to-royal/20 blur-2xl" />
+   230→   230→                <div className="relative rounded-3xl overflow-hidden glass p-1">
+   231→   231→                  <div className="rounded-2xl overflow-hidden">
+   232→   232→                    <Image src="/doctores/dr-adolfo.webp" alt="Dr. Adolfo Herencia Barrios - Especialista en Ginecología y Obstetricia" width={400} height={550} className="object-cover" />
+   233→   233→                  </div>
+   234→   234→                  <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-marine/90 to-transparent">
+   235→   235→                    <h3 className="text-white font-bold text-xl">Dr. Adolfo Herencia Barrios</h3>
+   236→   236→                    <p className="text-cyan-light text-sm">Ginecología y Obstetricia</p>
+   237→   237→                  </div>
+   238→   238→                </div>
+   239→   239→              </div>
+   240→   240→            </motion.div>
+   241→   241→          </div>
+   242→   242→        </div>
+   243→   243→
+   244→   244→        <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10" animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+   245→   245→          <div className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-1.5">
+   246→   246→            <motion.div className="w-1.5 h-1.5 rounded-full bg-cyan" animate={{ y: [0, 16, 0] }} transition={{ duration: 2, repeat: Infinity }} />
+   247→   247→          </div>
+   248→   248→        </motion.div>
+   249→   249→        {/* Section transition: dark → white */}
+   250→   250→        <div className="hero-fade-bottom" />
+   251→   251→      </section>
+   252→   252→
+   253→   253→      {/* ═══ ABOUT SECTION ═══ */}
+   254→   254→      <section className="py-20 lg:py-28 bg-white" id="quienes-somos">
+   255→   255→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   256→   256→          <div className="grid lg:grid-cols-2 gap-16 items-center">
+   257→   257→            <ScrollReveal direction="left">
+   258→   258→              <div className="relative">
+   259→   259→                <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-cyan/10 to-royal/10 blur-xl" />
+   260→   260→                <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+   261→   261→                  <Image src="/instalaciones/instalacion-1.jpg" alt="Consultorio Nueva Vida" width={600} height={400} className="object-cover w-full" />
+   262→   262→                </div>
+   263→   263→                <motion.div className="absolute -bottom-6 -right-6 bg-cyan text-white rounded-2xl p-4 shadow-xl" animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}>
+   264→   264→                  <div className="text-center"><div className="text-3xl font-bold">15+</div><div className="text-xs opacity-80">Años</div></div>
+   265→   265→                </motion.div>
+   266→   266→              </div>
+   267→   267→            </ScrollReveal>
+   268→   268→            <ScrollReveal direction="right" delay={0.2}>
+   269→   269→              <div className="space-y-6">
+   270→   270→                <div>
+   271→   271→                  <span {...ve('siteSettings', 'siteSettings', 'slogan')} className="text-cyan font-semibold text-sm uppercase tracking-wider">Quiénes Somos</span>
+   272→   272→                  <h2 {...ve('siteSettings', 'siteSettings', 'tagline')} className="text-3xl sm:text-4xl font-bold text-marine mt-2 leading-tight">Tu bienestar, nuestra{' '}<span className="gradient-text">misión principal</span></h2>
+   273→   273→                </div>
+   274→   274→                <p {...ve('siteSettings', 'siteSettings', 'companyName')} className="text-marine/70 text-lg leading-relaxed">
+   275→   275→                  En <strong className="text-marine">Nueva Vida</strong>, contamos con más de 15 años de experiencia brindando atención ginecológica integral de la más alta calidad. Nuestro consultorio está equipado con tecnología de última generación para garantizar diagnósticos precisos y tratamientos efectivos.
+   276→   276→                </p>
+   277→   277→                <div className="grid grid-cols-2 gap-4 pt-4">
+   278→   278→                  {['Tecnología 4D', 'Ambiente Privado', 'Atención Personalizada', 'Resultados Inmediatos'].map((item) => (
+   279→   279→                    <div key={item} className="flex items-center gap-2 text-marine/80 text-sm"><CheckCircle2 className="w-4 h-4 text-cyan flex-shrink-0" /><span>{item}</span></div>
+   280→   280→                  ))}
+   281→   281→                </div>
+   282→   282→                <div className="pt-4">
+   283→   283→                  <MagneticButton href="/salud" strength={0.15}>
+   284→   284→                    <Button variant="outline" className="border-royal text-royal hover:bg-royal hover:text-white rounded-full px-6 transition-all duration-300">Conoce más <ArrowRight className="w-4 h-4 ml-2" /></Button>
+   285→   285→                  </MagneticButton>
+   286→   286→                </div>
+   287→   287→              </div>
+   288→   288→            </ScrollReveal>
+   289→   289→          </div>
+   290→   290→        </div>
+   291→   291→      </section>
+   292→   292→
+   293→   293→      {/* ═══ NUESTRO ESPECIALISTA — Dr. Adolfo Herencia Barrios ═══ */}
+   294→   294→      <section className="py-20 lg:py-28 bg-white" id="nuestro-especialista">
+   295→   295→        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+   296→   296→          <ScrollReveal>
+   297→   297→            <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-14 items-start">
+   298→   298→              <div className="relative">
+   299→   299→                <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-cyan/15 to-royal/15 blur-2xl" />
+   300→   300→                <div className="relative rounded-2xl overflow-hidden shadow-xl shadow-marine/10">
+   301→   301→                  <Image src="/doctores/dr-adolfo.webp" alt="Dr. Adolfo Herencia Barrios" width={500} height={620} className="object-cover w-full h-auto" priority />
+   302→   302→                  <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-marine/90 via-marine/40 to-transparent">
+   303→   303→                    <span className="inline-flex items-center gap-2 bg-cyan/20 text-cyan-light text-xs font-bold px-4 py-1.5 rounded-full backdrop-blur-sm">
+   304→   304→                      <Stethoscope className="w-3.5 h-3.5" />+10 Años de Experiencia
+   305→   305→                    </span>
+   306→   306→                  </div>
+   307→   307→                </div>
+   308→   308→              </div>
+   309→   309→              <div className="space-y-5">
+   310→   310→                <div>
+   311→   311→                  <span className="text-cyan font-bold text-xs uppercase tracking-widest">Médico Especialista Principal</span>
+   312→   312→                  <h2 className="text-3xl sm:text-4xl font-bold text-marine mt-2 leading-tight">Dr. Adolfo Herencia Barrios</h2>
+   313→   313→                  <p className="text-royal font-semibold mt-3 text-base lg:text-lg leading-relaxed">Garantizando tu bienestar en cada etapa de la vida con medicina de vanguardia, precisión diagnóstica y calidez humana.</p>
+   314→   314→                </div>
+   315→   315→                <div className="bg-[#F8F9FA] rounded-xl border border-[#E9ECEF] overflow-hidden">
+   316→   316→                  <button onClick={() => setAccordionOpen(accordionOpen === 1 ? 0 : 1)} className="w-full flex items-center justify-between p-4 sm:p-5 text-left font-bold text-marine hover:bg-[#F0F4FA] transition-colors duration-200">
+   317→   317→                    <span className="text-sm sm:text-base">Presentación Profesional</span>
+   318→   318→                    <ChevronDown className={`w-5 h-5 text-cyan flex-shrink-0 ml-3 transition-transform duration-300 ${accordionOpen === 1 ? 'rotate-180' : ''}`} />
+   319→   319→                  </button>
+   320→   320→                  <AnimatePresence>
+   321→   321→                    {accordionOpen === 1 && (
+   322→   322→                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden">
+   323→   323→                        <div className="px-5 pb-5 text-marine/70 text-sm sm:text-[15px] leading-relaxed">Soy el Dr. Adolfo Herencia Barrios, médico gineco-obstetra comprometido firmemente con la salud integral y el bienestar de la mujer. Entiendo que acudir al ginecólogo es un acto de confianza absoluta; por ello, mi enfoque combina una atención empática y personalizada con el respaldo de más de una década de sólida experiencia clínica y quirúrgica en los principales centros hospitalarios de nuestra región. Mi práctica se distingue por una constante actualización científica a nivel internacional, orientada a ofrecer los tratamientos menos invasivos, más seguros y avanzados en la especialidad de ginecología y obstetricia.</div>
+   324→   324→                      </motion.div>
+   325→   325→                    )}
+   326→   326→                  </AnimatePresence>
+   327→   327→                </div>
+   328→   328→                <div className="bg-[#F8F9FA] rounded-xl border border-[#E9ECEF] overflow-hidden">
+   329→   329→                  <button onClick={() => setAccordionOpen(accordionOpen === 2 ? 0 : 2)} className="w-full flex items-center justify-between p-4 sm:p-5 text-left font-bold text-marine hover:bg-[#F0F4FA] transition-colors duration-200">
+   330→   330→                    <span className="text-sm sm:text-base">Pilares y Especialidades de Vanguardia</span>
+   331→   331→                    <ChevronDown className={`w-5 h-5 text-cyan flex-shrink-0 ml-3 transition-transform duration-300 ${accordionOpen === 2 ? 'rotate-180' : ''}`} />
+   332→   332→                  </button>
+   333→   333→                  <AnimatePresence>
+   334→   334→                    {accordionOpen === 2 && (
+   335→   335→                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden">
+   336→   336→                        <div className="px-5 pb-5 space-y-5">
+   337→   337→                          <div className="space-y-2">
+   338→   338→                            <div className="flex items-center gap-2">
+   339→   339→                              <div className="w-8 h-8 rounded-lg bg-cyan/10 flex items-center justify-center flex-shrink-0"><Globe className="w-4 h-4 text-cyan" /></div>
+   340→   340→                              <h4 className="font-bold text-marine text-sm">Formación y Alta Especialización Internacional</h4>
+   341→   341→                            </div>
+   342→   342→                            <p className="text-marine/70 text-sm leading-relaxed pl-10">Con el propósito de traer la medicina del más alto nivel a mis pacientes, he complementado mi especialización con entrenamientos avanzados fuera de nuestras fronteras. Cuento con certificación en Buenos Aires, Argentina, por la <strong className="text-marine">Sociedad Argentina de Ginecología y Estética (SARGE)</strong>, especializándome en tecnologías aplicadas a la ginecología funcional; estudios de alta especialización realizados junto al <strong className="text-marine">Dr. Jorge Elías</strong> (referente de la medicina funcional en Argentina y Sudamérica). Asimismo, me capacité en la <strong className="text-marine">Fundación Universitaria de Ciencias de la Salud (FUCS)</strong> en Cúcuta, Colombia, perfeccionando técnicas avanzadas de cirugía ginecológica en prolapso genital, incontinencia urinaria de esfuerzo, reparación sitio específica e histerectomía sin prolapso, bajo la mentoría del <strong className="text-marine">Dr. Álvaro Ochoa</strong> (referente y uno de los máximos expositores de piso pélvico en Colombia y Sudamérica).</p>
+   343→   343→                          </div>
+   344→   344→                          <div className="space-y-2">
+   345→   345→                            <div className="flex items-center gap-2">
+   346→   346→                              <div className="w-8 h-8 rounded-lg bg-cyan/10 flex items-center justify-center flex-shrink-0"><Microscope className="w-4 h-4 text-cyan" /></div>
+   347→   347→                              <h4 className="font-bold text-marine text-sm">Histeroscopia Avanzada y Cirugía Mínimamente Invasiva</h4>
+   348→   348→                            </div>
+   349→   349→                            <p className="text-marine/70 text-sm leading-relaxed pl-10">Cuento con un riguroso entrenamiento intensivo de nivel avanzado (Hands-On) en histeroscopia tanto de consultorio (utilizando el reconocido equipo Bettocchi) como de quirófano con resectoscopio. Este enfoque de vanguardia me permite diagnosticar y tratar de forma directa patologías dentro del útero sin necesidad de recurrir a grandes cirugías abiertas, asegurando intervenciones rápidas, seguras y con una recuperación extraordinariamente cómoda para ti.</p>
+   350→   350→                          </div>
+   351→   351→                          <div className="space-y-2">
+   352→   352→                            <div className="flex items-center gap-2">
+   353→   353→                              <div className="w-8 h-8 rounded-lg bg-cyan/10 flex items-center justify-center flex-shrink-0"><Baby className="w-4 h-4 text-cyan" /></div>
+   354→   354→                              <h4 className="font-bold text-marine text-sm">Ecografía Obstétrica Compleja y Medicina Fetal</h4>
+   355→   355→                            </div>
+   356→   356→                            <p className="text-marine/70 text-sm leading-relaxed pl-10">El cuidado de una nueva vida exige la máxima exactitud diagnóstica. Poseo una sólida formación experta en ecografía morfológica avanzada del primer y segundo trimestre, ecografía Doppler avanzada, ecocardiografía y neurosonografía fetal, estudios realizados bajo la tutela del <strong className="text-marine">Dr. Josué Zapata</strong> (especialista en medicina fetal y estudios ecográficos de alta complejidad, en su escuela ECO IMAGEN). Esta preparación técnica, sumada a mi acreditación en Cirugía Obstétrica de Alta Complejidad por el <strong className="text-marine">Instituto Nacional Materno Perinatal (Maternidad de Lima)</strong>, me permite realizar un seguimiento minucioso y proteger la salud de la madre y del bebé, incluso en embarazos de alto riesgo.</p>
+   357→   357→                          </div>
+   358→   358→                        </div>
+   359→   359→                      </motion.div>
+   360→   360→                    )}
+   361→   361→                  </AnimatePresence>
+   362→   362→                </div>
+   363→   363→                <div className="bg-[#F8F9FA] rounded-xl border border-[#E9ECEF] overflow-hidden">
+   364→   364→                  <button onClick={() => setAccordionOpen(accordionOpen === 3 ? 0 : 3)} className="w-full flex items-center justify-between p-4 sm:p-5 text-left font-bold text-marine hover:bg-[#F0F4FA] transition-colors duration-200">
+   365→   365→                    <span className="text-sm sm:text-base">Respaldo Académico (Garantía de Confianza)</span>
+   366→   366→                    <ChevronDown className={`w-5 h-5 text-cyan flex-shrink-0 ml-3 transition-transform duration-300 ${accordionOpen === 3 ? 'rotate-180' : ''}`} />
+   367→   367→                  </button>
+   368→   368→                  <AnimatePresence>
+   369→   369→                    {accordionOpen === 3 && (
+   370→   370→                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden">
+   371→   371→                        <div className="px-5 pb-5 space-y-2">
+   372→   372→                          <div className="flex items-center gap-2">
+   373→   373→                            <div className="w-8 h-8 rounded-lg bg-cyan/10 flex items-center justify-center flex-shrink-0"><GraduationCap className="w-4 h-4 text-cyan" /></div>
+   374→   374→                            <h4 className="font-bold text-marine text-sm">Labor Docente Universitaria</h4>
+   375→   375→                          </div>
+   376→   376→                          <p className="text-marine/70 text-sm leading-relaxed pl-10">Comparto activamente mis conocimientos e investigo las últimas evidencias de la ciencia médica como Docente de la Facultad de Medicina Humana en la <strong className="text-marine">Universidad Privada San Juan Bautista</strong>, manteniéndome al día con las directrices de salud mundiales.</p>
+   377→   377→                        </div>
+   378→   378→                      </motion.div>
+   379→   379→                    )}
+   380→   380→                  </AnimatePresence>
+   381→   381→                </div>
+   382→   382→                <div className="pt-3">
+   383→   383→                  <MagneticButton href="https://wa.me/51983554248?text=Hola%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita%20con%20el%20Dr.%20Adolfo" strength={0.15}>
+   384→   384→                    <Button className="bg-[#25D366] hover:bg-[#1DA851] text-white font-semibold rounded-full px-8 h-13 shadow-lg shadow-[#25D366]/30 transition-all duration-300 hover:shadow-xl hover:shadow-[#25D366]/40">
+   385→   385→                      <Calendar className="w-5 h-5 mr-2" />Agendar Cita con el Dr. Adolfo
+   386→   386→                    </Button>
+   387→   387→                  </MagneticButton>
+   388→   388→                </div>
+   389→   389→              </div>
+   390→   390→            </div>
+   391→   391→          </ScrollReveal>
+   392→   392→        </div>
+   393→   393→      </section>
+   394→   394→
+   395→   395→      {/* ═══ SERVICES PREVIEW — EXPANDED WITH SURGICAL ═══ */}
+   396→   396→      <section className="section-transition-light py-16 lg:py-24 bg-gradient-to-b from-[#F0F7FD] to-white" id="servicios">
+   397→   397→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   398→   398→          <ScrollReveal>
+   399→   399→            <div className="text-center max-w-2xl mx-auto mb-10 lg:mb-14">
+   400→   400→              <span className="text-cyan font-semibold text-sm uppercase tracking-wider">Nuestros Servicios</span>
+   401→   401→              <h2 className="text-3xl sm:text-4xl font-bold text-marine mt-2">Atención especializada para tu{' '}<span className="gradient-text">salud íntima</span></h2>
+   402→   402→              <p className="text-marine/60 mt-4 text-lg">Diagnóstico, cirugía y prevención con la más alta tecnología médica.</p>
+   403→   403→            </div>
+   404→   404→          </ScrollReveal>
+   405→   405→          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+   406→   406→            {services.map((service, i) => (
+   407→   407→              <ScrollReveal key={service.title} delay={i * 0.06}>
+   408→   408→                <Link href={service.href} className="block group">
+   409→   409→                  <article className="relative rounded-2xl overflow-hidden bg-white
+   410→   410→                    shadow-[0_4px_20px_rgba(0,32,96,0.08)]
+   411→   411→                    group-hover:shadow-[0_20px_40px_rgba(0,32,96,0.12)]
+   412→   412→                    group-hover:-translate-y-[6px]
+   413→   413→                    transition-all duration-300 ease-out h-full flex flex-col">
+   414→   414→                    <div className="relative h-40 sm:h-48 overflow-hidden">
+   415→   415→                      <Image src={service.image} alt={service.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" loading="lazy" />
+   416→   416→                      <div className="absolute inset-0 bg-gradient-to-t from-marine/70 via-marine/20 to-transparent" />
+   417→   417→                      <div className="absolute top-3 left-3 w-11 h-11 rounded-xl bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md group-hover:bg-cyan group-hover:shadow-lg group-hover:shadow-cyan/30 transition-all duration-300">
+   418→   418→                        <service.icon className="w-5 h-5 text-cyan group-hover:text-white transition-colors duration-300" />
+   419→   419→                      </div>
+   420→   420→                      <div className="absolute bottom-3 left-3 right-3">
+   421→   421→                        <h3 className="text-white font-bold text-base leading-tight drop-shadow-sm">{service.title}</h3>
+   422→   422→                      </div>
+   423→   423→                    </div>
+   424→   424→                    <div className="p-4 flex-1 flex flex-col">
+   425→   425→                      <p className="text-marine/60 text-[13px] leading-relaxed flex-1">{service.description}</p>
+   426→   426→                      <div className="mt-3 pt-3 border-t border-marine/5">
+   427→   427→                        <span className="inline-flex items-center gap-1.5 text-cyan text-sm font-semibold opacity-60 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-300">
+   428→   428→                          Conocer más <ArrowRight className="w-3.5 h-3.5" />
+   429→   429→                        </span>
+   430→   430→                      </div>
+   431→   431→                    </div>
+   432→   432→                  </article>
+   433→   433→                </Link>
+   434→   434→              </ScrollReveal>
+   435→   435→            ))}
+   436→   436→          </div>
+   437→   437→          <ScrollReveal className="text-center mt-10 lg:mt-12">
+   438→   438→            <MagneticButton href="/servicios" strength={0.15}>
+   439→   439→              <Button className="bg-marine hover:bg-royal text-white font-semibold rounded-full px-8 shadow-lg shadow-marine/20 transition-all duration-300 hover:shadow-xl hover:shadow-marine/25">Ver Todos los Servicios <ArrowRight className="w-4 h-4 ml-2" /></Button>
+   440→   440→            </MagneticButton>
+   441→   441→          </ScrollReveal>
+   442→   442→        </div>
+   443→   443→      </section>
+   444→   444→
+   445→   445→      {/* ═══ FORMACIÓN MÉDICA DE EXCELENCIA INTERNACIONAL ═══ */}
+   446→   446→      <section className="section-transition-light py-20 lg:py-28 bg-gradient-to-b from-[#F0F7FD] to-white" id="formacion-internacional">
+   447→   447→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   448→   448→          <ScrollReveal>
+   449→   449→            <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
+   450→   450→              <span className="text-cyan font-bold text-xs uppercase tracking-widest">Garantía de Confianza</span>
+   451→   451→              <h2 className="text-3xl sm:text-4xl font-bold text-marine mt-2">
+   452→   452→                Formación Médica de{' '}<span className="gradient-text">Excelencia Internacional</span>
+   453→   453→              </h2>
+   454→   454→              <p className="text-marine/60 mt-4 text-base lg:text-lg leading-relaxed">
+   455→   455→                El Dr. Adolfo Herencia Barrios complementa su experiencia clínica mediante capacitaciones de alto nivel y mentorías directas con los máximos exponentes de la ginecología en Sudamérica.
+   456→   456→              </p>
+   457→   457→            </div>
+   458→   458→          </ScrollReveal>
+   459→   459→          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+   460→   460→            {mentorships.map((m, i) => (
+   461→   461→              <ScrollReveal key={m.institution} delay={i * 0.1}>
+   462→   462→                <article className="bg-white rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(0,32,96,0.06)] border border-[#F0F2F5] group hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+   463→   463→                  <div className="relative h-48 overflow-hidden">
+   464→   464→                    <Image src={m.image} alt={m.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" loading="lazy" />
+   465→   465→                    <div className="absolute inset-0 bg-gradient-to-t from-marine/50 via-transparent to-transparent" />
+   466→   466→                    <div className="absolute bottom-3 left-3">
+   467→   467→                      <span className="inline-flex items-center gap-1.5 bg-white/90 text-marine text-[11px] font-bold px-3 py-1.5 rounded-full backdrop-blur-sm shadow-sm">
+   468→   468→                        <MapPin className="w-3 h-3 text-cyan" />{m.flag} {m.location}
+   469→   469→                      </span>
+   470→   470→                    </div>
+   471→   471→                  </div>
+   472→   472→                  <div className="p-5 sm:p-6 flex flex-col flex-1">
+   473→   473→                    <h3 className="text-marine font-bold text-lg leading-tight">{m.title}</h3>
+   474→   474→                    <p className="text-cyan font-bold text-[13px] mt-1.5">{m.institution}</p>
+   475→   475→                    <p className="text-marine/60 text-[13.5px] leading-relaxed mt-3 flex-1">{m.description}</p>
+   476→   476→                    {m.galleryImages && (
+   477→   477→                      <button
+   478→   478→                        onClick={() => { setLightboxImages(m.galleryImages!.map((src) => ({ src, alt: m.title }))); setLightboxOpen(true) }}
+   479→   479→                        className="mt-4 inline-flex items-center gap-1.5 text-cyan text-sm font-semibold hover:text-royal transition-colors duration-200"
+   480→   480→                      >
+   481→   481→                        <Eye className="w-4 h-4" />{m.galleryLabel || 'Ver galería'}
+   482→   482→                      </button>
+   483→   483→                    )}
+   484→   484→                  </div>
+   485→   485→                </article>
+   486→   486→              </ScrollReveal>
+   487→   487→            ))}
+   488→   488→          </div>
+   489→   489→        </div>
+   490→   490→      </section>
+   491→   491→
+   492→   492→      {/* ═══ INSTALACIONES Y EQUIPAMIENTO ═══ */}
+   493→   493→      <section className="py-20 lg:py-28 bg-white" id="instalaciones">
+   494→   494→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   495→   495→          <ScrollReveal>
+   496→   496→            <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
+   497→   497→              <span className="text-cyan font-semibold text-sm uppercase tracking-wider">Instalaciones</span>
+   498→   498→              <h2 className="text-3xl sm:text-4xl font-bold text-marine mt-2">
+   499→   499→                Tecnología de{' '}<span className="gradient-text">última generación</span>
+   500→   500→              </h2>
+   501→   501→              <p className="text-marine/60 mt-4 text-lg">
+   502→   502→                Nuestro consultorio cuenta con infraestructura moderna y equipos médicos de alta resolución para garantizar la mejor atención.
+   503→   503→              </p>
+   504→   504→            </div>
+   505→   505→          </ScrollReveal>
+   506→   506→          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+   507→   507→            {facilities.map((facility, i) => (
+   508→   508→              <ScrollReveal key={facility.alt} delay={i * 0.1}>
+   509→   509→                <div className="relative rounded-2xl overflow-hidden shadow-xl shadow-marine/8 group cursor-pointer">
+   510→   510→                  <div className="relative h-[250px] sm:h-[320px]">
+   511→   511→                    <Image src={facility.src} alt={facility.alt} fill className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 640px) 100vw, 50vw" loading="lazy" />
+   512→   512→                    <div className="absolute inset-0 bg-gradient-to-t from-marine/60 via-marine/10 to-transparent" />
+   513→   513→                  </div>
+   514→   514→                  <div className="absolute bottom-4 left-4 right-4">
+   515→   515→                    <p className="text-white font-semibold text-sm drop-shadow-sm">{facility.caption}</p>
+   516→   516→                  </div>
+   517→   517→                </div>
+   518→   518→              </ScrollReveal>
+   519→   519→            ))}
+   520→   520→          </div>
+   521→   521→        </div>
+   522→   522→      </section>
+   523→   523→
+   524→   524→      {/* ═══ TESTIMONIALS ═══ */}
+   525→   525→      <section className="py-20 lg:py-28 bg-white" id="testimonios">
+   526→   526→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   527→   527→          <ScrollReveal>
+   528→   528→            <div className="text-center max-w-2xl mx-auto mb-16">
+   529→   529→              <span className="text-cyan font-semibold text-sm uppercase tracking-wider">Testimonios</span>
+   530→   530→              <h2 className="text-3xl sm:text-4xl font-bold text-marine mt-2">Lo que dicen nuestras{' '}<span className="gradient-text">pacientes</span></h2>
+   531→   531→            </div>
+   532→   532→          </ScrollReveal>
+   533→   533→          <div className="grid md:grid-cols-3 gap-8">
+   534→   534→            {testimonials.map((t, i) => (
+   535→   535→              <ScrollReveal key={t.name} delay={i * 0.15}>
+   536→   536→                <Card className="border-0 shadow-lg shadow-marine/5 bg-gradient-to-b from-white to-muted/50 h-full">
+   537→   537→                  <CardContent className="p-8 space-y-4">
+   538→   538→                    <div className="flex gap-1">{[...Array(t.rating)].map((_, j) => (<Star key={j} className="w-5 h-5 fill-cyan text-cyan" />))}</div>
+   539→   539→                    <p className="text-marine/70 leading-relaxed italic">&ldquo;{t.text}&rdquo;</p>
+   540→   540→                    <div className="flex items-center gap-3 pt-2">
+   541→   541→                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan to-royal flex items-center justify-center"><span className="text-white font-bold text-sm">{t.name.charAt(0)}</span></div>
+   542→   542→                      <div><p className="font-semibold text-marine text-sm">{t.name}</p><p className="text-marine/50 text-xs">Paciente verificada</p></div>
+   543→   543→                    </div>
+   544→   544→                  </CardContent>
+   545→   545→                </Card>
+   546→   546→              </ScrollReveal>
+   547→   547→            ))}
+   548→   548→          </div>
+   549→   549→        </div>
+   550→   550→      </section>
+   551→   551→
+   552→   552→      {/* ═══ CTA SECTION ═══ */}
+   553→   553→      <section className="py-20 lg:py-28 animated-gradient relative overflow-hidden" id="cta">
+   554→   554→        {/* Section transition: white → dark */}
+   555→   555→        <div className="cta-fade-top" />
+   556→   556→        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+   557→   557→          <ScrollReveal>
+   558→   558→            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">¿Lista para cuidar de tu salud?</h2>
+   559→   559→            <p className="text-white/80 mt-6 text-lg max-w-2xl mx-auto leading-relaxed">Agenda tu cita de manera rápida y sencilla. Nuestro equipo está listo para brindarte la atención que mereces.</p>
+   560→   560→            <div className="mt-10">
+   561→   561→              <MagneticButton href="/reservas#hero" strength={0.2}>
+   562→   562→                <Button size="lg" className="bg-white text-marine hover:bg-white/90 font-semibold rounded-full px-10 h-14 text-base shadow-2xl transition-all duration-300"><Calendar className="w-5 h-5 mr-2" />Agendar Cita Ahora</Button>
+   563→   563→              </MagneticButton>
+   564→   564→            </div>
+   565→   565→          </ScrollReveal>
+   566→   566→        </div>
+   567→   567→      </section>
+   568→   568→
+   569→   569→      {/* ═══ LIGHTBOX — Mentorship Gallery ═══ */}
+   570→   570→      <DoctorLightbox
+   571→   571→        images={lightboxImages}
+   572→   572→        isOpen={lightboxOpen}
+   573→   573→        onClose={() => setLightboxOpen(false)}
+   574→   574→      />
+   575→   575→    </>
+   576→   576→  )
+   577→   577→}

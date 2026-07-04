@@ -25,5 +25,30 @@ export default defineType({
     defineField({ name: "mapZoom", title: "Zoom del Mapa", type: "number", initialValue: 15 }),
     defineField({ name: "seoTitle", title: "SEO Título", type: "string" }),
     defineField({ name: "seoDescription", title: "SEO Descripción", type: "text", rows: 3, description: "Máximo 160 caracteres" }),
+    // — Home page sections —
+    defineField({ name: "aboutDescription", title: "Texto Quiénes Somos", type: "text", rows: 4, description: "Párrafo principal de la sección 'Quiénes Somos'." }),
+    defineField({ name: "aboutFeatures", title: "Características Quiénes Somos", type: "array", of: [{ type: "string" }], description: "Lista de features. Ej: Tecnología 4D, Ambiente Privado" }),
+    defineField({ name: "servicesTitle", title: "Título Sección Servicios (Home)", type: "string" }),
+    defineField({ name: "servicesDescription", title: "Descripción Sección Servicios (Home)", type: "text", rows: 2 }),
+    defineField({ name: "ctaTitle", title: "Título CTA (Home)", type: "string" }),
+    defineField({ name: "ctaDescription", title: "Descripción CTA (Home)", type: "text", rows: 2 }),
+    defineField({ name: "footerDescription", title: "Texto del Footer", type: "text", rows: 2 }),
+    // — Servicios page —
+    defineField({ name: "servicesPageTitle", title: "Título Página Servicios", type: "string" }),
+    defineField({ name: "servicesPageDescription", title: "Descripción Página Servicios", type: "text", rows: 2 }),
+    defineField({ name: "servicesCtaTitle", title: "Título CTA Servicios", type: "string" }),
+    defineField({ name: "servicesCtaDescription", title: "Descripción CTA Servicios", type: "text", rows: 2 }),
+    // — Salud page —
+    defineField({ name: "healthPageTitle", title: "Título Página Salud", type: "string" }),
+    defineField({ name: "healthPageDescription", title: "Descripción Página Salud", type: "text", rows: 2 }),
+    defineField({ name: "healthFaqTitle", title: "Título FAQ Salud", type: "string" }),
+    defineField({ name: "healthFaqDescription", title: "Descripción FAQ Salud", type: "text", rows: 2 }),
+    defineField({
+      name: "healthFaqs", title: "Preguntas Frecuentes (Salud)", type: "array",
+      of: [{ type: "object", title: "FAQ", fields: [
+        { name: "q", title: "Pregunta", type: "string", validation: (R: any) => R.required() },
+        { name: "a", title: "Respuesta", type: "text", rows: 3, validation: (R: any) => R.required() },
+      ], preview: { select: { title: "q", subtitle: "a" } } }],
+    }),
   ],
 });

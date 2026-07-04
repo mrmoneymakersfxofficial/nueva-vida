@@ -8,6 +8,11 @@ export default defineType({
     titleField("Nombre de la Categoría"),
     slugField("name"),
     defineField({ name: "description", title: "Descripción", type: "text", rows: 2 }),
+    defineField({ name: "fullTitle", title: "Título Completo", type: "string", description: "Título largo para la sección. Si se deja vacío, se usa el nombre." }),
+    defineField({ name: "lead", title: "Texto Introductorio", type: "text", rows: 2, description: "Párrafo descriptivo bajo el título de la categoría." }),
+    defineField({ name: "imagePath", title: "Ruta de Imagen Principal", type: "string", description: "Imagen local en /public. Ej: /servicios/eco-fetal-1.webp" }),
+    defineField({ name: "galleryPaths", title: "Rutas de Galería", type: "array", of: [{ type: "string" }], description: "Imágenes adicionales locales en /public." }),
+    defineField({ name: "shortLabel", title: "Etiqueta Corta", type: "string", description: "Para mobile navbar. Ej: Ecografía, Prevención" }),
     defineField({ name: "icon", title: "Icono", type: "string", description: "Nombre del icono Lucide. Ej: pencil-ruler, wrench, zap" }),
     defineField({ name: "color", title: "Color", type: "string", description: "Color hex. Ej: #004691" }),
     defineField({

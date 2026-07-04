@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Phone, Calendar, Baby, Stethoscope, ArrowRight, Star, CheckCircle2, Eye, Scissors, Microscope, Syringe, Activity, ChevronDown, GraduationCap, Globe, MapPin } from 'lucide-react'
+import { Phone, Calendar, Baby, Stethoscope, ArrowRight, Star, CheckCircle2, Eye, Scissors, Microscope, Syringe, Activity, ChevronDown, GraduationCap, Globe, MapPin, Heart, Shield } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import ScrollReveal from '@/components/animations/ScrollReveal'
@@ -17,12 +17,20 @@ import { plainText } from '@/lib/sanity.client'
    ═══════════════════════════════════════════════════════════════════ */
 interface HeroSlideData { _id: string; title?: string; subtitle?: Array<{_type:string;children:Array<{text:string}>}>; ctaLabel?: string; ctaLink?: string; ctaType?: string }
 interface StatData { _id: string; label?: string; value?: number; suffix?: string; prefix?: string }
-interface SiteSettingsData { _id: string; companyName?: string; slogan?: string; tagline?: string }
+interface SiteSettingsData { _id: string; companyName?: string; slogan?: string; tagline?: string; aboutDescription?: string; aboutFeatures?: string[]; servicesTitle?: string; servicesDescription?: string; ctaTitle?: string; ctaDescription?: string }
+interface ServiceData { _id: string; title?: string; slug?: string; subtitle?: string; shortDescription?: string; imagePath?: string; category?: { _id: string; name?: string; slug?: string }; featured?: boolean }
+interface TestimonialData { _id: string; authorName?: string; quote?: Array<{_type:string;children:Array<{text:string}>}>; rating?: number }
+interface MentorshipData { _id: string; title?: string; institution?: string; location?: string; flag?: string; imagePath?: string; galleryPaths?: string[]; galleryLabel?: string; description?: string }
+interface FacilityData { _id: string; imagePath?: string; alt?: string; caption?: string }
 
 interface HomePageClientProps {
   heroSlide?: HeroSlideData | null
   stats?: StatData[] | null
   siteSettings?: SiteSettingsData | null
+  services?: ServiceData[] | null
+  testimonials?: TestimonialData[] | null
+  mentorships?: MentorshipData[] | null
+  facilities?: FacilityData[] | null
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -145,7 +153,7 @@ const testimonials = [
   },
 ]
 
-export default function HomePageClient({ heroSlide, stats: sanityStats, siteSettings }: HomePageClientProps) {
+export default function HomePageClient({ heroSlide, stats: sanityStats, siteSettings, services: sanityServices, testimonials: sanityTestimonials, mentorships: sanityMentorships, facilities: sanityFacilities }: HomePageClientProps) {
   const [accordionOpen, setAccordionOpen] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxImages, setLightboxImages] = useState<{ src: string; alt: string }[]>([])
@@ -163,6 +171,70 @@ export default function HomePageClient({ heroSlide, stats: sanityStats, siteSett
         _id: s._id,
       }))
     : fallbackStats.map(s => ({ ...s, _id: '' }))
+
+  /* ── Icon map for services ── */
+  const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+    Stethoscope, Baby, Scissors, Activity, Syringe, Microscope,
+    Heart, Shield, Phone, Calendar, Eye,
+  }
+
+  /* ── Resolve services: Sanity or fallback ── */
+  const hardcodedIcons = [Stethoscope, Baby, Scissors, Activity, Syringe, Microscope]
+  const displayServices = (sanityServices && sanityServices.length > 0)
+    ? sanityServices.map((s, i) => ({
+        _id: s._id,
+        icon: hardcodedIcons[i] || Stethoscope,
+        title: s.title || 'Sin título',
+        description: s.shortDescription || '',
+        href: `/servicios/${s.slug || ''}`,
+        image: s.imagePath || '/ultrasound-service.jpg',
+      }))
+    : services
+
+  /* ── Resolve mentorships: Sanity or fallback ── */
+  const displayMentorships = (sanityMentorships && sanityMentorships.length > 0)
+    ? sanityMentorships.map(m => ({
+        _id: m._id,
+        title: m.title || '',
+        institution: m.institution || '',
+        location: m.location || '',
+        flag: m.flag || '',
+        image: m.imagePath || '/doctores/dr-adolfo-1.jpg',
+        galleryImages: m.galleryPaths || [],
+        galleryLabel: m.galleryLabel || 'Ver galería',
+        description: m.description || '',
+      }))
+    : mentorships
+
+  /* ── Resolve facilities: Sanity or fallback ── */
+  const displayFacilities = (sanityFacilities && sanityFacilities.length > 0)
+    ? sanityFacilities.map(f => ({
+        _id: f._id,
+        src: f.imagePath || '/instalaciones/instalacion-1.jpg',
+        alt: f.alt || '',
+        caption: f.caption || '',
+      }))
+    : facilities
+
+  /* ── Resolve testimonials: Sanity or fallback ── */
+  const displayTestimonials = (sanityTestimonials && sanityTestimonials.length > 0)
+    ? sanityTestimonials.map(t => ({
+        _id: t._id,
+        name: t.authorName || '',
+        text: plainText(t.quote as any) || '',
+        rating: t.rating || 5,
+      }))
+    : testimonials
+
+  /* ── Resolve site settings content ── */
+  const aboutDescription = siteSettings?.aboutDescription || 'En <strong className="text-marine">Nueva Vida</strong>, contamos con más de 15 años de experiencia brindando atención ginecológica integral de la más alta calidad. Nuestro consultorio está equipado con tecnología de última generación para garantizar diagnósticos precisos y tratamientos efectivos.'
+  const aboutFeatures = (siteSettings?.aboutFeatures && siteSettings.aboutFeatures.length > 0)
+    ? siteSettings.aboutFeatures
+    : ['Tecnología 4D', 'Ambiente Privado', 'Atención Personalizada', 'Resultados Inmediatos']
+  const servicesTitle = siteSettings?.servicesTitle || 'Atención especializada para tu'
+  const servicesDescription = siteSettings?.servicesDescription || 'Diagnóstico, cirugía y prevención con la más alta tecnología médica.'
+  const ctaTitle = siteSettings?.ctaTitle || '¿Lista para cuidar de tu salud?'
+  const ctaDescription = siteSettings?.ctaDescription || 'Agenda tu cita de manera rápida y sencilla. Nuestro equipo está listo para brindarte la atención que mereces.'
 
   return (
     <>
@@ -271,11 +343,9 @@ export default function HomePageClient({ heroSlide, stats: sanityStats, siteSett
                   <span {...ve('siteSettings', 'siteSettings', 'slogan')} className="text-cyan font-semibold text-sm uppercase tracking-wider">Quiénes Somos</span>
                   <h2 {...ve('siteSettings', 'siteSettings', 'tagline')} className="text-3xl sm:text-4xl font-bold text-marine mt-2 leading-tight">Tu bienestar, nuestra{' '}<span className="gradient-text">misión principal</span></h2>
                 </div>
-                <p {...ve('siteSettings', 'siteSettings', 'companyName')} className="text-marine/70 text-lg leading-relaxed">
-                  En <strong className="text-marine">Nueva Vida</strong>, contamos con más de 15 años de experiencia brindando atención ginecológica integral de la más alta calidad. Nuestro consultorio está equipado con tecnología de última generación para garantizar diagnósticos precisos y tratamientos efectivos.
-                </p>
-                <div className="grid grid-cols-2 gap-4 pt-4">
-                  {['Tecnología 4D', 'Ambiente Privado', 'Atención Personalizada', 'Resultados Inmediatos'].map((item) => (
+                <p {...ve('siteSettings', 'siteSettings', 'aboutDescription')} className="text-marine/70 text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: aboutDescription }} />
+                <div {...ve('siteSettings', 'siteSettings', 'aboutFeatures')} className="grid grid-cols-2 gap-4 pt-4">
+                  {aboutFeatures.map((item) => (
                     <div key={item} className="flex items-center gap-2 text-marine/80 text-sm"><CheckCircle2 className="w-4 h-4 text-cyan flex-shrink-0" /><span>{item}</span></div>
                   ))}
                 </div>
@@ -398,12 +468,15 @@ export default function HomePageClient({ heroSlide, stats: sanityStats, siteSett
           <ScrollReveal>
             <div className="text-center max-w-2xl mx-auto mb-10 lg:mb-14">
               <span className="text-cyan font-semibold text-sm uppercase tracking-wider">Nuestros Servicios</span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-marine mt-2">Atención especializada para tu{' '}<span className="gradient-text">salud íntima</span></h2>
-              <p className="text-marine/60 mt-4 text-lg">Diagnóstico, cirugía y prevención con la más alta tecnología médica.</p>
+              <h2 {...ve('siteSettings', 'siteSettings', 'servicesTitle')} className="text-3xl sm:text-4xl font-bold text-marine mt-2">{servicesTitle}{' '}<span className="gradient-text">salud íntima</span></h2>
+              <p {...ve('siteSettings', 'siteSettings', 'servicesDescription')} className="text-marine/60 mt-4 text-lg">{servicesDescription}</p>
             </div>
           </ScrollReveal>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
-            {services.map((service, i) => (
+            {displayServices.map((service, i) => {
+              const isSanity = sanityServices && sanityServices.length > 0
+              const serviceId = isSanity ? (service as any)._id : ''
+              return (
               <ScrollReveal key={service.title} delay={i * 0.06}>
                 <Link href={service.href} className="block group">
                   <article className="relative rounded-2xl overflow-hidden bg-white
@@ -418,11 +491,11 @@ export default function HomePageClient({ heroSlide, stats: sanityStats, siteSett
                         <service.icon className="w-5 h-5 text-cyan group-hover:text-white transition-colors duration-300" />
                       </div>
                       <div className="absolute bottom-3 left-3 right-3">
-                        <h3 className="text-white font-bold text-base leading-tight drop-shadow-sm">{service.title}</h3>
+                        <h3 {...ve(serviceId, 'service', 'title')} className="text-white font-bold text-base leading-tight drop-shadow-sm">{service.title}</h3>
                       </div>
                     </div>
                     <div className="p-4 flex-1 flex flex-col">
-                      <p className="text-marine/60 text-[13px] leading-relaxed flex-1">{service.description}</p>
+                      <p {...ve(serviceId, 'service', 'shortDescription')} className="text-marine/60 text-[13px] leading-relaxed flex-1">{service.description}</p>
                       <div className="mt-3 pt-3 border-t border-marine/5">
                         <span className="inline-flex items-center gap-1.5 text-cyan text-sm font-semibold opacity-60 group-hover:opacity-100 translate-x-0 group-hover:translate-x-1 transition-all duration-300">
                           Conocer más <ArrowRight className="w-3.5 h-3.5" />
@@ -432,7 +505,8 @@ export default function HomePageClient({ heroSlide, stats: sanityStats, siteSett
                   </article>
                 </Link>
               </ScrollReveal>
-            ))}
+              )
+            })}
           </div>
           <ScrollReveal className="text-center mt-10 lg:mt-12">
             <MagneticButton href="/servicios" strength={0.15}>
@@ -457,7 +531,10 @@ export default function HomePageClient({ heroSlide, stats: sanityStats, siteSett
             </div>
           </ScrollReveal>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {mentorships.map((m, i) => (
+            {displayMentorships.map((m, i) => {
+              const isSanity = sanityMentorships && sanityMentorships.length > 0
+              const mentorshipId = isSanity ? (m as any)._id : ''
+              return (
               <ScrollReveal key={m.institution} delay={i * 0.1}>
                 <article className="bg-white rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(0,32,96,0.06)] border border-[#F0F2F5] group hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
                   <div className="relative h-48 overflow-hidden">
@@ -470,10 +547,10 @@ export default function HomePageClient({ heroSlide, stats: sanityStats, siteSett
                     </div>
                   </div>
                   <div className="p-5 sm:p-6 flex flex-col flex-1">
-                    <h3 className="text-marine font-bold text-lg leading-tight">{m.title}</h3>
-                    <p className="text-cyan font-bold text-[13px] mt-1.5">{m.institution}</p>
-                    <p className="text-marine/60 text-[13.5px] leading-relaxed mt-3 flex-1">{m.description}</p>
-                    {m.galleryImages && (
+                    <h3 {...ve(mentorshipId, 'mentorship', 'title')} className="text-marine font-bold text-lg leading-tight">{m.title}</h3>
+                    <p {...ve(mentorshipId, 'mentorship', 'institution')} className="text-cyan font-bold text-[13px] mt-1.5">{m.institution}</p>
+                    <p {...ve(mentorshipId, 'mentorship', 'description')} className="text-marine/60 text-[13.5px] leading-relaxed mt-3 flex-1">{m.description}</p>
+                    {m.galleryImages && m.galleryImages.length > 0 && (
                       <button
                         onClick={() => { setLightboxImages(m.galleryImages!.map((src) => ({ src, alt: m.title }))); setLightboxOpen(true) }}
                         className="mt-4 inline-flex items-center gap-1.5 text-cyan text-sm font-semibold hover:text-royal transition-colors duration-200"
@@ -484,7 +561,8 @@ export default function HomePageClient({ heroSlide, stats: sanityStats, siteSett
                   </div>
                 </article>
               </ScrollReveal>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -504,19 +582,23 @@ export default function HomePageClient({ heroSlide, stats: sanityStats, siteSett
             </div>
           </ScrollReveal>
           <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-            {facilities.map((facility, i) => (
-              <ScrollReveal key={facility.alt} delay={i * 0.1}>
+            {displayFacilities.map((facility, i) => {
+              const isSanity = sanityFacilities && sanityFacilities.length > 0
+              const facilityId = isSanity ? (facility as any)._id : ''
+              return (
+              <ScrollReveal key={facility.alt || facility._id || i} delay={i * 0.1}>
                 <div className="relative rounded-2xl overflow-hidden shadow-xl shadow-marine/8 group cursor-pointer">
                   <div className="relative h-[250px] sm:h-[320px]">
                     <Image src={facility.src} alt={facility.alt} fill className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 640px) 100vw, 50vw" loading="lazy" />
                     <div className="absolute inset-0 bg-gradient-to-t from-marine/60 via-marine/10 to-transparent" />
                   </div>
                   <div className="absolute bottom-4 left-4 right-4">
-                    <p className="text-white font-semibold text-sm drop-shadow-sm">{facility.caption}</p>
+                    <p {...ve(facilityId, 'facility', 'caption')} className="text-white font-semibold text-sm drop-shadow-sm">{facility.caption}</p>
                   </div>
                 </div>
               </ScrollReveal>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -531,20 +613,24 @@ export default function HomePageClient({ heroSlide, stats: sanityStats, siteSett
             </div>
           </ScrollReveal>
           <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((t, i) => (
+            {displayTestimonials.map((t, i) => {
+              const isSanity = sanityTestimonials && sanityTestimonials.length > 0
+              const testimonialId = isSanity ? (t as any)._id : ''
+              return (
               <ScrollReveal key={t.name} delay={i * 0.15}>
                 <Card className="border-0 shadow-lg shadow-marine/5 bg-gradient-to-b from-white to-muted/50 h-full">
                   <CardContent className="p-8 space-y-4">
-                    <div className="flex gap-1">{[...Array(t.rating)].map((_, j) => (<Star key={j} className="w-5 h-5 fill-cyan text-cyan" />))}</div>
-                    <p className="text-marine/70 leading-relaxed italic">&ldquo;{t.text}&rdquo;</p>
+                    <div {...ve(testimonialId, 'testimonial', 'rating')} className="flex gap-1">{[...Array(t.rating)].map((_, j) => (<Star key={j} className="w-5 h-5 fill-cyan text-cyan" />))}</div>
+                    <p {...ve(testimonialId, 'testimonial', 'quote')} className="text-marine/70 leading-relaxed italic">&ldquo;{t.text}&rdquo;</p>
                     <div className="flex items-center gap-3 pt-2">
                       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan to-royal flex items-center justify-center"><span className="text-white font-bold text-sm">{t.name.charAt(0)}</span></div>
-                      <div><p className="font-semibold text-marine text-sm">{t.name}</p><p className="text-marine/50 text-xs">Paciente verificada</p></div>
+                      <div><p {...ve(testimonialId, 'testimonial', 'authorName')} className="font-semibold text-marine text-sm">{t.name}</p><p className="text-marine/50 text-xs">Paciente verificada</p></div>
                     </div>
                   </CardContent>
                 </Card>
               </ScrollReveal>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -555,8 +641,8 @@ export default function HomePageClient({ heroSlide, stats: sanityStats, siteSett
         <div className="cta-fade-top" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">¿Lista para cuidar de tu salud?</h2>
-            <p className="text-white/80 mt-6 text-lg max-w-2xl mx-auto leading-relaxed">Agenda tu cita de manera rápida y sencilla. Nuestro equipo está listo para brindarte la atención que mereces.</p>
+            <h2 {...ve('siteSettings', 'siteSettings', 'ctaTitle')} className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">{ctaTitle}</h2>
+            <p {...ve('siteSettings', 'siteSettings', 'ctaDescription')} className="text-white/80 mt-6 text-lg max-w-2xl mx-auto leading-relaxed">{ctaDescription}</p>
             <div className="mt-10">
               <MagneticButton href="/reservas#hero" strength={0.2}>
                 <Button size="lg" className="bg-white text-marine hover:bg-white/90 font-semibold rounded-full px-10 h-14 text-base shadow-2xl transition-all duration-300"><Calendar className="w-5 h-5 mr-2" />Agendar Cita Ahora</Button>

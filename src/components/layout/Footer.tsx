@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Phone, Mail, MapPin, Clock, Heart } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
+import { ve } from '@/lib/ve'
 
 const quickLinks = [
   { href: '/', label: 'Inicio' },
@@ -44,7 +45,7 @@ export default function Footer() {
                 sizes="140px"
               />
             </div>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p {...ve('siteSettings', 'siteSettings', 'footerDescription')} className="text-white/70 text-sm leading-relaxed">
               Brindamos atención médica especializada con la más alta calidad y calidez humana. 
               Su salud y bienestar son nuestra prioridad.
             </p>
@@ -86,20 +87,20 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-sm text-white/70">
                 <MapPin className="w-4 h-4 text-cyan mt-0.5 flex-shrink-0" />
-                <span>Av. Principal 123, Centro Médico, Lima - Perú</span>
+                <span {...ve('siteSettings', 'siteSettings', 'address')}>Av. Principal 123, Centro Médico, Lima - Perú</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-white/70">
                 <Phone className="w-4 h-4 text-cyan flex-shrink-0" />
-                <a href="tel:+51983554248" className="hover:text-cyan transition-colors">+51 983 554 248</a>
+                <a {...ve('siteSettings', 'siteSettings', 'phone')} href="tel:+51983554248" className="hover:text-cyan transition-colors">+51 983 554 248</a>
               </li>
               <li className="flex items-center gap-3 text-sm text-white/70">
                 <Mail className="w-4 h-4 text-cyan flex-shrink-0" />
-                <a href="mailto:info@nuevavida.pe" className="hover:text-cyan transition-colors">info@nuevavida.pe</a>
+                <a {...ve('siteSettings', 'siteSettings', 'email')} href="mailto:info@nuevavida.pe" className="hover:text-cyan transition-colors">info@nuevavida.pe</a>
               </li>
               <li className="flex items-start gap-3 text-sm text-white/70">
                 <Clock className="w-4 h-4 text-cyan mt-0.5 flex-shrink-0" />
                 <div>
-                  <p>Lun - Vie: 4:00 PM - 8:00 PM</p>
+                  <p {...ve('siteSettings', 'siteSettings', 'businessHours')}>Lun - Vie: 4:00 PM - 8:00 PM</p>
                 </div>
               </li>
             </ul>

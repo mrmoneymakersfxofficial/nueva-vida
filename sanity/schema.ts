@@ -9,8 +9,12 @@ import partner from "./schemas/partner";
 import heroSlide from "./schemas/heroSlide";
 import stat from "./schemas/stat";
 import studioGuide from "./schemas/guia";
+import healthArticle from "./schemas/healthArticle";
+import mentorship from "./schemas/mentorship";
+import facility from "./schemas/facility";
 
 export const schemaTypes = [
   siteSettings, serviceCategory, service, project,
   teamMember, testimonial, partner, heroSlide, stat, studioGuide,
+  healthArticle, mentorship, facility,
 ];

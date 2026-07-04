@@ -6,6 +6,7 @@ import { defineLocations } from "sanity/presentation";
 import {
   PackageIcon, HomeIcon, CogIcon, BookIcon, StackIcon,
   UsersIcon, MessageSquareIcon, BarChartIcon, DashboardIcon,
+  HeartIcon, BookmarkIcon,
 } from "@sanity/icons";
 import { schemaTypes } from "./sanity/schema";
 import { STUDIO_TITLE, SITE_URL, BRAND_COLORS } from "./sanity/lib/constants";
@@ -35,6 +36,12 @@ export default defineConfig({
               S.listItem().title("Socios / Clientes").icon(UsersIcon).id("partners-list").child(
                 S.documentTypeList("partner").title("Socios / Clientes").defaultOrdering([{ field: "order", direction: "asc" }]),
               ),
+              S.listItem().title("Formación Internacional").icon(BookmarkIcon).id("mentorships-list").child(
+                S.documentTypeList("mentorship").title("Mentorías").defaultOrdering([{ field: "order", direction: "asc" }]),
+              ),
+              S.listItem().title("Instalaciones").icon(HomeIcon).id("facilities-list").child(
+                S.documentTypeList("facility").title("Instalaciones").defaultOrdering([{ field: "order", direction: "asc" }]),
+              ),
             ]),
           ),
           S.listItem().title("Servicios").icon(PackageIcon).id("services-group").child(
@@ -48,6 +55,9 @@ export default defineConfig({
           ...S.documentTypeListItems().filter((item) => item.getId() === "project"),
           ...S.documentTypeListItems().filter((item) => item.getId() === "teamMember"),
           ...S.documentTypeListItems().filter((item) => item.getId() === "testimonial"),
+          S.listItem().title("Salud").icon(HeartIcon).id("health-group").child(
+            S.documentTypeList("healthArticle").title("Artículos de Salud").defaultOrdering([{ field: "order", direction: "asc" }]),
+          ),
           S.listItem().title("Configuración del Sitio").icon(CogIcon).id("settings-group").child(
             S.list().title("Configuración").items([
               S.listItem().title("Datos del Sitio").icon(HomeIcon).id("site-settings-editor").child(
@@ -76,7 +86,10 @@ export default defineConfig({
           project: defineLocations({ type: "project", resolve: (doc) => ({ locations: [{ title: "Proyectos", href: "/proyectos" }, { title: `Proyecto: ${doc.title || ""}`, href: `/proyectos/${doc.slug?.current || doc.slug || ""}` }] }) }),
           teamMember: defineLocations({ type: "teamMember", resolve: () => ({ locations: [{ title: "Nosotros", href: "/#nosotros" }] }) }),
           testimonial: defineLocations({ type: "testimonial", resolve: () => ({ locations: [{ title: "Inicio", href: "/" }] }) }),
-          siteSettings: defineLocations({ type: "siteSettings", resolve: () => ({ locations: [{ title: "Inicio (Header + Hero)", href: "/" }, { title: "Nosotros", href: "/#nosotros" }, { title: "Contacto (Footer)", href: "/#contacto" }, { title: "Servicios", href: "/servicios" }, { title: "Proyectos", href: "/proyectos" }] }) }),
+          siteSettings: defineLocations({ type: "siteSettings", resolve: () => ({ locations: [{ title: "Inicio (Header + Hero)", href: "/" }, { title: "Nosotros", href: "/#nosotros" }, { title: "Contacto (Footer)", href: "/#contacto" }, { title: "Servicios", href: "/servicios" }, { title: "Proyectos", href: "/proyectos" }, { title: "Salud", href: "/salud" }] }) }),
+          healthArticle: defineLocations({ type: "healthArticle", resolve: () => ({ locations: [{ title: "Portal de Salud", href: "/salud" }] }) }),
+          mentorship: defineLocations({ type: "mentorship", resolve: () => ({ locations: [{ title: "Formación Internacional", href: "/#formacion-internacional" }] }) }),
+          facility: defineLocations({ type: "facility", resolve: () => ({ locations: [{ title: "Instalaciones", href: "/#instalaciones" }] }) }),
         },
       },
     }),
