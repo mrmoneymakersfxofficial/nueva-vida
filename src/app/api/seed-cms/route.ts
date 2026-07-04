@@ -871,7 +871,7 @@ const siteSettings = {
   phone: "+51 983 554 248",
   whatsapp: "51983554248",
   email: "info@nuevavida.pe",
-  address: "Av. Principal 123, Centro Médico, Chincha - Perú",
+  address: "Calle San Martín 104, frente al Hospital San José, Chincha",
   businessHours: "Lun - Vie: 4:00 PM - 8:00 PM",
   aboutDescription:
     "En Nueva Vida, contamos con más de 15 años de experiencia brindando atención ginecológica integral de la más alta calidad. Nuestro consultorio está equipado con tecnología de última generación para garantizar diagnósticos precisos y tratamientos efectivos.",

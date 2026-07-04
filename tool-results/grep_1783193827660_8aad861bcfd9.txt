@@ -1,0 +1,252 @@
+/home/z/my-project/src/app/reservas/page.tsx:39:    if (window.location.hash === '#hero') {
+/home/z/my-project/src/app/reservas/page.tsx:87:              <Button onClick={() => { setSubmitted(false); setStep(1); setFormData({ servicio: '', fecha: '', hora: '', mensaje: '' }); window.location.hash = 'hero'; }} className="bg-white text-marine hover:bg-white/90 rounded-full px-8 font-semibold">
+/home/z/my-project/src/app/reservas/page.tsx:90:              <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 rounded-full px-8" onClick={() => window.location.href = '/'}>
+/home/z/my-project/src/app/reservas/page.tsx:316:              { icon: MapPin, title: 'Ubicación', text: 'Av. Principal 123, Lima' },
+/home/z/my-project/src/app/api/seed-cms/route.ts:732:    location: "Buenos Aires, Argentina",
+/home/z/my-project/src/app/api/seed-cms/route.ts:751:    location: "Cúcuta, Colombia",
+/home/z/my-project/src/app/api/seed-cms/route.ts:769:    location: "Lima, Perú",
+/home/z/my-project/src/app/api/seed-cms/route.ts:874:  address: "Av. Principal 123, Centro Médico, Chincha - Perú",
+/home/z/my-project/src/components/HomePageClient.tsx:23:interface MentorshipData { _id: string; title?: string; institution?: string; location?: string; flag?: string; imagePath?: string; galleryPaths?: string[]; galleryLabel?: string; description?: string }
+/home/z/my-project/src/components/HomePageClient.tsx:88:    location: 'Buenos Aires, Argentina',
+/home/z/my-project/src/components/HomePageClient.tsx:97:    location: 'Cúcuta, Colombia',
+/home/z/my-project/src/components/HomePageClient.tsx:107:    location: 'Lima, Perú',
+/home/z/my-project/src/components/HomePageClient.tsx:200:        location: m.location || '',
+/home/z/my-project/src/components/HomePageClient.tsx:545:                        <MapPin className="w-3 h-3 text-cyan" />{m.flag} {m.location}
+/home/z/my-project/src/components/animations/ScrollSpy.tsx:42:        const currentPath = window.location.pathname
+/home/z/my-project/src/components/animations/ScrollSpy.tsx:66:    const hash = window.location.hash.replace('#', '')
+/home/z/my-project/src/components/animations/ScrollSpy.tsx:94:              const currentPath = window.location.pathname
+/home/z/my-project/src/components/animations/ScrollSpy.tsx:96:              if (window.location.href !== window.location.origin + newUrl) {
+/home/z/my-project/src/components/animations/ScrollSpy.tsx:143:            const currentPath = window.location.pathname
+/home/z/my-project/src/components/animations/ScrollSpy.tsx:159:      const hash = window.location.hash.replace('#', '')
+/home/z/my-project/src/components/layout/Footer.tsx:90:                <span {...ve('siteSettings', 'siteSettings', 'address')}>Av. Principal 123, Centro Médico, Lima - Perú</span>
+/home/z/my-project/src/components/SanityLiveWithToken.tsx:52:                window.location.reload();
+/home/z/my-project/sanity/schemas/siteSettings.ts:16:    defineField({ name: "address", title: "Dirección", type: "string" }),
+/home/z/my-project/src/lib/sanity.client.ts:58:export interface SanityProject { _id: string; title: string; slug: string; coverImage?: SanityImage | null; gallery?: SanityImage[]; description?: PortableTextBlock[]; excerpt?: string; client?: string; location?: string; year?: string; area?: string; status?: "completed" | "in-progress" | "planned"; tags?: string[]; videoMp4?: SanityFile | null; videoWebm?: SanityFile | null; service?: { _id: string; title: string; slug: string } | null; featured?: boolean; order?: number; }
+/home/z/my-project/src/lib/sanity.client.ts:64:export interface SanitySiteSettings { _id: string; companyName?: string; slogan?: string; tagline?: string; logo?: SanityImage | null; logoWhite?: SanityImage | null; ogImage?: SanityImage | null; phone?: string; whatsapp?: string; email?: string; address?: string; businessHours?: string; facebookUrl?: string; instagramUrl?: string; linkedinUrl?: string; tiktokUrl?: string; youtubeUrl?: string; mapLatitude?: number; mapLongitude?: number; mapZoom?: number; seoTitle?: string; seoDescription?: string; }
+/home/z/my-project/sanity/schemas/project.ts:15:    defineField({ name: "location", title: "Ubicación", type: "string" }),
+/home/z/my-project/sanity/schemas/mentorship.ts:11:    defineField({ name: "location", title: "Ubicación", type: "string" }),
+/home/z/my-project/src/lib/sanity.queries.ts:10:  _id, companyName, slogan, tagline, phone, whatsapp, email, address, businessHours,
+/home/z/my-project/src/lib/sanity.queries.ts:24:  _id, title, "slug": slug.current, institution, location, flag, image { ${IMAGE_FIELDS} }, imagePath,
+/home/z/my-project/src/lib/sanity.queries.ts:68:  phone, whatsapp, email, address, businessHours,
+/home/z/my-project/src/lib/sanity.queries.ts:75:const PROJECT_FIELDS = `_id, title, "slug": slug.current, coverImage { ${IMAGE_FIELDS} }, gallery[] { ${IMAGE_FIELDS} }, description, excerpt, client, location, year, area, status, tags[], videoMp4 { ${FILE_FIELDS} }, videoWebm { ${FILE_FIELDS} }, service-> { _id, title, "slug": slug.current }, featured, order`;
+/home/z/my-project/src/lib/sanity.queries.ts:89:export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0] { _id, companyName, slogan, tagline, logo { ${IMAGE_FIELDS} }, logoWhite { ${IMAGE_FIELDS} }, ogImage { ${IMAGE_FIELDS} }, phone, whatsapp, email, address, businessHours, facebookUrl, instagramUrl, linkedinUrl, tiktokUrl, youtubeUrl, mapLatitude, mapLongitude, mapZoom, seoTitle, seoDescription }`;
+/home/z/my-project/sanity.config.ts:5:import { defineLocations } from "sanity/presentation";
+/home/z/my-project/sanity.config.ts:80:        locations: {
+/home/z/my-project/sanity.config.ts:81:          heroSlide: defineLocations({ type: "heroSlide", resolve: () => ({ locations: [{ title: "Hero / Inicio", href: "/#inicio" }] }) }),
+/home/z/my-project/sanity.config.ts:82:          stat: defineLocations({ type: "stat", resolve: () => ({ locations: [{ title: "Nuestros Numeros", href: "/#numeros" }] }) }),
+/home/z/my-project/sanity.config.ts:83:          partner: defineLocations({ type: "partner", resolve: () => ({ locations: [{ title: "Nuestros Clientes", href: "/#clientes" }] }) }),
+/home/z/my-project/sanity.config.ts:84:          serviceCategory: defineLocations({ type: "serviceCategory", resolve: (doc) => ({ locations: [{ title: "Servicios", href: "/servicios" }, { title: `Categoria: ${doc.name || ""}`, href: `/servicios#${doc.slug?.current || ""}` }] }) }),
+/home/z/my-project/sanity.config.ts:85:          service: defineLocations({ type: "service", resolve: (doc) => ({ locations: [{ title: "Servicios", href: "/servicios" }, { title: `Servicio: ${doc.title || ""}`, href: `/servicios#${doc.slug?.current || ""}` }] }) }),
+/home/z/my-project/sanity.config.ts:86:          project: defineLocations({ type: "project", resolve: (doc) => ({ locations: [{ title: "Proyectos", href: "/proyectos" }, { title: `Proyecto: ${doc.title || ""}`, href: `/proyectos/${doc.slug?.current || doc.slug || ""}` }] }) }),
+/home/z/my-project/sanity.config.ts:87:          teamMember: defineLocations({ type: "teamMember", resolve: () => ({ locations: [{ title: "Nosotros", href: "/#nosotros" }] }) }),
+/home/z/my-project/sanity.config.ts:88:          testimonial: defineLocations({ type: "testimonial", resolve: () => ({ locations: [{ title: "Inicio", href: "/" }] }) }),
+/home/z/my-project/sanity.config.ts:89:          siteSettings: defineLocations({ type: "siteSettings", resolve: () => ({ locations: [{ title: "Inicio (Header + Hero)", href: "/" }, { title: "Nosotros", href: "/#nosotros" }, { title: "Contacto (Footer)", href: "/#contacto" }, { title: "Servicios", href: "/servicios" }, { title: "Proyectos", href: "/proyectos" }, { title: "Salud", href: "/salud" }] }) }),
+/home/z/my-project/sanity.config.ts:90:          healthArticle: defineLocations({ type: "healthArticle", resolve: () => ({ locations: [{ title: "Portal de Salud", href: "/salud" }] }) }),
+/home/z/my-project/sanity.config.ts:91:          mentorship: defineLocations({ type: "mentorship", resolve: () => ({ locations: [{ title: "Formación Internacional", href: "/#formacion-internacional" }] }) }),
+/home/z/my-project/sanity.config.ts:92:          facility: defineLocations({ type: "facility", resolve: () => ({ locations: [{ title: "Instalaciones", href: "/#instalaciones" }] }) }),
+/home/z/my-project/tool-results/read_1783185210447_ac7cbe5c3271.txt:65:    65→    65→    location: 'Buenos Aires, Argentina',
+/home/z/my-project/tool-results/read_1783185210447_ac7cbe5c3271.txt:74:    74→    74→    location: 'Cúcuta, Colombia',
+/home/z/my-project/tool-results/read_1783185210447_ac7cbe5c3271.txt:84:    84→    84→    location: 'Lima, Perú',
+/home/z/my-project/tool-results/read_1783185210447_ac7cbe5c3271.txt:439:   439→   439→                        <MapPin className="w-3 h-3 text-cyan" />{m.flag} {m.location}
+/home/z/my-project/tool-results/read_1783190939524_525d47f58674.txt:80:    80→    80→    location: 'Buenos Aires, Argentina',
+/home/z/my-project/tool-results/read_1783190939524_525d47f58674.txt:89:    89→    89→    location: 'Cúcuta, Colombia',
+/home/z/my-project/tool-results/read_1783190939524_525d47f58674.txt:99:    99→    99→    location: 'Lima, Perú',
+/home/z/my-project/tool-results/read_1783190939524_525d47f58674.txt:468:   468→   468→                        <MapPin className="w-3 h-3 text-cyan" />{m.flag} {m.location}
+/home/z/my-project/tool-results/read_1783190494640_1d271e598d03.txt:80:    80→    location: 'Buenos Aires, Argentina',
+/home/z/my-project/tool-results/read_1783190494640_1d271e598d03.txt:89:    89→    location: 'Cúcuta, Colombia',
+/home/z/my-project/tool-results/read_1783190494640_1d271e598d03.txt:99:    99→    location: 'Lima, Perú',
+/home/z/my-project/tool-results/read_1783190494640_1d271e598d03.txt:468:   468→                        <MapPin className="w-3 h-3 text-cyan" />{m.flag} {m.location}
+/home/z/my-project/tool-results/read_1783192132388_525d47f58674.txt:80:    80→    80→    location: 'Buenos Aires, Argentina',
+/home/z/my-project/tool-results/read_1783192132388_525d47f58674.txt:89:    89→    89→    location: 'Cúcuta, Colombia',
+/home/z/my-project/tool-results/read_1783192132388_525d47f58674.txt:99:    99→    99→    location: 'Lima, Perú',
+/home/z/my-project/tool-results/read_1783192132388_525d47f58674.txt:468:   468→   468→                        <MapPin className="w-3 h-3 text-cyan" />{m.flag} {m.location}
+/home/z/my-project/tool-results/read_1783190924857_1d271e598d03.txt:80:    80→    location: 'Buenos Aires, Argentina',
+/home/z/my-project/tool-results/read_1783190924857_1d271e598d03.txt:89:    89→    location: 'Cúcuta, Colombia',
+/home/z/my-project/tool-results/read_1783190924857_1d271e598d03.txt:99:    99→    location: 'Lima, Perú',
+/home/z/my-project/tool-results/read_1783190924857_1d271e598d03.txt:468:   468→                        <MapPin className="w-3 h-3 text-cyan" />{m.flag} {m.location}
+/home/z/my-project/tool-results/read_1782752155337_4cf87ac44a55.txt:65:    65→    location: 'Buenos Aires, Argentina',
+/home/z/my-project/tool-results/read_1782752155337_4cf87ac44a55.txt:74:    74→    location: 'Cúcuta, Colombia',
+/home/z/my-project/tool-results/read_1782752155337_4cf87ac44a55.txt:84:    84→    location: 'Lima, Perú',
+/home/z/my-project/tool-results/read_1782752155337_4cf87ac44a55.txt:439:   439→                        <MapPin className="w-3 h-3 text-cyan" />{m.flag} {m.location}
+/home/z/my-project/tool-results/read_1783185203801_4cf87ac44a55.txt:65:    65→    location: 'Buenos Aires, Argentina',
+/home/z/my-project/tool-results/read_1783185203801_4cf87ac44a55.txt:74:    74→    location: 'Cúcuta, Colombia',
+/home/z/my-project/tool-results/read_1783185203801_4cf87ac44a55.txt:84:    84→    location: 'Lima, Perú',
+/home/z/my-project/tool-results/read_1783185203801_4cf87ac44a55.txt:439:   439→                        <MapPin className="w-3 h-3 text-cyan" />{m.flag} {m.location}
+/home/z/my-project/tool-results/read_1783192126290_1d271e598d03.txt:80:    80→    location: 'Buenos Aires, Argentina',
+/home/z/my-project/tool-results/read_1783192126290_1d271e598d03.txt:89:    89→    location: 'Cúcuta, Colombia',
+/home/z/my-project/tool-results/read_1783192126290_1d271e598d03.txt:99:    99→    location: 'Lima, Perú',
+/home/z/my-project/tool-results/read_1783192126290_1d271e598d03.txt:468:   468→                        <MapPin className="w-3 h-3 text-cyan" />{m.flag} {m.location}
+/home/z/my-project/skills/pptx/ooxml/scripts/validation/base.py:332:                        # Resolve the target path relative to the .rels file location
+/home/z/my-project/skills/pptx/html2pptx1.js:562:      const loc = res.headers.location;
+/home/z/my-project/skills/pptx/html2pptx1.js:2368:      // Location / map / travel
+/home/z/my-project/skills/pptx/html2pptx1.js:2369:      my_location: '◎', location_on: '◎', location_pin: '◎', place: '◎',
+/home/z/my-project/skills/pptx/html2pptx1.js:2370:      pin_drop: '◎', room: '◎', not_listed_location: '◎',
+/home/z/my-project/skills/pptx/html2pptx1.js:2425:      'user-plus': '☻', 'user-tie': '☻', 'address-book': '▤', 'id-card': '▭',
+/home/z/my-project/skills/pptx/html2pptx1.js:2515:      // location
+/home/z/my-project/skills/pptx/html2pptx1.js:2516:      'location-dot': '◎', 'map-marker': '◎', 'map-marker-alt': '◎',
+/home/z/my-project/skills/pptx/html2pptx1.js:2742:      [/location|pin|marker|place|map[\s_-]*marker|geo/, '◎'],
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/ux-guidelines.csv:4:3,Navigation,Active State,All,Current page/section should be visually indicated,Highlight active nav item with color/underline,No visual feedback on current location,text-primary border-b-2,All links same style,Medium
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/ux-guidelines.csv:5:4,Navigation,Back Button,Mobile,Users expect back to work predictably,Preserve navigation history properly,Break browser/app back button behavior,history.pushState(),location.replace(),High
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/ux-guidelines.csv:7:6,Navigation,Breadcrumbs,Web,Show user location in site hierarchy,Use for sites with 3+ levels of depth,Use for flat single-level sites,Home > Category > Product,Only on deep nested pages,Low
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/products.csv:34:33,Hyperlocal Services,"appointment, booking, consultation, hyperlocal, service, services",Minimalism + Vibrant & Block-based,"Micro-interactions, Flat Design",Conversion-Optimized,Drill-Down Analytics + Map,Location markers + Trust colors,Map integration. Service categories. Provider profiles. Booking system. Reviews.
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/products.csv:37:36,Restaurant/Food Service,"appointment, booking, consultation, delivery, food, menu, order, restaurant, service",Vibrant & Block-based + Motion-Driven,"Claymorphism, Flat Design",Hero-Centric Design + Conversion,N/A - Booking focused,Warm colors (Orange Red Brown) + appetizing imagery,Menu display. Online ordering. Reservation system. Food photography. Location/hours prominent.
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/products.csv:41:40,Hotel/Hospitality,"hospitality, hotel",Liquid Glass + Minimalism,"Glassmorphism, Soft UI Evolution",Hero-Centric Design + Social Proof,Revenue Management Dashboard,Warm neutrals + Gold (#D4AF37) + Brand accent,Room booking. Amenities showcase. Location maps. Guest reviews. Seasonal pricing. Luxury imagery.
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/products.csv:67:66,Bakery/Cafe,"bakery, cafe",Vibrant & Block-based + Soft UI Evolution,"Claymorphism, Motion-Driven",Hero-Centric Design + Conversion,N/A - Order focused,Warm Brown + Cream + Appetizing accents,Menu display. Online ordering. Location/hours. Catering. Seasonal specials. Appetizing photography.
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/products.csv:68:67,Coffee Shop,"coffee, shop",Minimalism + Organic Biophilic,"Soft UI Evolution, Flat Design",Hero-Centric Design + Conversion,N/A - Order focused,Coffee Brown (#6F4E37) + Cream + Warm accents,Menu. Online ordering. Loyalty program. Location. Story/origin. Cozy aesthetic.
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/products.csv:81:80,Church/Religious Organization,"church, organization, religious",Accessible & Ethical + Soft UI Evolution,"Minimalism, Trust & Authority",Hero-Centric Design + Social Proof,N/A - Community focused,Warm Gold + Deep Purple/Blue + White,Service times. Events. Sermons. Community. Giving. Location. Welcoming imagery.
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/landing.csv:9:8,Pricing Page + CTA,"pricing, plans, tiers, comparison, cta","1. Hero (pricing headline), 2. Price comparison cards, 3. Feature comparison table, 4. FAQ section, 5. Final CTA",Each card: CTA button. Sticky CTA in nav,"Free: Grey, Starter: Blue, Pro: Green/Gold, Enterprise: Dark. Cards: 1px border, shadow","Price toggle animation (monthly/yearly), card comparison highlight, FAQ accordion open/close",Recommend starter plan (pre-select/highlight). Show annual discount (20-30%). Use FAQs to address concerns.
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/landing.csv:15:14,Pricing-Focused Landing,"pricing, price, cost, plans, subscription","1. Hero (value proposition), 2. Pricing cards (3 tiers), 3. Feature comparison, 4. FAQ, 5. Final CTA",Each pricing card + Sticky CTA in nav + Bottom,Popular plan highlighted (brand color border/bg). Free: grey. Enterprise: dark/premium.,"Price toggle monthly/annual animation, card hover lift, FAQ accordion smooth open",Annual discount 20-30%. Recommend mid-tier (most popular badge). Address objections in FAQ.
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/landing.csv:19:18,Event/Conference Landing,"event, conference, meetup, registration, schedule","1. Hero (date/location/countdown), 2. Speakers grid, 3. Agenda/schedule, 4. Sponsors, 5. Register CTA",Register CTA sticky + After speakers + Bottom,Urgency colors (countdown). Event branding. Speaker cards professional. Sponsor logos neutral.,"Countdown timer, speaker hover cards with bio, agenda tabs, early bird countdown",Early bird pricing with deadline. Social proof (past attendees). Speaker credibility. Multi-ticket discounts.
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/react-performance.csv:19:18,Rerender,Defer State Reads,state read callback subscription,React/Next.js,Don't subscribe to state only used in callbacks,Read state on-demand in callbacks,Subscribe to state used only in handlers,"const handleClick = () => { const params = new URLSearchParams(location.search) }","const params = useSearchParams(); const handleClick = () => { params.get('ref') }",Medium
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/stacks/svelte.csv:46:45,SvelteKit,Use $app/stores for app state,$page $navigating $updated,$page for current page data,Manual URL parsing,import { page } from '$app/stores',window.location.pathname,Medium,https://kit.svelte.dev/docs/modules#$app-stores
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/stacks/react-native.csv:34:33,Forms,Use proper keyboard types,Appropriate keyboard for input,keyboardType for input type,Default keyboard for all,"keyboardType=""email-address""","keyboardType=""default"" for email",Low,
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/stacks/nuxtjs.csv:14:13,DataFetching,Use server option to control fetch location,Choose where data is fetched,server: false for client-only data,Server fetch for user-specific client data,"useFetch('/api/user-preferences', { server: false })",useFetch for localStorage-dependent data,Medium,https://nuxt.com/docs/api/composables/use-fetch
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/stacks/nuxtjs.csv:45:44,Link,Use useRouter for programmatic navigation,Navigate programmatically,useRouter().push() for navigation,Direct window.location,"const router = useRouter(); router.push('/dashboard')",window.location.href = '/dashboard',Medium,https://nuxt.com/docs/api/composables/use-router
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/charts.csv:7:6,Geographic Data,"geographic, map, location, region, geo, spatial","Choropleth Map, Bubble Map",Geographic Heat Map,Regional: single color gradient or categorized colors. Legend: clear scale,⚠ Moderate (rendering),⚠ Include text labels for regions. Provide data table alternative.,"D3.js, Mapbox, Leaflet",Pan + Zoom + Drill
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/ui-reasoning.csv:62:61,Hyperlocal Services,Conversion + Feature-Rich,Minimalism + Vibrant & Block-based,Location markers + Trust colors,Clear + Functional typography,Map hover + Provider card reveals,"{""must_have"": ""map-integration"", ""must_have"": ""booking-system""}",No map + Hidden reviews,HIGH
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/colors.csv:34:33,Hyperlocal Services,#059669,#10B981,#F97316,#ECFDF5,#064E3B,#A7F3D0,Location green + action orange
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/icons.csv:90:89,Location,map-pin,location marker place address,Lucide,import { MapPin } from 'lucide-react',<MapPin />,Location pin marker,Outline
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/icons.csv:91:90,Location,map,directions navigate geography location,Lucide,import { Map } from 'lucide-react',<Map />,Map directions,Outline
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/icons.csv:92:91,Location,navigation,compass direction pointer arrow,Lucide,import { Navigation } from 'lucide-react',<Navigation />,Navigation compass,Outline
+/home/z/my-project/skills/ui-ux-pro-max/assets/data/icons.csv:93:92,Location,globe,world international global web,Lucide,import { Globe } from 'lucide-react',<Globe />,Globe world,Outline
+/home/z/my-project/skills/ui-ux-pro-max/data/ux-guidelines.csv:4:3,Navigation,Active State,All,Current page/section should be visually indicated,Highlight active nav item with color/underline,No visual feedback on current location,text-primary border-b-2,All links same style,Medium
+/home/z/my-project/skills/ui-ux-pro-max/data/ux-guidelines.csv:5:4,Navigation,Back Button,Mobile,Users expect back to work predictably,Preserve navigation history properly,Break browser/app back button behavior,history.pushState(),location.replace(),High
+/home/z/my-project/skills/ui-ux-pro-max/data/ux-guidelines.csv:7:6,Navigation,Breadcrumbs,Web,Show user location in site hierarchy,Use for sites with 3+ levels of depth,Use for flat single-level sites,Home > Category > Product,Only on deep nested pages,Low
+/home/z/my-project/skills/ui-ux-pro-max/data/products.csv:34:33,Hyperlocal Services,"appointment, booking, consultation, hyperlocal, service, services",Minimalism + Vibrant & Block-based,"Micro-interactions, Flat Design",Conversion-Optimized,Drill-Down Analytics + Map,Location markers + Trust colors,Map integration. Service categories. Provider profiles. Booking system. Reviews.
+/home/z/my-project/skills/ui-ux-pro-max/data/products.csv:37:36,Restaurant/Food Service,"appointment, booking, consultation, delivery, food, menu, order, restaurant, service",Vibrant & Block-based + Motion-Driven,"Claymorphism, Flat Design",Hero-Centric Design + Conversion,N/A - Booking focused,Warm colors (Orange Red Brown) + appetizing imagery,Menu display. Online ordering. Reservation system. Food photography. Location/hours prominent.
+/home/z/my-project/skills/ui-ux-pro-max/data/products.csv:41:40,Hotel/Hospitality,"hospitality, hotel",Liquid Glass + Minimalism,"Glassmorphism, Soft UI Evolution",Hero-Centric Design + Social Proof,Revenue Management Dashboard,Warm neutrals + Gold (#D4AF37) + Brand accent,Room booking. Amenities showcase. Location maps. Guest reviews. Seasonal pricing. Luxury imagery.
+/home/z/my-project/skills/ui-ux-pro-max/data/products.csv:67:66,Bakery/Cafe,"bakery, cafe",Vibrant & Block-based + Soft UI Evolution,"Claymorphism, Motion-Driven",Hero-Centric Design + Conversion,N/A - Order focused,Warm Brown + Cream + Appetizing accents,Menu display. Online ordering. Location/hours. Catering. Seasonal specials. Appetizing photography.
+/home/z/my-project/skills/ui-ux-pro-max/data/products.csv:68:67,Coffee Shop,"coffee, shop",Minimalism + Organic Biophilic,"Soft UI Evolution, Flat Design",Hero-Centric Design + Conversion,N/A - Order focused,Coffee Brown (#6F4E37) + Cream + Warm accents,Menu. Online ordering. Loyalty program. Location. Story/origin. Cozy aesthetic.
+/home/z/my-project/skills/ui-ux-pro-max/data/products.csv:81:80,Church/Religious Organization,"church, organization, religious",Accessible & Ethical + Soft UI Evolution,"Minimalism, Trust & Authority",Hero-Centric Design + Social Proof,N/A - Community focused,Warm Gold + Deep Purple/Blue + White,Service times. Events. Sermons. Community. Giving. Location. Welcoming imagery.
+/home/z/my-project/skills/ui-ux-pro-max/data/landing.csv:9:8,Pricing Page + CTA,"pricing, plans, tiers, comparison, cta","1. Hero (pricing headline), 2. Price comparison cards, 3. Feature comparison table, 4. FAQ section, 5. Final CTA",Each card: CTA button. Sticky CTA in nav,"Free: Grey, Starter: Blue, Pro: Green/Gold, Enterprise: Dark. Cards: 1px border, shadow","Price toggle animation (monthly/yearly), card comparison highlight, FAQ accordion open/close",Recommend starter plan (pre-select/highlight). Show annual discount (20-30%). Use FAQs to address concerns.
+/home/z/my-project/skills/ui-ux-pro-max/data/landing.csv:15:14,Pricing-Focused Landing,"pricing, price, cost, plans, subscription","1. Hero (value proposition), 2. Pricing cards (3 tiers), 3. Feature comparison, 4. FAQ, 5. Final CTA",Each pricing card + Sticky CTA in nav + Bottom,Popular plan highlighted (brand color border/bg). Free: grey. Enterprise: dark/premium.,"Price toggle monthly/annual animation, card hover lift, FAQ accordion smooth open",Annual discount 20-30%. Recommend mid-tier (most popular badge). Address objections in FAQ.
+/home/z/my-project/skills/ui-ux-pro-max/data/landing.csv:19:18,Event/Conference Landing,"event, conference, meetup, registration, schedule","1. Hero (date/location/countdown), 2. Speakers grid, 3. Agenda/schedule, 4. Sponsors, 5. Register CTA",Register CTA sticky + After speakers + Bottom,Urgency colors (countdown). Event branding. Speaker cards professional. Sponsor logos neutral.,"Countdown timer, speaker hover cards with bio, agenda tabs, early bird countdown",Early bird pricing with deadline. Social proof (past attendees). Speaker credibility. Multi-ticket discounts.
+/home/z/my-project/skills/ui-ux-pro-max/data/react-performance.csv:19:18,Rerender,Defer State Reads,state read callback subscription,React/Next.js,Don't subscribe to state only used in callbacks,Read state on-demand in callbacks,Subscribe to state used only in handlers,"const handleClick = () => { const params = new URLSearchParams(location.search) }","const params = useSearchParams(); const handleClick = () => { params.get('ref') }",Medium
+/home/z/my-project/skills/ui-ux-pro-max/data/stacks/svelte.csv:46:45,SvelteKit,Use $app/stores for app state,$page $navigating $updated,$page for current page data,Manual URL parsing,import { page } from '$app/stores',window.location.pathname,Medium,https://kit.svelte.dev/docs/modules#$app-stores
+/home/z/my-project/skills/ui-ux-pro-max/data/stacks/react-native.csv:34:33,Forms,Use proper keyboard types,Appropriate keyboard for input,keyboardType for input type,Default keyboard for all,"keyboardType=""email-address""","keyboardType=""default"" for email",Low,
+/home/z/my-project/skills/ui-ux-pro-max/data/stacks/nuxtjs.csv:14:13,DataFetching,Use server option to control fetch location,Choose where data is fetched,server: false for client-only data,Server fetch for user-specific client data,"useFetch('/api/user-preferences', { server: false })",useFetch for localStorage-dependent data,Medium,https://nuxt.com/docs/api/composables/use-fetch
+/home/z/my-project/skills/ui-ux-pro-max/data/stacks/nuxtjs.csv:45:44,Link,Use useRouter for programmatic navigation,Navigate programmatically,useRouter().push() for navigation,Direct window.location,"const router = useRouter(); router.push('/dashboard')",window.location.href = '/dashboard',Medium,https://nuxt.com/docs/api/composables/use-router
+/home/z/my-project/skills/ui-ux-pro-max/data/charts.csv:7:6,Geographic Data,"geographic, map, location, region, geo, spatial","Choropleth Map, Bubble Map",Geographic Heat Map,Regional: single color gradient or categorized colors. Legend: clear scale,⚠ Moderate (rendering),⚠ Include text labels for regions. Provide data table alternative.,"D3.js, Mapbox, Leaflet",Pan + Zoom + Drill
+/home/z/my-project/skills/ui-ux-pro-max/data/ui-reasoning.csv:62:61,Hyperlocal Services,Conversion + Feature-Rich,Minimalism + Vibrant & Block-based,Location markers + Trust colors,Clear + Functional typography,Map hover + Provider card reveals,"{""must_have"": ""map-integration"", ""must_have"": ""booking-system""}",No map + Hidden reviews,HIGH
+/home/z/my-project/skills/ui-ux-pro-max/data/colors.csv:34:33,Hyperlocal Services,#059669,#10B981,#F97316,#ECFDF5,#064E3B,#A7F3D0,Location green + action orange
+/home/z/my-project/skills/ui-ux-pro-max/data/icons.csv:90:89,Location,map-pin,location marker place address,Lucide,import { MapPin } from 'lucide-react',<MapPin />,Location pin marker,Outline
+/home/z/my-project/skills/ui-ux-pro-max/data/icons.csv:91:90,Location,map,directions navigate geography location,Lucide,import { Map } from 'lucide-react',<Map />,Map directions,Outline
+/home/z/my-project/skills/ui-ux-pro-max/data/icons.csv:92:91,Location,navigation,compass direction pointer arrow,Lucide,import { Navigation } from 'lucide-react',<Navigation />,Navigation compass,Outline
+/home/z/my-project/skills/ui-ux-pro-max/data/icons.csv:93:92,Location,globe,world international global web,Lucide,import { Globe } from 'lucide-react',<Globe />,Globe world,Outline
+/home/z/my-project/skills/skill-creator/SKILL.md:440:- **Copy to a writeable location before editing.** The installed skill path may be read-only. Copy to `/tmp/skill-name/`, edit there, and package from the copy.
+/home/z/my-project/skills/skill-creator/eval-viewer/generate_review.py:447:        port = server.server_address[1]
+/home/z/my-project/skills/skill-creator/agents/analyzer.md:83:- Edge cases to address
+/home/z/my-project/skills/skill-creator/scripts/package_skill.py:79:    # Determine output location
+/home/z/my-project/skills/image-edit/SKILL.md:13:**Skill Location**: `{project_path}/skills/image-edit`
+/home/z/my-project/skills/image-edit/SKILL.md:17:**Reference Scripts**: Example test scripts are available in the `{Skill Location}/scripts/` directory for quick testing and reference. See `{Skill Location}/scripts/image-edit.ts` for a working example.
+/home/z/my-project/skills/marketing-mode/SKILL.md:361:**Marketing application**: Money-back guarantees, free trials reduce regret fear. Address concerns directly.
+/home/z/my-project/skills/marketing-mode/SKILL.md:433:1. **Location Pages** - City + keyword targeting
+/home/z/my-project/skills/storyboard-manager/SKILL.md:189:- Setting and locations
+/home/z/my-project/skills/storyboard-manager/SKILL.md:269:**Location:** [Where this takes place]
+/home/z/my-project/skills/storyboard-manager/SKILL.md:321:- Chapter/scene locations
+/home/z/my-project/skills/storyboard-manager/SKILL.md:333:1. **Review warnings** - Address missing timeline markers by adding them to chapters
+/home/z/my-project/skills/storyboard-manager/SKILL.md:394:1. **Read flagged locations** - Review the specific files mentioned
+/home/z/my-project/skills/storyboard-manager/SKILL.md:482:6. Include timeline markers and POV/location headers
+/home/z/my-project/skills/storyboard-manager/SKILL.md:520:Python script that detects inconsistencies in character details, physical descriptions, ages, names, and world-building facts across all story files. Outputs severity-ranked issues with file locations.
+/home/z/my-project/skills/storyboard-manager/references/character_development.md:123:- **What They Avoid**: Topics they don't address
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:22:                 locations: List[str], details: Dict = None):
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:26:        self.locations = locations
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:37:            'locations': self.locations,
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:78:        self.world_facts: Dict[str, Tuple[str, str]] = {}  # fact -> (value, location)
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:145:            location = str(file_path.relative_to(self.project_root))
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:168:                                    locations=[location, profile.file_path],
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:193:                                        locations=[location, profile.file_path],
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:222:            location = str(file_path.relative_to(self.project_root))
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:227:            # Example: Check for location descriptions
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:228:            location_pattern = r'\*\*Location:\*\*\s*(.+?)(?:\n|$)'
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:229:            for match in re.finditer(location_pattern, content, re.IGNORECASE):
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:234:                    prev_value, prev_location = self.world_facts[loc_name]
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:237:                    self.world_facts[loc_name] = (match.group(0), location)
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:252:        # - Locations visited before discovery
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:259:            location = str(file_path.relative_to(self.project_root))
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:281:                            locations=[location],
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:378:                        print(f"**Locations:**")
+/home/z/my-project/skills/storyboard-manager/scripts/consistency_checker.py:379:                        for loc in issue['locations']:
+/home/z/my-project/skills/storyboard-manager/scripts/timeline_tracker.py:22:    def __init__(self, content: str, location: str, chapter: str = None,
+/home/z/my-project/skills/storyboard-manager/scripts/timeline_tracker.py:25:        self.location = location  # File path where event was found
+/home/z/my-project/skills/storyboard-manager/scripts/timeline_tracker.py:160:                        location=str(file_path.relative_to(self.project_root)),
+/home/z/my-project/skills/storyboard-manager/scripts/timeline_tracker.py:173:                    location=str(file_path.relative_to(self.project_root)),
+/home/z/my-project/skills/storyboard-manager/scripts/timeline_tracker.py:227:                'location': event.location,
+/home/z/my-project/skills/storyboard-manager/scripts/timeline_tracker.py:242:                    'location': event.location,
+/home/z/my-project/skills/storyboard-manager/scripts/timeline_tracker.py:257:                'location': event.location,
+/home/z/my-project/skills/storyboard-manager/scripts/timeline_tracker.py:275:                'location': event.location,
+/home/z/my-project/skills/storyboard-manager/scripts/timeline_tracker.py:339:            print(f"**Location:** {event['location']}")
+/home/z/my-project/skills/multi-search-engine/references/international-search.md:156:| `!m` | Google Maps | `!m Beijing` |
+/home/z/my-project/skills/agent-browser/SKILL.md:172:agent-browser set geo 37.7749 -122.4194   # Set geolocation
+/home/z/my-project/skills/market-research-reports/assets/FORMATTING_GUIDE.md:97:Total Addressable Market (TAM) represents the total revenue opportunity
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:267:\section{Total Addressable Market (TAM)}
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:269:The Total Addressable Market represents the total revenue opportunity available if 100\% market share was achieved. Based on comprehensive analysis from multiple research sources:
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:322:\section{Serviceable Addressable Market (SAM)}
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:324:The Serviceable Addressable Market represents the portion of TAM that can be served given current product offerings, geographic presence, and regulatory constraints.
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:327:% python skills/scientific-schematics/scripts/generate_schematic.py "TAM SAM SOM concentric circle diagram. Outer circle: TAM $XXB (Total Addressable Market). Middle circle: SAM $XXB (Serviceable Addressable Market). Inner circle: SOM $XXB (Serviceable Obtainable Market). Labels with arrows pointing to each. Professional blue color scheme" -o figures/tam_sam_som.png --doc-type report
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:1153:- Budget allocation
+/home/z/my-project/skills/market-research-reports/assets/market_report_template.tex:1329:\textbf{Headquarters:} [Location]
+/home/z/my-project/skills/market-research-reports/SKILL.md:62:  "TAM SAM SOM concentric circle diagram showing Total Addressable Market $50B outer circle, Serviceable Addressable Market $15B middle circle, Serviceable Obtainable Market $3B inner circle, with labels and arrows pointing to each segment" \
+/home/z/my-project/skills/market-research-reports/SKILL.md:150:- Total Addressable Market (TAM) calculation
+/home/z/my-project/skills/market-research-reports/SKILL.md:151:- Serviceable Addressable Market (SAM) definition
+/home/z/my-project/skills/market-research-reports/SKILL.md:389:- Budget allocation by phase
+/home/z/my-project/skills/market-research-reports/SKILL.md:519:  "TAM SAM SOM concentric circles diagram. Outer circle TAM Total Addressable Market, middle circle SAM Serviceable Addressable Market, inner circle SOM Serviceable Obtainable Market. Each labeled with acronym and description. Blue gradient" \
+/home/z/my-project/skills/market-research-reports/SKILL.md:567:- **Comprehensive coverage**: Every subsection addressed
+/home/z/my-project/skills/market-research-reports/SKILL.md:707:TAM (Total Addressable Market) represents the total revenue opportunity.
+/home/z/my-project/skills/market-research-reports/references/data_analysis_patterns.md:11:**Total Addressable Market (TAM)** represents the total revenue opportunity if 100% market share was achieved.
+/home/z/my-project/skills/market-research-reports/references/data_analysis_patterns.md:33:**Serviceable Addressable Market (SAM)** represents the portion of TAM that can be served given product/service capabilities.
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:113:  "TAM SAM SOM concentric circles. Outer circle TAM Total Addressable Market. Middle circle SAM Serviceable Addressable Market. Inner circle SOM Serviceable Obtainable Market. Each labeled with acronym, full name, placeholder for dollar value. Arrows pointing to each with descriptions. Blue gradient darkest outer to lightest inner. White background professional appearance" \
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:318:- Outer circle: TAM (Total Addressable Market) - $XXX billion
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:319:- Middle circle: SAM (Serviceable Addressable Market) - $XX billion  
+/home/z/my-project/skills/market-research-reports/references/visual_generation_guide.md:336:  "TAM SAM SOM concentric circles. Outer circle TAM Total Addressable Market [VALUE]B. Middle circle SAM Serviceable Addressable Market [VALUE]B. Inner circle SOM Serviceable Obtainable Market [VALUE]B. Each labeled with acronym, full name, dollar value. Arrows pointing to each with descriptions. Blue gradient darkest outer to lightest inner. White background professional" \
+/home/z/my-project/skills/market-research-reports/references/report_structure_guide.md:108:- Address common misconceptions about market boundaries
+/home/z/my-project/skills/market-research-reports/references/report_structure_guide.md:163:#### Section 2.1: Total Addressable Market (TAM)
+/home/z/my-project/skills/market-research-reports/references/report_structure_guide.md:186:#### Section 2.2: Serviceable Addressable Market (SAM)
+/home/z/my-project/skills/market-research-reports/references/report_structure_guide.md:845:- Budget allocation by phase
+/home/z/my-project/skills/market-research-reports/references/report_structure_guide.md:966:- Headquarters and key locations
+/home/z/my-project/skills/market-research-reports/scripts/generate_market_visuals.py:48:        "TAM SAM SOM concentric circles for {topic} market. Outer circle TAM Total Addressable "
+/home/z/my-project/skills/market-research-reports/scripts/generate_market_visuals.py:49:        "Market. Middle circle SAM Serviceable Addressable Market. Inner circle SOM Serviceable "
+/home/z/my-project/skills/VLM/SKILL.md:13:**Skill Location**: `{project_path}/skills/VLM`
+/home/z/my-project/skills/VLM/SKILL.md:17:**Reference Scripts**: Example test scripts are available in the `{Skill Location}/scripts/` directory for quick testing and reference. See `{Skill Location}/scripts/vlm.ts` for a working example.
+/home/z/my-project/skills/charts/references/mindmap-css.md:48:| `branchWeights[]` | Total descendants per first-level branch | Left-right balance allocation |
+/home/z/my-project/skills/charts/references/mindmap-css.md:109:### 2.3 Left-Right Branch Allocation (Style B)
+/home/z/my-project/skills/charts/references/matplotlib.md:19:# Font path: adjust for your system. Common locations:
+/home/z/my-project/skills/charts/references/seaborn.md:19:# Font path: adjust for your system. Common locations:
+/home/z/my-project/skills/pdf/typesetting/overflow.md:287:## 4. Table Overflow: Dynamic Column Width Allocation
+/home/z/my-project/skills/pdf/briefs/creative-fixed-canvas.md:264:### ★ Content-Proportional Grid Row Allocation
+/home/z/my-project/skills/pdf/briefs/creative-fixed-canvas.md:283:**Why this matters:** Equal row allocation (4+4) causes the longer component to overflow into the shorter one's territory, creating text overlap in the final PDF. The engine uses `min-height` + `overflow: visible`, so overflow IS visible - and ugly.
+/home/z/my-project/skills/pdf/briefs/creative-fixed-canvas.md:415:**User Request**: "Make a poster for a minimalist architecture exhibition called 'The Weight of Light'. Include date Oct 12, location Tokyo. Keep it very clean."
+/home/z/my-project/skills/pdf/briefs/creative-fixed-canvas.md:641:9. **Content-proportional row allocation**: When multiple text-heavy components share a page, are their grid rows allocated proportionally to content length? Equal rows for unequal content = text overlap. (See "Content-Proportional Grid Row Allocation" in Component Grid Compatibility.)
+/home/z/my-project/skills/pdf/briefs/poster.md:59:### 2.3 Grid Area Allocation Iron Rule
+/home/z/my-project/skills/pdf/briefs/poster.md:69:### 2.4 ★★★ Content-Proportional Row Allocation (Anti-Overlap Iron Rule)
+/home/z/my-project/skills/pdf/briefs/poster.md:198:5. **Bottom action information (price/address/QR code) should not be wrapped in a separate color block.** Use larger font + heavier weight to emphasize, keeping it unified with the overall composition.
+/home/z/my-project/skills/pdf/briefs/poster.md:231:- Information data (dates, locations, headcounts) should use `Floating_Meta` or `Stat_Block`, not Glass_Canvas
+/home/z/my-project/skills/pdf/briefs/poster.md:452:- Inaccurate row allocation for multiple components, text overlap
+/home/z/my-project/skills/pdf/briefs/poster.md:459:| Standard poster (50-150 chars) | Blueprint JSON | Grid mostly sufficient, mind row allocation |
+/home/z/my-project/skills/pdf/briefs/poster.md:683:□ Emphasis elements (price/date/address) highlighted via font size+weight, not wrapped in separate color blocks?
+/home/z/my-project/skills/pdf/briefs/creative.md:258:### ★ Content-Proportional Grid Row Allocation
+/home/z/my-project/skills/pdf/briefs/creative.md:277:**Why this matters:** Equal row allocation (4+4) causes the longer component to overflow into the shorter one's territory, creating text overlap in the final PDF. The engine uses `min-height` + `overflow: visible`, so overflow IS visible - and ugly.
+/home/z/my-project/skills/pdf/briefs/creative.md:409:**User Request**: "Make a poster for a minimalist architecture exhibition called 'The Weight of Light'. Include date Oct 12, location Tokyo. Keep it very clean."
+/home/z/my-project/skills/pdf/briefs/creative.md:635:9. **Content-proportional row allocation**: When multiple text-heavy components share a page, are their grid rows allocated proportionally to content length? Equal rows for unequal content = text overlap. (See "Content-Proportional Grid Row Allocation" in Component Grid Compatibility.)
+/home/z/my-project/skills/pdf/briefs/resume.md:29:- **Contact line**: Email, phone, location separated by `|` or `·`. Each segment must stay on one line - if too long, move to next line at the separator, not mid-segment.
+/home/z/my-project/skills/pdf/briefs/resume.md:115:def experience_entry(title, company, dates, location, bullets):
+/home/z/my-project/skills/pdf/briefs/resume.md:119:        Paragraph(f'{company}  |  {dates}  |  {location}', job_meta_style),
+/home/z/my-project/skills/pdf/briefs/report.md:415:> **Font file locations note:** On macOS, font paths may be under `~/.openclaw/workspace/fonts/` or `~/Library/Fonts/` instead of `/usr/share/fonts/`. The registration code below uses a single `FONT_DIR` variable — set it to the correct base path for your system. All font sub-paths (e.g. `truetype/noto-serif-sc/NotoSerifSC-Regular.ttf`) are appended to `FONT_DIR`.
+/home/z/my-project/skills/pdf/SKILL.md:252:- Address common questions or misconceptions
+/home/z/my-project/skills/pdf/SKILL.md:273:| Image location | `<img src>` value | Example |
+/home/z/my-project/skills/pdf/SKILL.md:568:| **WARNING** items | Review; non-blocking but should be addressed |
+/home/z/my-project/skills/pdf/references/resume-altacv.tex:50:% Experience entry: {title}{company}{dates}{location}
+/home/z/my-project/skills/pdf/scripts/pdf.py:1246:    # Filter fields without location
+/home/z/my-project/skills/pdf/scripts/pdf.py:1247:    fields_with_location = []
+/home/z/my-project/skills/pdf/scripts/pdf.py:1250:            fields_with_location.append(field_info)
+/home/z/my-project/skills/pdf/scripts/pdf.py:1252:            print(f"Unable to determine location for field id: {field_info.get('field_id')}, ignoring")
+/home/z/my-project/skills/pdf/scripts/pdf.py:1263:    sorted_fields = fields_with_location + list(radio_fields_by_id.values())
+/home/z/my-project/skills/pdf/scripts/pdf.py:2595:        spec = importlib.util.spec_from_file_location("toc_validate", str(toc_script))
+/home/z/my-project/skills/pdf/scripts/pdf.py:2774:    spec = importlib.util.spec_from_file_location("design_engine", str(engine_script))
+/home/z/my-project/skills/pdf/scripts/pdf.py:2841:    spec = importlib.util.spec_from_file_location("design_engine", str(engine_script))
+/home/z/my-project/skills/pdf/scripts/design_engine.py:2188:    # First pass: if total exceeds available, shrink the largest allocations
+/home/z/my-project/skills/video-generation/SKILL.md:13:**Skill Location**: `{project_path}/skills/video-generation`
+/home/z/my-project/skills/video-generation/SKILL.md:17:**Reference Scripts**: Example test scripts are available in the `{Skill Location}/scripts/` directory for quick testing and reference. See `{Skill Location}/scripts/video.ts` for a working example.
+/home/z/my-project/skills/web-reader/SKILL.md:13:**Skill Location**: `{project_path}/skills/web-reader`
+
+[Showing results with pagination = limit: 250]

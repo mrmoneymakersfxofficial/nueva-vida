@@ -313,7 +313,7 @@ export default function ReservasPage() {
           {/* Info Cards */}
           <div className="grid sm:grid-cols-3 gap-4 mt-12">
             {[
-              { icon: MapPin, title: 'Ubicación', text: 'Av. Principal 123, Lima' },
+              { icon: MapPin, title: 'Ubicación', text: 'Calle San Martín 104, frente al Hospital San José, Chincha' },
               { icon: Clock, title: 'Horario', text: 'Lun - Vie: 4:00 PM - 8:00 PM' },
               { icon: Calendar, title: 'Reserva Rápida', text: 'Solo 2 pasos para agendar' },
             ].map((info, i) => (
@@ -328,6 +328,38 @@ export default function ReservasPage() {
               </ScrollReveal>
             ))}
           </div>
+
+          {/* Google Maps Embed */}
+          <ScrollReveal delay={0.2}>
+            <div className="mt-12 rounded-2xl overflow-hidden shadow-lg border border-marine/10">
+              <div className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-cyan/10 to-royal/5">
+                <MapPin className="w-4 h-4 text-cyan" />
+                <h3 className="font-semibold text-marine text-sm">Nuestra Ubicación</h3>
+              </div>
+              <iframe
+                src="https://maps.google.com/maps?q=Calle+San+Martin+104+frente+al+Hospital+San+Jose+Chincha+Peru&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="300"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Ubicación Consultorio Nueva Vida - Chincha"
+                className="w-full"
+              />
+              <div className="px-5 py-3 bg-white flex items-center justify-between">
+                <p className="text-marine/60 text-xs">Calle San Martín 104, frente al Hospital San José, Chincha</p>
+                <a
+                  href="https://www.google.com/maps/search/Calle+San+Mart%C3%ADn+104+frente+al+Hospital+San+Jos%C3%A9+Chincha"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan text-xs font-medium hover:underline flex items-center gap-1"
+                >
+                  Abrir en Maps <ArrowRight className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     </>

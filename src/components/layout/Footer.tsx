@@ -87,7 +87,7 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-sm text-white/70">
                 <MapPin className="w-4 h-4 text-cyan mt-0.5 flex-shrink-0" />
-                <span {...ve('siteSettings', 'siteSettings', 'address')}>Av. Principal 123, Centro Médico, Lima - Perú</span>
+                <span {...ve('siteSettings', 'siteSettings', 'address')}>Calle San Martín 104, frente al Hospital San José, Chincha</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-white/70">
                 <Phone className="w-4 h-4 text-cyan flex-shrink-0" />
@@ -104,6 +104,28 @@ export default function Footer() {
                 </div>
               </li>
             </ul>
+            {/* Google Maps */}
+            <div className="mt-3 rounded-xl overflow-hidden border border-white/10">
+              <iframe
+                src="https://maps.google.com/maps?q=Calle+San+Martin+104+frente+al+Hospital+San+Jose+Chincha+Peru&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="160"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Ubicación Consultorio Nueva Vida - Chincha"
+                className="w-full opacity-80 hover:opacity-100 transition-opacity"
+              />
+              <a
+                href="https://www.google.com/maps/search/Calle+San+Mart%C3%ADn+104+frente+al+Hospital+San+Jos%C3%A9+Chincha"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1 py-2 bg-white/5 hover:bg-white/10 transition-colors text-cyan text-xs font-medium"
+              >
+                <MapPin className="w-3 h-3" /> Abrir en Maps
+              </a>
+            </div>
           </div>
         </div>
 
