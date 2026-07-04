@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240">
+  <!-- Hexagonal Logo Mark -->
+  <g transform="translate(100, 85)">
+    <!-- Outer Hexagon -->
+    <polygon
+      points="0,-70 60.6,-35 60.6,35 0,70 -60.6,35 -60.6,-35"
+      fill="none"
+      stroke="#004691"
+      stroke-width="3"
+      stroke-linejoin="round"
+    />
+    <!-- Inner interlocking geometric lines -->
+    <!-- Top-left to center-right -->
+    <line x1="-30" y1="-52" x2="30" y2="0" stroke="#004691" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Top-right to center-left -->
+    <line x1="30" y1="-52" x2="-30" y2="0" stroke="#004691" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Bottom-left to center-top -->
+    <line x1="-30" y1="52" x2="30" y2="0" stroke="#004691" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Bottom-right to center-top -->
+    <line x1="30" y1="52" x2="-30" y2="0" stroke="#004691" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Horizontal center bar -->
+    <line x1="-42" y1="0" x2="42" y2="0" stroke="#004691" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Small inner hexagon accent -->
+    <polygon
+      points="0,-25 21.7,-12.5 21.7,12.5 0,25 -21.7,12.5 -21.7,-12.5"
+      fill="none"
+      stroke="#004691"
+      stroke-width="2"
+      stroke-linejoin="round"
+    />
+  </g>
+  <!-- Text: Sertrade -->
+  <text x="100" y="192" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="32" font-weight="600" text-anchor="middle" fill="#004691" letter-spacing="3">
+    <tspan fill="#004691">Ser</tspan><tspan fill="#555555">trade</tspan>
+  </text>
+</svg>

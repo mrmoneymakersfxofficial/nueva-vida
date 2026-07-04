@@ -109,20 +109,9 @@ export default function Footer() {
         <Separator className="my-6 sm:my-8 bg-white/10" />
 
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-          <p className="text-white/80 text-xs sm:text-sm text-center sm:text-left leading-relaxed">
+        <div className="flex items-center justify-center gap-3">
+          <p className="text-white/80 text-xs sm:text-sm text-center leading-relaxed">
             © {new Date().getFullYear()} Nueva Vida - Consultorio Ginecológico. Todos los derechos reservados.
-          </p>
-          <p className="text-white/80 text-xs sm:text-sm text-center sm:text-right leading-relaxed">
-            Diseño y desarrollo por{' '}
-            <a 
-              href="https://www.fastpagepro.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-cyan font-semibold hover:text-cyan-light transition-colors"
-            >
-              fastpagepro.com
-            </a>
           </p>
         </div>
       </div>
